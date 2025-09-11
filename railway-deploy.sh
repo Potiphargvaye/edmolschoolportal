@@ -1,17 +1,12 @@
 #!/bin/sh
 
-# Install Node dependencies
-echo "Installing Node.js dependencies..."
-npm install --legacy-peer-deps
-
-# Build frontend assets for production
-echo "Building assets..."
-npm run build
-
-# Run database migrations
-echo "Running database migrations..."
+# Run database migrations (if needed)
 php artisan migrate --force
 
-# Start Laravel
-echo "Starting Laravel..."
+# Clear caches so Laravel sees the new assets
+php artisan config:clear
+php artisan cache:clear
+php artisan view:clear
+
+# Serve the app
 php artisan serve --host=0.0.0.0 --port=$PORT
