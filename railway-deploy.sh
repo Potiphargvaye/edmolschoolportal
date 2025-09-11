@@ -1,12 +1,18 @@
 #!/bin/sh
 
-# Run database migrations (if needed)
-php artisan migrate --force
+# Install Node dependencies for Linux
+npm ci
 
-# Clear caches so Laravel sees the new assets
+# Build Vite assets
+npm run build
+
+# Clear Laravel caches
 php artisan config:clear
 php artisan cache:clear
 php artisan view:clear
 
-# Serve the app
+# Run migrations
+php artisan migrate --force
+
+# Start Laravel
 php artisan serve --host=0.0.0.0 --port=$PORT
