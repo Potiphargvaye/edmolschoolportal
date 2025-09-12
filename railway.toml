@@ -1,7 +1,13 @@
 [build]
 builder = "nixpacks"
-buildCommand = "echo 'Using pre-built assets'"
+buildCommand = "npm ci --only=production"
 
 [deploy]
 startCommand = "php artisan serve --host=0.0.0.0 --port=$PORT"
 restartPolicyType = "ON_FAILURE"
+
+[[build.ignore]]
+path = ".git"
+
+[[build.ignore]]
+path = "node_modules"
