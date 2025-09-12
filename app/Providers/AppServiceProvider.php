@@ -25,28 +25,31 @@ class AppServiceProvider extends ServiceProvider
     }
 
     /**
-     * Bootstrap any application services.
-     */
-    public function boot(): void
-    {
-        
-
-        // Register policies
-        $this->registerPolicies();
-
-        // Define role-based authorization gates
-        Gate::define('is-student', function (User $user) {
-            return $user->role === 'student';
-        });
-
-        Gate::define('is-teacher', function (User $user) {
-            return $user->role === 'teacher';
-        });
-
-        Gate::define('is-admin', function (User $user) {
-            return $user->role === 'admin';
-        });
+ * Bootstrap any application services.
+ */
+public function boot(): void
+{
+    // Force HTTPS in production (important for Railway)
+    if ($this->app->environment('production')) {
+        \Illuminate\Support\Facades\URL::forceScheme('https');
     }
+
+    // Register policies
+    $this->registerPolicies();
+
+    // Define role-based authorization gates
+    Gate::define('is-student', function (User $user) {
+        return $user->role === 'student';
+    });
+
+    Gate::define('is-teacher', function (User $user) {
+        return $user->role === 'teacher';
+    });
+
+    Gate::define('is-admin', function (User $user) {
+        return $user->role === 'admin';
+    });
+}
 
     /**
      * Register the application's policies.
