@@ -6,6 +6,7 @@ npm ci --only=production
 # Build Vite assets for production
 npm run build
 
+
 # Clear Laravel caches
 php artisan config:clear
 php artisan cache:clear
