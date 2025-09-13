@@ -23,9 +23,6 @@ php artisan route:cache || true
 php artisan view:cache || true
 
 # start php-fpm as daemon
-echo "Starting php-fpm..."
-php-fpm -D
 
-# start nginx in foreground (this keeps the container running)
-echo "Starting nginx..."
+php-fpm -D
 nginx -g 'daemon off;'

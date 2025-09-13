@@ -62,4 +62,5 @@ RUN chmod +x /usr/local/bin/start-container.sh
 EXPOSE 80
 
 # run the start script (it will start php-fpm and nginx)
-CMD ["/usr/local/bin/start-container.sh"]
+CMD ["sh", "docker/start-container.sh"] 
+
