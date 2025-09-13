@@ -224,3 +224,10 @@ Route::get('/admin/fees/{fee}/edit', [FeeController::class, 'getFeeEditData'])->
 Route::put('/admin/fees/{fee}', [FeeController::class, 'update'])->name('admin.fees.update');
 
 
+Route::get('/check-build', function () {
+    $path = public_path('build/manifest.json');
+    return file_exists($path) 
+        ? response()->json(['status' => 'found', 'path' => $path]) 
+        : response()->json(['status' => 'missing', 'path' => $path]);
+});
+
