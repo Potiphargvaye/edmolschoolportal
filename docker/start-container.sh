@@ -1,28 +1,21 @@
 #!/bin/sh
 set -e
 
-echo "=== Container start script ==="
-echo "Running Laravel prep tasks..."
+# Permissions
+chmod -R 755 storage bootstrap/cache
 
-# ensure storage/cache permissions
-chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache || true
-chmod -R 755 /var/www/html/storage /var/www/html/bootstrap/cache || true
-
-# clear caches (don't fail the container if something goes wrong)
+# Laravel setup
 php artisan config:clear || true
 php artisan cache:clear || true
+php artisan route:clear || true
 php artisan view:clear || true
 
-# run migrations (will use runtime env vars provided by Railway)
-echo "Running migrations..."
-php artisan migrate --force || echo "Migrations failed (continuing)..."
+php artisan migrate --force || true
 
-# optional: rebuild caches (safe to attempt)
-php artisan config:cache || true
-php artisan route:cache || true
-php artisan view:cache || true
+# Cache configs for production
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
 
-# start php-fpm as daemon
-
-php-fpm -D
-nginx -g 'daemon off;'
+# Start Supervisor (manages php-fpm + nginx)
+exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
