@@ -33,6 +33,7 @@ COPY --from=nodebuild /app/public/build /app/public/build
 
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
+# At the very bottom of Dockerfile
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=${PORT}"]
 
-CMD ["sh", "railway-deploy.sh"]
 
