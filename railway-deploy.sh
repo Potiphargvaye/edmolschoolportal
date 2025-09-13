@@ -1,27 +1,22 @@
 #!/bin/sh
 
-# ✅ Ensure build assets exist before proceeding
-if [ ! -f "public/build/manifest.json" ]; then
-  echo "❌ Error: manifest.json not found in public/build"
-  exit 1
-fi
+echo "🚀 Running Railway Deploy Script..."
 
 # Set permissions
-chmod -R 755 storage bootstrap/cache public/build
+chmod -R 755 storage bootstrap/cache
 
-# Clear caches and generate key
+# Clear old caches
 php artisan config:clear
 php artisan cache:clear
 php artisan view:clear
-php artisan key:generate --force
-
-# Optimize
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
 
 # Run migrations
 php artisan migrate --force
+
+# Optimize caches
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
 
 # Start Laravel
 php artisan serve --host=0.0.0.0 --port=$PORT
