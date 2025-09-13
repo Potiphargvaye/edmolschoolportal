@@ -13,7 +13,8 @@ COPY . .
 RUN npm run build
 
 # Stage 2: PHP
-FROM php:8.2-fpm as phpbuild
+FROM php:8.2-cli as phpbuild
+
 WORKDIR /app
 
 # Install system dependencies (example for Laravel)
