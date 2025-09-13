@@ -1,39 +1,65 @@
-# Stage 1: Node build
-FROM node:18 as nodebuild
+# Stage 1 - build frontend with Node
+FROM node:18 AS nodebuild
 WORKDIR /app
 
-# Copy only package files first
+# copy package files and install
 COPY package*.json ./
-RUN npm install
+RUN npm ci
 
-# Copy rest of the app
+# copy rest and build
 COPY . .
-
-# Build frontend assets
 RUN npm run build
 
-# Stage 2: PHP
-FROM php:8.2-cli as phpbuild
+# Stage 2 - PHP-FPM + Nginx
+FROM php:8.2-fpm
 
-WORKDIR /app
-
-# Install system dependencies (example for Laravel)
+# install system deps + nginx + tools
 RUN apt-get update && apt-get install -y \
-    git unzip libpq-dev libzip-dev zip curl \
-    && docker-php-ext-install pdo pdo_mysql zip bcmath
+    nginx \
+    git \
+    unzip \
+    libpq-dev \
+    libzip-dev \
+    zip \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
 
-# Install Composer
+# install php extensions (pgsql + mysql optional)
+RUN docker-php-ext-install pdo_mysql pdo_pgsql zip bcmath
+
+# copy composer from official image
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Copy app code
+# set working dir
+WORKDIR /var/www/html
+
+# copy application files
 COPY . .
 
-# Copy built assets from Node build stage
-COPY --from=nodebuild /app/public/build /app/public/build
+# copy built assets from node stage
+COPY --from=nodebuild /app/public/build /var/www/html/public/build
 
-# Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader
-# At the very bottom of Dockerfile
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=${PORT}"]
+# install php dependencies
+RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
 
+# fix permissions
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
+ && chmod -R 755 /var/www/html/storage /var/www/html/bootstrap/cache
 
+# configure php-fpm to listen on TCP 9000
+RUN sed -i "s|listen = .*|listen = 9000|" /usr/local/etc/php-fpm.d/www.conf \
+ && sed -i "s|;listen.owner = .*|listen.owner = www-data|" /usr/local/etc/php-fpm.d/www.conf \
+ && sed -i "s|;listen.group = .*|listen.group = www-data|" /usr/local/etc/php-fpm.d/www.conf
+
+# add nginx config and start script (we'll add these files next)
+COPY docker/nginx.conf /etc/nginx/sites-available/default
+RUN ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+
+COPY docker/start-container.sh /usr/local/bin/start-container.sh
+RUN chmod +x /usr/local/bin/start-container.sh
+
+# expose port 80
+EXPOSE 80
+
+# run the start script (it will start php-fpm and nginx)
+CMD ["/usr/local/bin/start-container.sh"]
