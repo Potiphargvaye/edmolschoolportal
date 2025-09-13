@@ -1,13 +1,10 @@
 [build]
 builder = "nixpacks"
-buildCommand = "npm ci --only=production"
+buildCommand = "echo 'Using pre-built assets from repository'"
 
 [deploy]
-startCommand = "php artisan serve --host=0.0.0.0 --port=$PORT"
+startCommand = "chmod +x railway-deploy.sh && ./railway-deploy.sh"
 restartPolicyType = "ON_FAILURE"
 
-[[build.ignore]]
-path = ".git"
-
-[[build.ignore]]
-path = "node_modules"
+[environment]
+NODE_VERSION = "20.19.0"
