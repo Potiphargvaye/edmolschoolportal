@@ -33,7 +33,7 @@ COPY --from=nodebuild /app/public/build /app/public/build
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Laravel setup
-RUN php artisan config:cache && php artisan route:cache && php artisan view:cache
 
-CMD ["php-fpm"]
+
+CMD ["sh", "railway-deploy.sh"]
+
