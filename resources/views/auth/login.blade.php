@@ -54,10 +54,9 @@
             </div>
             <div class="w-full py-6 z-20">
                   <div class="text-center mb-8">
-    <img src="{{ asset('storage/logo/edmol school logo.jpg') }}" alt="School Logo" class="mx-auto" style="height: 125px;">
+    <img src="/logo/edmol school logo.jpg" alt="School Logoo" class="mx-auto" style="height: 125px;">
     <h2 class="text-2xl font-bold text-white-800 mt-2">Welcome Back!</h2>
 </div>
-
 
 <div class="py-6 space-x-2">
     <!-- Facebook -->
