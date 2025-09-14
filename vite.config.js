@@ -9,8 +9,9 @@ export default defineConfig({
         }),
     ],
     build: {
-        manifest: true,
+        manifest: 'manifest.json', //  force manifest at root
         outDir: 'public/build',
+        emptyOutDir: true, // ensures no old build files linger
         rollupOptions: {
             output: {
                 assetFileNames: 'assets/[name]-[hash][extname]',
