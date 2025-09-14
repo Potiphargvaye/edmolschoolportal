@@ -39,7 +39,24 @@ Route::get('/user-avatar/{user}', function($user) {
     return response()->file($path);
 })->name('user.avatar');
 
-
+// Helper function to generate SVG avatars
+function generateInitialsAvatar($name) {
+    $initials = '';
+    $words = explode(' ', $name);
+    foreach ($words as $word) {
+        $initials .= strtoupper(substr(trim($word), 0, 1));
+        if (strlen($initials) >= 2) break;
+    }
+    
+    $svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+              <rect width="100" height="100" fill="#eee"/>
+              <text x="50" y="60" font-size="40" text-anchor="middle" fill="#555">'
+              .($initials ?: '?').'</text>
+            </svg>';
+    
+    return response($svg, 200)
+           ->header('Content-Type', 'image/svg+xml');
+}
 
 // Landing page route
 Route::get('/', function () {
