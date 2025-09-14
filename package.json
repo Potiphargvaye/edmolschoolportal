@@ -3,11 +3,11 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "dev": "vite",
-        "build": "vite build",
-        "preview": "vite preview",
-        "railway-deploy": "npm run build && php artisan config:clear && php artisan cache:clear && php artisan view:clear && php artisan config:cache && php artisan view:cache"
-    },
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "railway-deploy": "npm install && npm run build && php artisan config:clear && php artisan cache:clear && php artisan view:clear && php artisan storage:link"
+},
     "devDependencies": {
         "@tailwindcss/forms": "^0.5.10",
         "alpinejs": "^3.4.2",
