@@ -36,7 +36,7 @@ class StudentController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'age' => 'required|integer|min:5|max:25',
-            'gender' => 'required|in:Male,Female,Other',
+            'gender' => 'required|in:male,female,other',
             'parent_phone' => 'required|string|max:15',
             'class_applying_for' => 'required|string|max:100',
             'date_of_admission' => 'required|date',
