@@ -22,7 +22,7 @@ class StudentController extends Controller
         'students',
         'totalStudents',
         'maleStudents',
-        'femaleStudents'
+        'femaleStudents' 
     ));
 }
 
