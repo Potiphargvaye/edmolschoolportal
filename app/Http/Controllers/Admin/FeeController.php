@@ -20,10 +20,11 @@ class FeeController extends Controller
             DB::raw('SUM(amount) as total_fees_due'),
             DB::raw('SUM(paid_amount) as total_fees_collected'),
             DB::raw('COUNT(*) as total_records'),
-            DB::raw('SUM(CASE WHEN status = 'pending' THEN 1 ELSE 0 END) as pending_count'),
-            DB::raw('SUM(CASE WHEN status = 'partial' THEN 1 ELSE 0 END) as partial_count'),
-            DB::raw('SUM(CASE WHEN status = 'paid' THEN 1 ELSE 0 END) as paid_count'),
-            DB::raw('SUM(CASE WHEN status = 'overdue' THEN 1 ELSE 0 END) as overdue_count')
+            DB::raw("SUM(CASE WHEN status = 'pending' THEN 1 ELSE 0 END) as pending_count"),
+            DB::raw("SUM(CASE WHEN status = 'partial' THEN 1 ELSE 0 END) as partial_count"),
+            DB::raw("SUM(CASE WHEN status = 'paid' THEN 1 ELSE 0 END) as paid_count"),
+            DB::raw("SUM(CASE WHEN status = 'overdue' THEN 1 ELSE 0 END) as overdue_count")
+
         );
 
         if (!empty($selected_year) && $selected_year != 'all') {
