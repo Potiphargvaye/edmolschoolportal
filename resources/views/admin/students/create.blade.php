@@ -190,9 +190,9 @@
                             <label for="gender" class="form-label">Gender <span class="text-red-500">*</span></label>
                             <select class="form-input @error('gender') border-red-500 @enderror" id="gender" name="gender" required>
                                 <option value="">Select Gender</option>
-                                <option value="Male" {{ old('gender') == 'Male' ? 'selected' : '' }}>male</option>
-                                <option value="Female" {{ old('gender') == 'Female' ? 'selected' : '' }}>female</option>
-                                <option value="Other" {{ old('gender') == 'Other' ? 'selected' : '' }}>other</option>
+                                <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>Male</option>
+                                <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>Female</option>
+                                <option value="0ther" {{ old('gender') == 'other' ? 'selected' : '' }}>Other</option>
                             </select>
                             @error('gender')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
