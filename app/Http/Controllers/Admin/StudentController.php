@@ -15,8 +15,8 @@ class StudentController extends Controller
     
     // Calculate statistics
     $totalStudents = Student::count();
-    $maleStudents = Student::where('gender', 'male')->count();
-    $femaleStudents = Student::where('gender', 'female')->count();
+    $maleStudents = Student::where('gender', 'Male')->count();
+    $femaleStudents = Student::where('gender', 'Female')->count();
     
     return view('admin.students.index', compact(
         'students',
