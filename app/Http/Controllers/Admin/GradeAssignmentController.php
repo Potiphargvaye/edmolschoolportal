@@ -22,7 +22,7 @@ class GradeAssignmentController extends Controller
                                 ->whereNull('grade_id')
                                 ->get();
         
-        $allSubjects = ['Math', 'English', 'Biology', 'Physics', 'Chemistry', 'History', 'Geography'];
+        $allSubjects = ['Math', 'English', 'Biology', 'Physics', 'Chemistry', 'History', 'Geography, Web Development'];
         
         return view('admin.grade-assignments.index', compact(
             'grades',
