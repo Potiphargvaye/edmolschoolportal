@@ -388,16 +388,6 @@
             color: #991b1b;
         }
 
-        
-        
-
-
-
-
-
-
-
-
         /* Logout Button Styles */
 .student-info-container {
     /* Remove positioning and padding for absolute positioning */
@@ -448,6 +438,9 @@ form.button {
         justify-content: center; /* Center button on mobile */
     }
 }
+
+
+
     </style>
 </head>
 <body>
@@ -576,36 +569,62 @@ form.button {
         </div>
 
         <!-- Dashboard Cards Grid -->
-        <div class="dashboard-grid">
-            <div class="dashboard-card">
-                <h5 class="card-title">
-                    <i class="fas fa-book text-blue"></i>
-                    Courses
-                </h5>
-                <div class="card-content">
-                    <p>View your current courses, assignments, and progress.</p>
-                </div>
-            </div>
-            <div class="dashboard-card">
-                <h5 class="card-title">
-                    <i class="fas fa-chart-line text-blue"></i>
-                    Grades
-                </h5>
-                <div class="card-content">
-                    <p>Check your latest grades and performance reports.</p>
-                </div>
-            </div>
-            <div class="dashboard-card">
-                <h5 class="card-title">
-                    <i class="fas fa-calendar-alt text-blue"></i>
-                    Schedule
-                </h5>
-                <div class="card-content">
-                    <p>View your class schedule and upcoming events.</p>
-                </div>
-            </div>
+<div class="dashboard-grid">
+    <div class="dashboard-card">
+        <h5 class="card-title">
+            <i class="fas fa-book text-blue"></i>
+            Learning Materials
+        </h5>
+        <div class="card-content">
+            <p>Access all your learning materials, assignments, and resources in one place.</p>
+            <a href="{{ route('student.materials') }}" class="inline-flex items-center mt-4 text-blue-500 hover:text-blue-700 font-medium">
+                Go to Materials
+                <i class="fas fa-arrow-right ml-2"></i>
+            </a>
         </div>
     </div>
+    <div class="dashboard-card">
+        <h5 class="card-title">
+            <i class="fas fa-book text-blue"></i>
+            Courses
+        </h5>
+        <div class="card-content">
+            <p>View your current courses, assignments, and progress.</p>
+            <a href="#" class="inline-flex items-center mt-4 text-blue-500 hover:text-blue-700 font-medium">
+                View Courses
+                <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+    </div>
+    <div class="dashboard-card">
+        <h5 class="card-title">
+            <i class="fas fa-chart-line text-blue"></i>
+            Grades
+        </h5>
+        <div class="card-content">
+            <p>Check your latest grades and performance reports.</p>
+            <a href="#" class="inline-flex items-center mt-4 text-blue-500 hover:text-blue-700 font-medium">
+                View Grades
+                <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+    </div>
+    <div class="dashboard-card">
+        <h5 class="card-title">
+            <i class="fas fa-calendar-alt text-blue"></i>
+            Schedule
+        </h5>
+        <div class="card-content">
+            <p>View your class schedule and upcoming events.</p>
+            <a href="#" class="inline-flex items-center mt-4 text-blue-500 hover:text-blue-700 font-medium">
+                View Schedule
+                <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+    </div>
+</div>
+
+                    </div>
 
     
     

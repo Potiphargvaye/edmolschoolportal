@@ -67,15 +67,59 @@ class StudentController extends Controller
     }
 
     public function show(Student $student)
-    {
-        return view('admin.students.show', compact('student'));
+{
+    if (request()->ajax() || request()->wantsJson()) {
+        return response()->json([
+            'success' => true,
+            'student' => [
+                'id' => $student->id,
+                'student_id' => $student->student_id,
+                'name' => $student->name,
+                'age' => $student->age,
+                'gender' => $student->gender,
+                'parent_phone' => $student->parent_phone,
+                'class_applying_for' => $student->class_applying_for,
+                'date_of_admission' => $student->date_of_admission->format('Y-m-d'),
+                'image' => $student->image,
+                'image_exists' => $student->image && Storage::exists($student->image),
+                'transcript' => $student->transcript,
+                'transcript_exists' => $student->transcript && Storage::exists($student->transcript),
+                'recommendation_letter' => $student->recommendation_letter,
+                'recommendation_letter_exists' => $student->recommendation_letter && Storage::exists($student->recommendation_letter),
+                'created_at' => $student->created_at->toISOString(),
+                'updated_at' => $student->updated_at->toISOString(),
+            ]
+        ]);
     }
+    
+    return view('admin.students.show', compact('student'));
+}
 
     public function edit(Student $student)
-    {
-        return view('admin.students.edit', compact('student'));
+{
+    if (request()->ajax() || request()->wantsJson()) {
+        return response()->json([
+            'success' => true,
+            'student' => [
+                'id' => $student->id,
+                'name' => $student->name,
+                'age' => $student->age,
+                'gender' => $student->gender,
+                'parent_phone' => $student->parent_phone,
+                'class_applying_for' => $student->class_applying_for,
+                'date_of_admission' => $student->date_of_admission->format('Y-m-d'),
+                'image' => $student->image,
+                'image_exists' => $student->image && Storage::exists($student->image),
+                'transcript' => $student->transcript,
+                'transcript_exists' => $student->transcript && Storage::exists($student->transcript),
+                'recommendation_letter' => $student->recommendation_letter,
+                'recommendation_letter_exists' => $student->recommendation_letter && Storage::exists($student->recommendation_letter),
+            ]
+        ]);
     }
-
+    
+    return view('admin.students.edit', compact('student'));
+}
     public function update(Request $request, Student $student)
     {
         $request->validate([
@@ -121,8 +165,9 @@ class StudentController extends Controller
             ->with('success', 'Student updated successfully.');
     }
 
-    public function destroy(Student $student)
-    {
+    public function destroy(Request $request, Student $student)
+{
+    try {
         // Delete associated files
         if ($student->image) {
             Storage::disk('public')->delete($student->image);
@@ -136,7 +181,30 @@ class StudentController extends Controller
 
         $student->delete();
 
+        // Check if it's an AJAX request
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Student deleted successfully!'
+            ]);
+        }
+
         return redirect()->route('admin.students.index')
-            ->with('success', 'Student deleted successfully.');
+            ->with('success', 'Student deleted successfully');
+
+    } catch (\Exception $e) {
+        // Handle AJAX errors
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to delete student: ' . $e->getMessage()
+            ], 500);
+        }
+
+        return redirect()->route('admin.students.index')
+            ->with('error', 'Failed to delete student: ' . $e->getMessage());
     }
 }
+
+}
+

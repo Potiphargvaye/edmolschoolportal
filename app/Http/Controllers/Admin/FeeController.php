@@ -62,64 +62,137 @@ class FeeController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $request->validate([
-            'student_id' => 'required|exists:students,student_id',
-            'fee_type' => 'required|string|max:255',
-            'installment_number' => 'required|integer|min:1',
-            'academic_year' => 'required|string|max:255',
-            'amount' => 'required|numeric|min:0',
-            'due_date' => 'required|date',
+{
+    $request->validate([
+        'student_id' => 'required|exists:students,student_id',
+        'fee_type' => 'required|string|max:255',
+        'installment_number' => 'required|integer|min:1',
+        'academic_year' => 'required|string|max:255',
+        'amount' => 'required|numeric|min:0',
+        'due_date' => 'required|date',
+    ]);
+
+    StudentFee::create($request->all());
+
+    // Check if it's an AJAX request
+    if ($request->ajax() || $request->wantsJson()) {
+        return response()->json([
+            'success' => true,
+            'message' => 'Fee assigned successfully!'
         ]);
-
-        StudentFee::create($request->all());
-
-        return redirect()->route('admin.fees.index')
-            ->with('success', 'Fee assigned successfully!');
     }
 
-    public function updatePayment(Request $request, $id)
-    {
-        $request->validate([
-            'paid_amount' => 'required|numeric|min:0',
-            'payment_method' => 'required|string|max:255',
-            'reference_number' => 'nullable|string|max:255',
-        ]);
+    return redirect()->route('admin.fees.index')
+        ->with('success', 'Fee assigned successfully!');
+}
 
-        $fee = StudentFee::findOrFail($id);
+public function updatePayment(Request $request, $id)
+{
+    $request->validate([
+        'paid_amount' => 'required|numeric|min:0',
+        'payment_method' => 'required|string|max:255',
+        'reference_number' => 'nullable|string|max:255',
+    ]);
 
-        $new_paid_amount = $fee->paid_amount + $request->paid_amount;
-        $status = 'partial';
+    $fee = StudentFee::findOrFail($id);
 
-        if ($new_paid_amount >= $fee->amount) {
-            $status = 'paid';
-            $new_paid_amount = $fee->amount;
-        }
+    $new_paid_amount = $fee->paid_amount + $request->paid_amount;
+    $status = 'partial';
 
-        $fee->update([
-            'paid_amount' => $new_paid_amount,
-            'payment_date' => now(),
-            'payment_method' => $request->payment_method,
-            'reference_number' => $request->reference_number,
-            'status' => $status,
-        ]);
-
-        return redirect()->route('admin.fees.index')
-            ->with('success', 'Payment recorded successfully!');
+    if ($new_paid_amount >= $fee->amount) {
+        $status = 'paid';
+        $new_paid_amount = $fee->amount;
     }
 
-    public function destroy($id)
-    {
+    $fee->update([
+        'paid_amount' => $new_paid_amount,
+        'payment_date' => now(),
+        'payment_method' => $request->payment_method,
+        'reference_number' => $request->reference_number,
+        'status' => $status,
+    ]);
+
+    // Check if it's an AJAX request
+    if ($request->ajax() || $request->wantsJson()) {
+        return response()->json([
+            'success' => true,
+            'message' => 'Payment recorded successfully!'
+        ]);
+    }
+
+    return redirect()->route('admin.fees.index')
+        ->with('success', 'Payment recorded successfully!');
+}
+
+public function destroy(Request $request, $id)
+{
+    try {
         $fee = StudentFee::findOrFail($id);
         $fee->delete();
 
+        // Check if it's an AJAX request
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Fee record deleted successfully!'
+            ]);
+        }
+
         return redirect()->route('admin.fees.index')
             ->with('success', 'Fee record deleted successfully!');
+
+    } catch (\Exception $e) {
+        // Check if it's an AJAX request
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to delete fee record: ' . $e->getMessage()
+            ], 500);
+        }
+
+        return redirect()->route('admin.fees.index')
+            ->with('error', 'Failed to delete fee record: ' . $e->getMessage());
+    }
+}
+
+public function update(Request $request, $id)
+{
+    $request->validate([
+        'fee_type' => 'required|string|max:255',
+        'installment_number' => 'required|integer|min:1',
+        'amount' => 'required|numeric|min:0',
+        'paid_amount' => 'required|numeric|min:0',
+        'due_date' => 'required|date',
+        'status' => 'required|in:pending,partial,paid,overdue',
+    ]);
+
+    $fee = StudentFee::findOrFail($id);
+    
+    // Ensure paid amount doesn't exceed amount
+    $paid_amount = min($request->paid_amount, $request->amount);
+    
+    $fee->update([
+        'fee_type' => $request->fee_type,
+        'installment_number' => $request->installment_number,
+        'amount' => $request->amount,
+        'paid_amount' => $paid_amount,
+        'due_date' => $request->due_date,
+        'status' => $request->status,
+    ]);
+
+    // Check if it's an AJAX request
+    if ($request->ajax() || $request->wantsJson()) {
+        return response()->json([
+            'success' => true,
+            'message' => 'Fee record updated successfully!'
+        ]);
     }
 
-    
+    return redirect()->route('admin.fees.index')
+        ->with('success', 'Fee record updated successfully!');
+}
 
-    /**
+/**
  * Get fee details for viewing (API endpoint)
  */
 public function getFeeDetails($id)
@@ -128,6 +201,7 @@ public function getFeeDetails($id)
         $fee = StudentFee::with('student')->findOrFail($id);
         
         return response()->json([
+            'success' => true,
             'fee_id' => $fee->fee_id,
             'student' => [
                 'name' => $fee->student->name,
@@ -143,6 +217,7 @@ public function getFeeDetails($id)
         ]);
     } catch (\Exception $e) {
         return response()->json([
+            'success' => false,
             'error' => 'Failed to fetch fee details',
             'message' => $e->getMessage()
         ], 500);
@@ -158,6 +233,7 @@ public function getFeeEditData($id)
         $fee = StudentFee::findOrFail($id);
         
         return response()->json([
+            'success' => true,
             'fee_id' => $fee->fee_id,
             'fee_type' => $fee->fee_type,
             'installment_number' => $fee->installment_number,
@@ -168,41 +244,10 @@ public function getFeeEditData($id)
         ]);
     } catch (\Exception $e) {
         return response()->json([
+            'success' => false,
             'error' => 'Failed to fetch fee data for editing',
             'message' => $e->getMessage()
         ], 500);
     }
 }
-
-    /**
-     * Update fee record
-     */
-    public function update(Request $request, $id)
-    {
-        $request->validate([
-            'fee_type' => 'required|string|max:255',
-            'installment_number' => 'required|integer|min:1',
-            'amount' => 'required|numeric|min:0',
-            'paid_amount' => 'required|numeric|min:0',
-            'due_date' => 'required|date',
-            'status' => 'required|in:pending,partial,paid,overdue',
-        ]);
-
-        $fee = StudentFee::findOrFail($id);
-        
-        // Ensure paid amount doesn't exceed amount
-        $paid_amount = min($request->paid_amount, $request->amount);
-        
-        $fee->update([
-            'fee_type' => $request->fee_type,
-            'installment_number' => $request->installment_number,
-            'amount' => $request->amount,
-            'paid_amount' => $paid_amount,
-            'due_date' => $request->due_date,
-            'status' => $request->status,
-        ]);
-
-        return redirect()->route('admin.fees.index')
-            ->with('success', 'Fee record updated successfully!');
-    }
 }

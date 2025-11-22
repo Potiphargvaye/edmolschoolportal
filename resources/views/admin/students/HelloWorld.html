@@ -581,7 +581,10 @@ function showInfoMessage(message) {
     showNotification(message, 'info');
 }
 
-// ========== MODAL FUNCTIONS ==========
+// REMOVED: Laravel flash message detection code
+// This is what was causing double notifications
+
+// Modal Functions
 function openModal(modalId) {
     const modal = document.getElementById(modalId);
     const modalContent = document.getElementById(modalId + 'Content');
@@ -607,82 +610,11 @@ function closeModal(modalId) {
     }, 300);
 }
 
-function closeAssignFeeModal() {
-    closeModal('assignFeeModal');
-    // Auto reload the page after modal closes
-    setTimeout(() => {
-        window.location.reload();
-    }, 100);
-}
-
-// ========== DELETE FEE FUNCTIONALITY ==========
 function confirmDelete(feeId, feeDetails) {
     document.getElementById('delete-fee-details').textContent = feeDetails;
     document.getElementById('deleteForm').action = '/admin/fees/' + feeId;
     openModal('deleteFeeModal');
 }
-
-function closeDeleteFeeModal() {
-    closeModal('deleteFeeModal');
-}
-
-// Handle delete form submission with AJAX
-document.addEventListener('DOMContentLoaded', function() {
-    const deleteForm = document.getElementById('deleteForm');
-    if (deleteForm) {
-        deleteForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            console.log('Delete fee form submitted via AJAX');
-            
-            const submitButton = this.querySelector('button[type="submit"]');
-            const originalText = submitButton.innerHTML;
-            
-            // Show loading state
-            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Deleting...';
-            submitButton.disabled = true;
-
-            fetch(this.action, {
-                method: 'DELETE', 
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
-                    'Accept': 'application/json'
-                }
-            })
-            .then(response => {
-                if (response.redirected) {
-                    return { success: true };
-                }
-                
-                return response.text().then(text => {
-                    try {
-                        return JSON.parse(text);
-                    } catch (e) {
-                        return { success: true };
-                    }
-                });
-            })
-            .then(data => {
-                console.log('Delete success data:', data);
-                if (data.success) {
-                    closeDeleteFeeModal();
-                    showSuccessMessage('Fee record deleted successfully!');
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 1500);
-                } else {
-                    throw new Error(data.message || 'Failed to delete fee record');
-                }
-            })
-            .catch(error => {
-                console.error('Delete error:', error);
-                showErrorMessage('Failed to delete fee record: ' + error.message);
-                submitButton.innerHTML = originalText;
-                submitButton.disabled = false;
-            });
-        });
-    }
-});
 
 // ========== VIEW FEE FUNCTIONALITY ==========
 async function viewFee(feeId) {
@@ -705,29 +637,20 @@ async function viewFee(feeId) {
             throw new Error(`Server returned ${response.status} status`);
         }
         
-        const result = await response.json();
-        console.log('Fee data received:', result);
+        const feeData = await response.json();
+        console.log('Fee data received:', feeData);
         
-        // Check if the request was successful
-        if (result.success) {
-            // Update modal with real data
-            updateViewModalWithData(result);
-            
-            // Show success message
-            showSuccessMessage('Fee details loaded successfully!');
-        } else {
-            throw new Error(result.message || 'Failed to load fee details');
-        }
+        // Update modal with real data
+        updateViewModalWithData(feeData);
+        
+        // Show success message
+        showSuccessMessage('Fee details loaded successfully!');
         
     } catch (error) {
         console.error('Error fetching fee details:', error);
         showErrorMessage('Failed to load fee details: ' + error.message);
         closeModal('viewFeeModal');
     }
-}
-
-function closeViewFeeModal() {
-    closeModal('viewFeeModal');
 }
 
 // ========== EDIT FEE FUNCTIONALITY ==========
@@ -747,20 +670,15 @@ async function editFee(feeId) {
             throw new Error(`Server returned ${response.status} status`);
         }
         
-        const result = await response.json();
-        console.log('Edit data received:', result);
+        const feeData = await response.json();
+        console.log('Edit data received:', feeData);
         
-        // Check if the request was successful
-        if (result.success) {
-            // Populate form with real data
-            populateEditForm(result);
-            openModal('editFeeModal');
-            
-            // Show success message
-            showSuccessMessage('Fee data loaded successfully!');
-        } else {
-            throw new Error(result.message || 'Failed to load fee data for editing');
-        }
+        // Populate form with real data
+        populateEditForm(feeData);
+        openModal('editFeeModal');
+        
+        // Show success message
+        showSuccessMessage('Fee data loaded successfully!');
         
     } catch (error) {
         console.error('Error fetching fee data for editing:', error);
@@ -768,199 +686,7 @@ async function editFee(feeId) {
     }
 }
 
-function closeEditFeeModal() {
-    closeModal('editFeeModal');
-}
-
-// Handle edit form submission with AJAX
-document.addEventListener('DOMContentLoaded', function() {
-    const editFeeForm = document.getElementById('editFeeForm');
-    if (editFeeForm) {
-        editFeeForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            console.log('Edit fee form submitted via AJAX');
-            
-            const submitButton = this.querySelector('button[type="submit"]');
-            const originalText = submitButton.innerHTML;
-            
-            // Show loading state
-            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Updating...';
-            submitButton.disabled = true;
-
-            const formData = new FormData(this);
-            
-            fetch(this.action, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
-                }
-            })
-            .then(response => {
-                if (response.redirected) {
-                    return { success: true };
-                }
-                
-                return response.text().then(text => {
-                    try {
-                        return JSON.parse(text);
-                    } catch (e) {
-                        return { success: true };
-                    }
-                });
-            })
-            .then(data => {
-                if (data.success) {
-                    closeEditFeeModal();
-                    showSuccessMessage('Fee record updated successfully!');
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 1500);
-                } else {
-                    throw new Error(data.message || 'Failed to update fee record');
-                }
-            })
-            .catch(error => {
-                console.error('Edit error:', error);
-                showErrorMessage('Failed to update fee record: ' + error.message);
-                submitButton.innerHTML = originalText;
-                submitButton.disabled = false;
-            });
-        });
-    }
-});
-
-// ========== ASSIGN FEE FUNCTIONALITY ==========
-document.addEventListener('DOMContentLoaded', function() {
-    const assignFeeForm = document.getElementById('assignFeeForm');
-    if (assignFeeForm) {
-        assignFeeForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            console.log('Assign fee form submitted via AJAX');
-            
-            const submitButton = this.querySelector('button[type="submit"]');
-            const originalText = submitButton.innerHTML;
-            
-            // Show loading state
-            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Assigning...';
-            submitButton.disabled = true;
-
-            const formData = new FormData(this);
-            
-            fetch(this.action, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
-                }
-            })
-            .then(response => {
-                if (response.redirected) {
-                    return { success: true };
-                }
-                
-                return response.text().then(text => {
-                    try {
-                        return JSON.parse(text);
-                    } catch (e) {
-                        return { success: true };
-                    }
-                });
-            })
-            .then(data => {
-                if (data.success) {
-                    closeAssignFeeModal();
-                    showSuccessMessage('Fee assigned successfully!');
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 1500);
-                } else {
-                    throw new Error(data.message || 'Failed to assign fee');
-                }
-            })
-            .catch(error => {
-                console.error('Assign fee error:', error);
-                showErrorMessage('Failed to assign fee: ' + error.message);
-                submitButton.innerHTML = originalText;
-                submitButton.disabled = false;
-            });
-        });
-    }
-});
-
-// ========== PAYMENT FUNCTIONALITY ==========
-document.addEventListener('DOMContentLoaded', function() {
-    const paymentForm = document.getElementById('paymentForm');
-    if (paymentForm) {
-        paymentForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            console.log('Payment form submitted via AJAX');
-            
-            const submitButton = this.querySelector('button[type="submit"]');
-            const originalText = submitButton.innerHTML;
-            
-            // Show loading state
-            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Processing...';
-            submitButton.disabled = true;
-
-            const formData = new FormData(this);
-            
-            fetch(this.action, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
-                }
-            })
-            .then(response => {
-                if (response.redirected) {
-                    return { success: true };
-                }
-                
-                return response.text().then(text => {
-                    try {
-                        return JSON.parse(text);
-                    } catch (e) {
-                        return { success: true };
-                    }
-                });
-            })
-            .then(data => {
-                if (data.success) {
-                    // Reset form
-                    this.reset();
-                    showSuccessMessage('Payment recorded successfully!');
-                    setTimeout(() => {
-                        window.location.reload();
-                    }, 1500);
-                } else {
-                    throw new Error(data.message || 'Failed to record payment');
-                }
-            })
-            .catch(error => {
-                console.error('Payment error:', error);
-                showErrorMessage('Failed to record payment: ' + error.message);
-                submitButton.innerHTML = originalText;
-                submitButton.disabled = false;
-            });
-        });
-    }
-
-    // Update payment form action dynamically
-    const feeIdSelect = document.getElementById('fee_id');
-    if (feeIdSelect) {
-        feeIdSelect.addEventListener('change', function() {
-            const feeId = this.value;
-            const form = document.getElementById('paymentForm');
-            form.action = `/admin/fees/${feeId}/payment`;
-        });
-    }
-});
-
-// ========== HELPER FUNCTIONS ==========
+// Helper functions
 function setViewModalLoading(loading) {
     const elements = [
         'view-student', 'view-fee-type', 'view-installment', 
@@ -969,10 +695,7 @@ function setViewModalLoading(loading) {
     ];
     
     elements.forEach(id => {
-        const element = document.getElementById(id);
-        if (element) {
-            element.textContent = loading ? 'Loading...' : '';
-        }
+        document.getElementById(id).textContent = loading ? 'Loading...' : '';
     });
 }
 
@@ -1017,7 +740,22 @@ function getOrdinalSuffix(number) {
     return suffixes[(value - 20) % 10] || suffixes[value] || suffixes[0];
 }
 
-// ========== SEARCH AND FILTER FUNCTIONALITY ==========
+// Close modal when clicking outside
+document.addEventListener('click', function(event) {
+    if (event.target.classList.contains('fixed') && event.target.id.includes('Modal')) {
+        const modalId = event.target.id;
+        closeModal(modalId);
+    }
+});
+
+// Update payment form action dynamically
+document.getElementById('fee_id').addEventListener('change', function() {
+    const feeId = this.value;
+    const form = document.getElementById('paymentForm');
+    form.action = `/admin/fees/${feeId}/payment`;
+});
+
+// Search and Filter functionality with spinner
 document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('feeSearchInput');
     const statusFilter = document.getElementById('statusFilter');
@@ -1190,17 +928,99 @@ document.addEventListener('DOMContentLoaded', function() {
             searchInput.focus();
         }
     });
-});
 
-// ========== MODAL CLOSE HANDLERS ==========
-document.addEventListener('click', function(event) {
-    if (event.target.classList.contains('fixed') && event.target.id.includes('Modal')) {
-        const modalId = event.target.id;
-        closeModal(modalId);
+    // Form submissions - ALLOW NORMAL FORM SUBMISSION
+    const assignFeeForm = document.getElementById('assignFeeForm');
+    if (assignFeeForm) {
+        assignFeeForm.addEventListener('submit', function(e) {
+            const submitButton = this.querySelector('button[type="submit"]');
+            const originalText = submitButton.innerHTML;
+            
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Assigning...';
+            submitButton.disabled = true;
+
+            // Show custom notification immediately
+            showSuccessMessage('Fee assigned successfully!');
+
+            // Allow form to submit normally - no e.preventDefault()
+            // Forms will submit to your Laravel backend as intended
+            
+            // Reset button after form submission (in case of validation errors)
+            setTimeout(() => {
+                submitButton.innerHTML = originalText;
+                submitButton.disabled = false;
+            }, 5000);
+        });
+    }
+
+    const paymentForm = document.getElementById('paymentForm');
+    if (paymentForm) {
+        paymentForm.addEventListener('submit', function(e) {
+            const submitButton = this.querySelector('button[type="submit"]');
+            const originalText = submitButton.innerHTML;
+            
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Processing...';
+            submitButton.disabled = true;
+
+            // Show custom notification immediately
+            showSuccessMessage('Payment recorded successfully!');
+
+            // Allow form to submit normally
+            
+            // Reset button after form submission (in case of validation errors)
+            setTimeout(() => {
+                submitButton.innerHTML = originalText;
+                submitButton.disabled = false;
+            }, 5000);
+        });
+    }
+
+    const editFeeForm = document.getElementById('editFeeForm');
+    if (editFeeForm) {
+        editFeeForm.addEventListener('submit', function(e) {
+            const submitButton = this.querySelector('button[type="submit"]');
+            const originalText = submitButton.innerHTML;
+            
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Updating...';
+            submitButton.disabled = true;
+
+            // Show custom notification immediately
+            showSuccessMessage('Fee record updated successfully!');
+
+            // Allow form to submit normally
+            
+            // Reset button after form submission (in case of validation errors)
+            setTimeout(() => {
+                submitButton.innerHTML = originalText;
+                submitButton.disabled = false;
+            }, 5000);
+        });
+    }
+
+    const deleteForm = document.getElementById('deleteForm');
+    if (deleteForm) {
+        deleteForm.addEventListener('submit', function(e) {
+            const submitButton = this.querySelector('button[type="submit"]');
+            const originalText = submitButton.innerHTML;
+            
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Deleting...';
+            submitButton.disabled = true;
+
+            // Show custom notification immediately
+            showSuccessMessage('Fee record deleted successfully!');
+
+            // Allow form to submit normally
+            
+            // Reset button after form submission (in case of validation errors)
+            setTimeout(() => {
+                submitButton.innerHTML = originalText;
+                submitButton.disabled = false;
+            }, 5000);
+        });
     }
 });
 
-// ========== ENHANCED PRINT FUNCTION ==========
+// Enhanced print function with school logo
 function enhancedPrintFeeDetails() {
     const printableContent = document.getElementById('printable-fee-details').cloneNode(true);
     const printHeader = printableContent.querySelector('.print-header');
@@ -1209,7 +1029,7 @@ function enhancedPrintFeeDetails() {
         printHeader.classList.remove('hidden');
     }
     
-    const printWindow = window.open('', '_blank', 'width=800,height=600'); 
+    const printWindow = window.open('', '_blank', 'width=800,height=600');
     
     printWindow.document.write(`
         <!DOCTYPE html>
@@ -1256,5 +1076,613 @@ function enhancedPrintFeeDetails() {
         }, 250);
     };
 }
+</script>
+@endsection
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// ========== NOTIFICATION SYSTEM ==========
+function showNotification(message, type = 'success') {
+    const notification = document.createElement('div');
+    
+    const styles = {
+        success: 'bg-gradient-to-r from-green-500 to-green-600 border-l-4 border-green-700',
+        error: 'bg-gradient-to-r from-red-500 to-red-600 border-l-4 border-red-700',
+        warning: 'bg-gradient-to-r from-yellow-500 to-yellow-600 border-l-4 border-yellow-700',
+        info: 'bg-gradient-to-r from-blue-500 to-blue-600 border-l-4 border-blue-700'
+    };
+
+    const icons = {
+        success: 'fa-check-circle',
+        error: 'fa-exclamation-triangle',
+        warning: 'fa-exclamation-circle',
+        info: 'fa-info-circle'
+    };
+
+    notification.className = `fixed top-4 right-4 z-50 transform translate-x-full opacity-0 transition-all duration-500 ease-in-out ${styles[type]} text-white p-4 rounded-xl shadow-2xl max-w-sm min-w-80 backdrop-blur-sm border-l-4`;
+    
+    notification.innerHTML = `
+        <div class="flex items-center gap-3">
+            <i class="fas ${icons[type]} text-xl flex-shrink-0"></i>
+            <span class="flex-1 text-sm font-medium">${message}</span>
+            <button onclick="this.parentElement.parentElement.remove()" 
+                    class="flex-shrink-0 p-1 rounded-lg hover:bg-white hover:bg-opacity-20 transition-colors duration-200">
+                <i class="fas fa-times text-sm"></i>
+            </button>
+        </div>
+    `;
+
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+        notification.classList.remove('translate-x-full', 'opacity-0');
+        notification.classList.add('translate-x-0', 'opacity-100');
+    }, 10);
+
+    setTimeout(() => {
+        if (notification.parentElement) {
+            notification.classList.remove('translate-x-0', 'opacity-100');
+            notification.classList.add('translate-x-full', 'opacity-0');
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, 500);
+        }
+    }, 7000);
+}
+
+function showSuccessMessage(message) {
+    showNotification(message, 'success');
+}
+
+function showErrorMessage(message) {
+    showNotification(message, 'error');
+}
+
+function showWarningMessage(message) {
+    showNotification(message, 'warning');
+}
+
+function showInfoMessage(message) {
+    showNotification(message, 'info');
+}
+
+// ========== MODAL FUNCTIONS ==========
+function openModal(modalId) {
+    const modal = document.getElementById(modalId);
+    const modalContent = document.getElementById(modalId + 'Content');
+    
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+        modalContent.classList.remove('scale-95', 'opacity-0');
+        modalContent.classList.add('scale-100', 'opacity-100');
+    }, 10);
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal(modalId) {
+    const modal = document.getElementById(modalId);
+    const modalContent = document.getElementById(modalId + 'Content');
+    
+    modalContent.classList.remove('scale-100', 'opacity-100');
+    modalContent.classList.add('scale-95', 'opacity-0');
+    
+    setTimeout(() => {
+        modal.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    }, 300);
+}
+
+// ========== EDIT SUBJECTS MODAL ==========
+function openEditModal(gradeId, subjects) {
+    const modal = document.getElementById('editSubjectsModal');
+    const form = document.getElementById('editSubjectsForm');
+    const container = document.getElementById('subjectsContainer');
+    
+    form.action = `/admin/grades/${gradeId}/subjects`;
+    container.innerHTML = '';
+    
+    try {
+        let parsedSubjects = typeof subjects === 'string' ? JSON.parse(subjects) : subjects;
+        
+        if (Array.isArray(parsedSubjects) && parsedSubjects.length > 0) {
+            parsedSubjects.forEach(subject => {
+                addSubjectField(subject);
+            });
+        } else {
+            addSubjectField();
+        }
+        
+        openModal('editSubjectsModal');
+    } catch (error) {
+        console.error('Error parsing subjects:', error);
+        addSubjectField();
+        openModal('editSubjectsModal');
+    }
+}
+
+function closeEditModal() {
+    closeModal('editSubjectsModal');
+}
+
+function addSubjectField(value = '') {
+    const container = document.getElementById('subjectsContainer');
+    const div = document.createElement('div');
+    div.className = 'flex items-center gap-2 p-2 bg-white rounded border border-gray-200';
+    div.innerHTML = `
+        <input type="text" name="subjects[]" value="${value}" 
+               class="flex-grow rounded border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+               placeholder="Enter subject name" required>
+        <button type="button" onclick="this.parentElement.remove()" 
+                class="p-2 text-red-600 hover:text-red-700 bg-red-50 hover:bg-red-100 rounded-lg transition-all duration-200">
+            <i class="fas fa-times"></i>
+        </button>
+    `;
+    container.appendChild(div);
+}
+
+
+
+
+
+
+
+
+
+
+// ========== UNASSIGN CONFIRMATION MODAL ==========
+function confirmUnassignTeacher(button) {
+    console.log('=== confirmUnassignTeacher START ===');
+    try {
+        const form = button.closest('form');
+        console.log('1. Button clicked:', button);
+        console.log('2. Form found:', form);
+        
+        if (!form) {
+            console.error('Form not found for teacher unassign');
+            return;
+        }
+        
+        let teacherName = 'this teacher';
+        
+        // Look for the teacher name in the parent container
+        const teacherCard = button.closest('.bg-blue-50');
+        console.log('3. Teacher card found:', teacherCard);
+        
+        if (teacherCard) {
+            const nameElement = teacherCard.querySelector('.font-medium');
+            console.log('4. Name element found:', nameElement);
+            if (nameElement && nameElement.textContent) {
+                teacherName = nameElement.textContent.trim();
+                console.log('5. Teacher name extracted:', teacherName);
+            }
+        }
+        
+        console.log('6. Setting message for:', teacherName);
+        document.getElementById('unassignMessage').textContent = `Are you sure you want to remove ${teacherName} from this grade?`;
+        document.getElementById('unassignForm').action = form.action;
+        console.log('7. Form action set to:', form.action);
+        
+        // FIX: Create proper form content instead of cloning the wrong button
+        const formContent = `
+            <input type="hidden" name="_token" value="${form.querySelector('input[name="_token"]').value}">
+            ${form.querySelector('input[name="_method"]') ? '<input type="hidden" name="_method" value="DELETE">' : ''}
+            <button type="submit" class="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition-all duration-200 font-semibold flex items-center gap-2">
+                <i class="fas fa-user-minus"></i>
+                Confirm Unassign
+            </button>
+        `;
+        
+        console.log('8. Form content created:', formContent);
+        document.getElementById('unassignForm').innerHTML = formContent;
+        
+        // Debug the modal form after injection
+        const modalForm = document.getElementById('unassignForm');
+        console.log('9. Modal form after injection:', modalForm);
+        console.log('10. Modal form innerHTML:', modalForm.innerHTML);
+        
+        openModal('unassignConfirmModal');
+        console.log('11. Modal opened successfully');
+        
+    } catch (error) {
+        console.error('Error in confirmUnassignTeacher:', error);
+        showErrorMessage('Failed to open confirmation dialog');
+    }
+    console.log('=== confirmUnassignTeacher END ===');
+}
+
+function confirmUnassignStudent(button) {
+    console.log('=== confirmUnassignStudent START ===');
+    try {
+        const form = button.closest('form');
+        console.log('1. Button clicked:', button);
+        console.log('2. Form found:', form);
+        
+        if (!form) {
+            console.error('Form not found for student unassign');
+            return;
+        }
+        
+        let studentName = 'this student';
+        
+        // Look for the student name in the parent container
+        const studentCard = button.closest('.bg-green-50');
+        console.log('3. Student card found:', studentCard);
+        
+        if (studentCard) {
+            const nameElement = studentCard.querySelector('.font-medium');
+            console.log('4. Name element found:', nameElement);
+            if (nameElement && nameElement.textContent) {
+                studentName = nameElement.textContent.trim();
+                console.log('5. Student name extracted:', studentName);
+            }
+        }
+        
+        console.log('6. Setting message for:', studentName);
+        document.getElementById('unassignMessage').textContent = `Are you sure you want to unassign ${studentName} from this grade?`;
+        document.getElementById('unassignForm').action = form.action;
+        console.log('7. Form action set to:', form.action);
+        
+        // FIX: Create proper form content instead of cloning the wrong button
+        const formContent = `
+            <input type="hidden" name="_token" value="${form.querySelector('input[name="_token"]').value}">
+            ${form.querySelector('input[name="_method"]') ? '<input type="hidden" name="_method" value="DELETE">' : ''}
+            <button type="submit" class="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition-all duration-200 font-semibold flex items-center gap-2">
+                <i class="fas fa-user-minus"></i>
+                Confirm Unassign
+            </button>
+        `;
+        
+        console.log('8. Form content created:', formContent);
+        document.getElementById('unassignForm').innerHTML = formContent;
+        
+        // Debug the modal form after injection
+        const modalForm = document.getElementById('unassignForm');
+        console.log('9. Modal form after injection:', modalForm);
+        console.log('10. Modal form innerHTML:', modalForm.innerHTML);
+        
+        openModal('unassignConfirmModal');
+        console.log('11. Modal opened successfully');
+        
+    } catch (error) {
+        console.error('Error in confirmUnassignStudent:', error);
+        showErrorMessage('Failed to open confirmation dialog');
+    }
+    console.log('=== confirmUnassignStudent END ===');
+}
+
+function closeUnassignModal() {
+    closeModal('unassignConfirmModal');
+}
+
+
+// ========== FORM SUBMISSIONS ==========
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('=== DOMContentLoaded - Setting up form listeners ===');
+    
+    // ... keep your existing Assign Teacher, Assign Student, Edit Subjects forms ...
+    // Assign Teacher Form
+    const assignTeacherForm = document.getElementById('assignTeacherForm');
+    if (assignTeacherForm) {
+        assignTeacherForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitButton = this.querySelector('button[type="submit"]');
+            const originalText = submitButton.innerHTML;
+            
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Assigning...';
+            submitButton.disabled = true;
+
+            const formData = new FormData(this);
+            
+            fetch(this.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+                }
+            })
+            .then(response => {
+                if (response.redirected) {
+                    return { success: true };
+                }
+                return response.text().then(text => {
+                    try {
+                        return JSON.parse(text);
+                    } catch (e) {
+                        return { success: true };
+                    }
+                });
+            })
+            .then(data => {
+                if (data.success) {
+                    showSuccessMessage('Teacher assigned successfully!');
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1500);
+                } else {
+                    throw new Error(data.message || 'Failed to assign teacher');
+                }
+            })
+            .catch(error => {
+                console.error('Assign teacher error:', error);
+                showErrorMessage('Failed to assign teacher: ' + error.message);
+                submitButton.innerHTML = originalText;
+                submitButton.disabled = false;
+            });
+        });
+    }
+
+    // Assign Student Form
+    const assignStudentForm = document.getElementById('assignStudentForm');
+    if (assignStudentForm) {
+        assignStudentForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitButton = this.querySelector('button[type="submit"]');
+            const originalText = submitButton.innerHTML;
+            
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Assigning...';
+            submitButton.disabled = true;
+
+            const formData = new FormData(this);
+            
+            fetch(this.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+                }
+            })
+            .then(response => {
+                if (response.redirected) {
+                    return { success: true };
+                }
+                return response.text().then(text => {
+                    try {
+                        return JSON.parse(text);
+                    } catch (e) {
+                        return { success: true };
+                    }
+                });
+            })
+            .then(data => {
+                if (data.success) {
+                    showSuccessMessage('Student assigned successfully!');
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1500);
+                } else {
+                    throw new Error(data.message || 'Failed to assign student');
+                }
+            })
+            .catch(error => {
+                console.error('Assign student error:', error);
+                showErrorMessage('Failed to assign student: ' + error.message);
+                submitButton.innerHTML = originalText;
+                submitButton.disabled = false;
+            });
+        });
+    }
+
+    // Edit Subjects Form
+    const editSubjectsForm = document.getElementById('editSubjectsForm');
+    if (editSubjectsForm) {
+        editSubjectsForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitButton = this.querySelector('button[type="submit"]');
+            const originalText = submitButton.innerHTML;
+            
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Saving...';
+            submitButton.disabled = true;
+
+            const formData = new FormData(this);
+            
+            fetch(this.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+                }
+            })
+            .then(response => {
+                if (response.redirected) {
+                    return { success: true };
+                }
+                return response.text().then(text => {
+                    try {
+                        return JSON.parse(text);
+                    } catch (e) {
+                        return { success: true };
+                    }
+                });
+            })
+            .then(data => {
+                if (data.success) {
+                    closeEditModal();
+                    showSuccessMessage('Subjects updated successfully!');
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1500);
+                } else {
+                    throw new Error(data.message || 'Failed to update subjects');
+                }
+            })
+            .catch(error => {
+                console.error('Edit subjects error:', error);
+                showErrorMessage('Failed to update subjects: ' + error.message);
+                submitButton.innerHTML = originalText;
+                submitButton.disabled = false;
+            });
+        });
+    }
+
+    // Unassign Form Event Listener - WITH DEBUG
+const unassignForm = document.getElementById('unassignForm');
+console.log('Unassign form on page load:', unassignForm);
+
+if (unassignForm) {
+    console.log('Setting up unassign form event listener');
+    
+    unassignForm.addEventListener('submit', function(e) {
+        console.log('=== UNASSIGN FORM SUBMIT EVENT FIRED ===');
+        console.log('1. Submit event triggered');
+        
+        e.preventDefault();
+        console.log('2. Default prevented');
+        
+        const submitButton = this.querySelector('button[type="submit"]');
+        console.log('3. Submit button found:', submitButton);
+        
+        if (!submitButton) {
+            console.error('No submit button found in form!');
+            return;
+        }
+        
+        const originalText = submitButton.innerHTML;
+        console.log('4. Original button text:', originalText);
+        
+        submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Processing...';
+        submitButton.disabled = true;
+        console.log('5. Button state updated to loading');
+
+        const formData = new FormData(this);
+        console.log('6. FormData created');
+        
+        const method = formData.get('_method') || 'POST';
+        const actualMethod = method === 'DELETE' ? 'DELETE' : 'POST';
+        console.log('7. Method detected:', method, '-> Actual method:', actualMethod);
+        
+        const finalFormData = new FormData();
+        finalFormData.append('_token', formData.get('_token'));
+        console.log('8. Final FormData prepared with token:', formData.get('_token'));
+
+        console.log('9. Making fetch request to:', this.action);
+        console.log('10. Request details:', {
+            method: actualMethod,
+            action: this.action,
+            hasToken: !!formData.get('_token')
+        });
+
+        fetch(this.action, {
+            method: actualMethod,
+            body: finalFormData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+            }
+        })
+        .then(response => {
+            console.log('11. Fetch response received:', response);
+            console.log('12. Response status:', response.status);
+            console.log('13. Response redirected:', response.redirected);
+            console.log('14. Response headers:', Object.fromEntries(response.headers.entries()));
+            
+            if (response.redirected) {
+                console.log('15. Response is redirected, returning success');
+                return { success: true };
+            }
+            
+            return response.text().then(text => {
+                console.log('16. Response text:', text);
+                try {
+                    const jsonData = JSON.parse(text);
+                    console.log('17. JSON parsed successfully:', jsonData);
+                    return jsonData;
+                } catch (e) {
+                    console.log('18. JSON parse failed, returning success');
+                    return { success: true };
+                }
+            });
+        })
+        .then(data => {
+            console.log('19. Final data received:', data);
+            if (data.success) {
+                console.log('20. Success - closing modal and showing message');
+                // FIX: Use closeModal directly instead of closeUnassignModal
+                closeModal('unassignConfirmModal');
+                showSuccessMessage('Unassigned successfully!');
+                setTimeout(() => {
+                    console.log('21. Reloading page...');
+                    window.location.reload();
+                }, 1500);
+            } else {
+                console.log('20. Error - throwing error');
+                throw new Error(data.message || 'Failed to unassign');
+            }
+        })
+        .catch(error => {
+            console.error('22. Catch block - Error:', error);
+            console.error('23. Error message:', error.message);
+            showErrorMessage('Failed to unassign: ' + error.message);
+            submitButton.innerHTML = originalText;
+            submitButton.disabled = false;
+            console.log('24. Button state reset');
+        });
+    });
+    
+    console.log('Unassign form event listener setup complete');
+} else {
+    console.error('Unassign form not found on page load!');
+}
+
+});
+
+
+
+
+
 </script>
 @endsection

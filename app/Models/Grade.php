@@ -51,6 +51,11 @@ class Grade extends Model
                     ->where('role', 'student');
     }
 
+    public function TeacherMaterial()
+    {
+        return $this->hasMany(Material::class);
+    }
+
     // Helper method: Get full grade name (e.g., "Grade 10A")
     public function getFullNameAttribute(): string
     {

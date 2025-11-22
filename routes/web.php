@@ -103,6 +103,7 @@ Route::prefix('admin')->middleware(['auth', 'can:is-admin'])->group(function () 
         Route::get('/{user}/edit', [UserController::class, 'edit'])->name('admin.users.edit');
         Route::put('/{user}', [UserController::class, 'update'])->name('admin.users.update');
         Route::delete('/{user}', [UserController::class, 'destroy'])->name('admin.users.destroy');
+        Route::get('/admin/users/{user}', [UserController::class, 'show'])->name('admin.users.show');
     });
     
     // Grade Assignments
@@ -225,3 +226,19 @@ Route::put('/admin/fees/{fee}', [FeeController::class, 'update'])->name('admin.f
 
 
 
+// Rout for student displaying students  materials 
+
+Route::middleware(['auth'])->group(function () {
+    // Student routes
+    Route::prefix('student')->name('student.')->group(function () {
+        Route::get('/dashboard', [StudentDashboardController::class, 'index'])->name('dashboard');
+        Route::get('/materials', [StudentDashboardController::class, 'materials'])->name('materials');
+    });
+});
+
+// routes for subjects 
+Route::get('/subjects', [GradeAssignmentController::class, 'getSubjects'])->name('subjects.get');
+Route::post('/subjects', [GradeAssignmentController::class, 'storeSubject'])->name('subjects.store');
+Route::put('/subjects/{subject}', [GradeAssignmentController::class, 'updateSubject'])->name('subjects.update');
+// Add this route for fetching single subject
+Route::get('/subjects/{subject}', [GradeAssignmentController::class, 'getSubject'])->name('subjects.show');

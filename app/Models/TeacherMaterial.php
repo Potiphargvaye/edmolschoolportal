@@ -14,7 +14,7 @@ class TeacherMaterial extends Model
         'grade_id',
         'title',
         'description',
-        'type',
+        'type',  
         'file_path',
         'due_date',
         'max_score',

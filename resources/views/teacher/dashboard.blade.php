@@ -170,7 +170,7 @@
     </div>
     <div class="p-6">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <a href="{{ route('teacher.materials.create') }}" class="quick-action-btn bg-blue-100 hover:bg-blue-200 text-blue-700 p-4 rounded-lg text-center transition duration-200">
+            <a href="{{ route('teacher.materials.index') }}" class="quick-action-btn bg-blue-100 hover:bg-blue-200 text-blue-700 p-4 rounded-lg text-center transition duration-200">
     <i class="fas fa-tasks text-2xl mb-2"></i>
     <p class="font-medium">Create Assignment And Notes</p>
 </a>
@@ -236,4 +236,19 @@
         box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.4);
     }
 </style>
-@endsection
+@endsection 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
