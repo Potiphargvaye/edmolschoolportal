@@ -1,0 +1,150 @@
+<!-- Sidenav -->  
+<div class="fixed left-0 top-0 w-64 h-screen z-50 sidebar-menu transition-transform bg-[#001f4d] flex flex-col">
+
+    <!-- Logo (UNCHANGED) -->
+    <a href="#" class="flex font-semibold items-center py-2 px-4 text-white hover:bg-[#002966] hover:text-white rounded-md">
+        <h2 class="font-bold text-2xl">
+            Edmol <span class="bg-[#f84525] text-white px-2 rounded-md">School</span>
+        </h2>
+    </a>
+
+    <!-- ✅ SCROLLABLE MENU AREA (ONLY ADDITION) -->
+    <div class="flex-1 overflow-y-auto px-4 mt-4">
+
+        <ul>
+            <span class="text-gray-400 font-bold">ADMIN</span>
+
+            <li class="mb-1 group">
+                <a href="" class="flex font-semibold items-center py-2 px-4 text-white hover:bg-[#002966] hover:text-white rounded-md">
+                    <i class="ri-home-2-line mr-3 text-lg"></i>
+                    <span class="text-sm">Dashboard</span>
+                </a>       
+            </li>
+
+           <li class="mb-1 group">
+    <!-- Main Users Link -->
+    <a href="{{ route('admin.users.index') }}" 
+       class="flex font-semibold items-center py-2 px-4 text-white hover:bg-[#002966] hover:text-white rounded-md
+              group-[.active]:bg-[#002966] group-[.active]:text-white sidebar-dropdown-toggle">
+        <i class='bx bx-user mr-3 text-lg'></i>                
+        <span class="text-sm">Users</span>
+        <i class="ri-arrow-right-s-line ml-auto group-[.selected]:rotate-90"></i>
+    </a>
+
+    <!-- Sub-links Dropdown -->
+    <ul class="pl-7 mt-2 hidden group-[.selected]:block">
+        <li class="mb-4">
+            <a href="{{ route('admin.users.index') }}"  
+               class="text-[#f84525] text-sm flex items-center
+                      hover:text-[#f84525]
+                      hover:bg-[#f84525]/10
+                      px-2 py-1 rounded-md  
+                      transition-colors
+                      before:contents-['']
+                      before:w-1 before:h-1
+                      before:rounded-full
+                      before:bg-[#f84525]
+                      before:mr-3">
+                All
+            </a>
+        </li> 
+
+        <li class="mb-4">
+            <a href=""
+               class="text-[#f84525] text-sm flex items-center
+                      hover:text-[#f84525]
+                      hover:bg-[#f84525]/10
+                      px-2 py-1 rounded-md
+                      transition-colors
+                      before:contents-['']
+                      before:w-1 before:h-1
+                      before:rounded-full
+                      before:bg-[#f84525]
+                      before:mr-3">
+                Add User
+            </a>
+        </li> 
+    </ul>
+</li>
+
+            <li class="mb-1 group">
+                <a href="{{ route('admin.students.index') }}"
+   class="flex font-semibold items-center py-2 px-4 text-white rounded-md
+          hover:bg-[#002966] hover:text-white
+          {{ request()->is('admin/students*') ? 'bg-[#002966]' : '' }}">
+    <i class="ri-graduation-cap-line mr-3 text-lg"></i>
+    <span class="text-sm">Students</span>
+</a>
+
+            </li>
+
+            <li class="mb-1 group">
+                <a href="{{ route('admin.grade-assignments') }}" class="flex font-semibold items-center py-2 px-4 text-white hover:bg-[#002966] hover:text-white rounded-md">
+                    <i class="ri-file-list-3-line mr-3 text-lg"></i>
+                    <span class="text-sm">Grade-Assignment</span> 
+                </a>
+            </li>
+
+            <li class="mb-1 group">
+    <a href="{{ route('admin.announcements.index') }}"
+   class="flex font-semibold items-center py-2 px-4 text-white rounded-md
+          hover:bg-[#002966] hover:text-white
+          {{ request()->is('admin/announcements*') ? 'bg-[#002966]' : '' }}">
+    <i class="ri-megaphone-line mr-3 text-lg"></i>
+    <span class="text-sm">Announcement</span>
+</a>
+</li>
+
+          <span class="text-gray-400 font-bold">Finance</span>
+
+            <li class="mb-1 group">
+                <a href="{{ route('admin.fees.index') }}" class="flex font-semibold items-center py-2 px-4 text-white hover:bg-[#002966] hover:text-white rounded-md">
+                    <i class="ri-wallet-3-line mr-3 text-lg"></i>
+                    <span class="text-sm">Fess-Management</span>
+                </a>
+            </li>
+
+            <span class="text-gray-400 font-bold">BLOG</span>
+
+            <li class="mb-1 group">
+                <a href="" class="flex font-semibold items-center py-2 px-4 text-white hover:bg-[#002966] hover:text-white rounded-md">
+                    <i class='bx bxl-blogger mr-3 text-lg'></i>                 
+                    <span class="text-sm">Post</span>
+                </a>
+            </li>
+
+            <li class="mb-1 group">
+                <a href="" class="flex font-semibold items-center py-2 px-4 text-white hover:bg-[#002966] hover:text-white rounded-md">
+                    <i class='bx bx-archive mr-3 text-lg'></i>                
+                    <span class="text-sm">Archive</span>
+                </a>
+            </li>
+
+            <span class="text-gray-400 font-bold">PERSONAL</span>
+
+            <li class="mb-1 group">
+                <a href="" class="flex font-semibold items-center py-2 px-4 text-white hover:bg-[#002966] hover:text-white rounded-md">
+                    <i class='bx bx-bell mr-3 text-lg'></i>                
+                    <span class="text-sm">Notifications</span>
+                </a>
+            </li>
+
+            <li class="mb-1 group">
+    <form method="POST" action="{{ route('logout') }}">
+        @csrf
+        <button type="submit" 
+                class="flex font-bold items-center py-2 px-4 w-full text-[#f84525] hover:text-white hover:bg-[#002966] rounded-md">
+            <i class="ri-shut-down-line mr-3 text-lg text-[#f84525]"></i>
+            <span class="text-sm">Logout</span>
+        </button>
+    </form>
+</li>
+
+
+        </ul>
+
+    </div>
+</div>
+
+<div class="fixed top-0 left-0 w-full h-full bg-black/50 z-40 md:hidden sidebar-overlay"></div>
+<!-- End Sidenav -->

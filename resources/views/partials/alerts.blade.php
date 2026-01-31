@@ -1,5 +1,5 @@
-{{-- Success Alert --}}
-@if (session('success'))
+{{-- Success Alert (ignore login messages) --}}
+@if (session('success') && !session()->has('login_success'))
 <div class="mb-6 p-4 rounded-lg bg-green-100 border-l-4 border-green-500 text-green-700">
     <div class="flex justify-between items-center">
         <div class="flex items-center">
@@ -43,7 +43,7 @@
                 @endforeach
             </ul>
         </div>
-        <button type="b`utton" class="text-red-700 hover:text-red-900" onclick="this.parentElement.parentElement.remove()">
+        <button type="button" class="text-red-700 hover:text-red-900" onclick="this.parentElement.parentElement.remove()">
             <i class="fas fa-times">close</i>
         </button>
     </div>

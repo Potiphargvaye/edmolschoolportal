@@ -26,14 +26,15 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
 
-        $request->session()->regenerate();
+   $request->session()->flash('login_success', 'Login successful. Welcome back!');
+
 
         // Redirect to role-specific dashboard
         return redirect()->intended(
             route(auth()->user()->role . '.dashboard', [], false)
         );
     }
-
+  
     /**
      * Destroy an authenticated session.
      */

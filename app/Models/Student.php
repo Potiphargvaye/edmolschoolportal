@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 namespace App\Models;
 
@@ -19,26 +19,27 @@ class Student extends Model
         'transcript',
         'recommendation_letter',
         'class_applying_for',
-        'date_of_admission'
+        'date_of_admission',
+        'status', // ✅ added
     ];
 
-
-
     protected $casts = [
-    'date_of_admission' => 'date',
-    'created_at' => 'datetime',
-    'updated_at' => 'datetime',
-];
+        'date_of_admission' => 'date',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
 
     protected static function boot()
     {
         parent::boot();
 
         static::creating(function ($student) {
-            // Generate custom student ID: EDMOL0001/2025
             $latestStudent = static::latest('id')->first();
             $nextId = $latestStudent ? $latestStudent->id + 1 : 1;
             $student->student_id = 'EDMOL' . str_pad($nextId, 4, '0', STR_PAD_LEFT) . '/' . date('Y');
+
+            // ✅ ensure default status
+            $student->status = $student->status ?? 'candidate';
         });
     }
 }

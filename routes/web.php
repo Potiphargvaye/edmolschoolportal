@@ -19,6 +19,8 @@ use App\Http\Controllers\Admin\FeeController; // Add this import
 
 
 
+
+
 // Debugging routes (added at the top for easy access)
 Route::get('/user-avatar/{user}', function($user) {
     $user = App\Models\User::findOrFail($user);
@@ -62,6 +64,8 @@ function generateInitialsAvatar($name) {
 Route::get('/', function () {
     return view('auth.login');
 })->name('auth.login');
+// Landing page route (updated)
+require __DIR__.'/public-page.php'; // for my public page routes 
 
 // Admin-only registration routes (added this new section)
 // In routes/web.php this will redirect admin to the register page
@@ -242,3 +246,4 @@ Route::post('/subjects', [GradeAssignmentController::class, 'storeSubject'])->na
 Route::put('/subjects/{subject}', [GradeAssignmentController::class, 'updateSubject'])->name('subjects.update');
 // Add this route for fetching single subject
 Route::get('/subjects/{subject}', [GradeAssignmentController::class, 'getSubject'])->name('subjects.show');
+
