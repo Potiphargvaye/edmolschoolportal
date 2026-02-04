@@ -26,7 +26,7 @@
    <main class="w-full md:w-[calc(100%-256px)] md:ml-64 bg-white min-h-screen transition-all main">
 
 
-        {{-- Navbar --}}
+        {{-- Navbar --}} 
         @include('partials.admin.admin-navbar')
 
         {{-- Page Content --}}

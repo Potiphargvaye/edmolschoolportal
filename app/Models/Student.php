@@ -21,6 +21,9 @@ class Student extends Model
         'class_applying_for',
         'date_of_admission',
         'status', // ✅ added
+        'status',
+        'shift',
+        'intake'
     ];
 
     protected $casts = [

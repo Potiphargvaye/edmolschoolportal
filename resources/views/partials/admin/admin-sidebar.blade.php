@@ -15,11 +15,12 @@
             <span class="text-gray-400 font-bold">ADMIN</span>
 
             <li class="mb-1 group">
-                <a href="" class="flex font-semibold items-center py-2 px-4 text-white hover:bg-[#002966] hover:text-white rounded-md">
-                    <i class="ri-home-2-line mr-3 text-lg"></i>
-                    <span class="text-sm">Dashboard</span>
-                </a>       
-            </li>
+    <a href="{{ route('admin.dashboard') }}"
+       class="flex font-semibold items-center py-2 px-4 text-white hover:bg-[#002966] hover:text-white rounded-md">
+        <i class="ri-home-2-line mr-3 text-lg"></i>
+        <span class="text-sm">Dashboard</span>
+    </a>
+</li>
 
            <li class="mb-1 group">
     <!-- Main Users Link -->

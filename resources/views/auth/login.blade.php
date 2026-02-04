@@ -1,6 +1,6 @@
 @extends('public.layouts.public')
 
-@section('title', 'Contact-us')
+@section('title', 'Edmol-Baptish-login Pannel')
 
 @section('content')
 

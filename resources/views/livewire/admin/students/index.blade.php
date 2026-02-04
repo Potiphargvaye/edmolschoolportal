@@ -31,16 +31,55 @@
     </div>
 
     {{-- Filters --}}
-    <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-2 mt-3 gap-2">
-        <input type="text" wire:model="search" placeholder="Search name..."
-               class="w-full sm:w-1/3 px-3 py-2 border rounded text-sm">
-        <select wire:model="intake" class="w-full sm:w-1/4 px-3 py-2 border rounded text-sm">
-            <option value="">Select Intake</option>
-        </select>
-        <select wire:model="shift" class="w-full sm:w-1/4 px-3 py-2 border rounded text-sm">
-            <option value="">Select Shift</option>
-        </select>
-    </div>
+<div class="flex flex-col sm:flex-row sm:items-center sm:space-x-2 mt-3 gap-2">
+
+    <input
+        type="text"
+        wire:model.debounce.300ms="search"
+        placeholder="Search name or ID..."
+        class="w-full sm:w-1/3 px-3 py-2 border rounded text-sm"
+    >
+
+    <select
+        wire:model="intake"
+        class="w-full sm:w-1/4 px-3 py-2 border rounded text-sm"
+    >
+        <option value="">All Intakes</option>
+        @foreach ($intakes as $item)
+            <option value="{{ $item }}">{{ $item }}</option>
+        @endforeach
+    </select>
+
+    <select
+        wire:model="shift"
+        class="w-full sm:w-1/4 px-3 py-2 border rounded text-sm"
+    >
+        <option value="">All Shifts</option>
+        @foreach ($shifts as $item)
+            <option value="{{ $item }}">{{ $item }}</option>
+        @endforeach
+    </select>
+
+</div>
+
+<div class="text-sm font-bold text-blue-600 mt-2">
+    🔍 To search for a student, type their Name or ID in the search box above, or select an Intake or Shift. <br>
+    ⚠️ Note: The table will only update after you click one of the Status buttons (Candidate, Admitted, etc.). <br>
+    💡 Example: 
+    <ol class="list-decimal list-inside ml-4">
+        <li>Type "John" in the search box.</li>
+        <li>Select an Intake or Shift if needed.</li>
+        <li>Click the "Candidate" status button to see the results.</li>
+    </ol>
+</div>
+
+<div class="text-xs text-red-600 mb-2">
+    🔴 Searching for: {{ $search }} |
+    Name: {{ $name }} |
+    Intake: {{ $intake }} |
+    Shift: {{ $shift }}
+     
+</div>
 
     {{-- Table --}}
     <div class="overflow-x-auto mt-4">
@@ -58,7 +97,8 @@
             </thead>
             <tbody>
                 @forelse($students as $student)
-                <tr class="text-center border-b">
+              <tr wire:key="student-{{ $student->id }}" class="text-center border-b">
+
                     <td class="px-2 py-1 border">{{ $student->student_id }}</td>
                     <td class="px-2 py-1 border">{{ $student->name }}</td>
                     <td class="px-2 py-1 border">{{ $student->age }}</td>
@@ -69,95 +109,54 @@
 
                         {{-- Dynamic Status Buttons --}}
 @if($student->status === 'candidate')
-    <button
-        wire:click="changeStatus({{ $student->id }}, 'admitted')"
-        wire:loading.attr="disabled"
-        wire:target="changeStatus({{ $student->id }}, 'admitted')"
-        class="px-2 py-1 bg-green-500 text-white rounded text-xs
-               flex items-center justify-center gap-1"
-    >
-        <span
-            wire:loading
-            wire:target="changeStatus({{ $student->id }}, 'admitted')"
-            class="animate-spin h-3 w-3 border-2 border-white border-t-transparent rounded-full"
-        ></span>
-
-        <span
-            wire:loading.remove
-            wire:target="changeStatus({{ $student->id }}, 'admitted')"
-        >
-            Admit
-        </span>
-    </button>
+  <button
+    wire:click="confirmStatusChange({{ $student->id }}, 'admitted')"
+    @click="$dispatch('open-admit')"
+    class="px-2 py-1 bg-green-500 text-white rounded text-xs"
+>
+    Admit
+</button>
 
 @elseif($student->status === 'admitted')
     <button
-        wire:click="changeStatus({{ $student->id }}, 'registered')"
-        wire:loading.attr="disabled"
-        class="px-2 py-1 bg-blue-500 text-white rounded text-xs
-               flex items-center justify-center gap-1"
-    >
-        Register
-    </button>
+    wire:click="confirmStatusChange({{ $student->id }}, 'registered')"
+    @click="$dispatch('open-register')"
+    class="px-2 py-1 bg-blue-500 text-white rounded text-xs"
+>
+    Register
+</button>
+
 
 @elseif($student->status === 'registered')
+    @if($student->status === 'registered')
     <button
-        wire:click="changeStatus({{ $student->id }}, 'active')"
-        wire:loading.attr="disabled"
-        class="px-2 py-1 bg-indigo-500 text-white rounded text-xs
-               flex items-center justify-center gap-1"
+        wire:click="confirmStatusChange({{ $student->id }}, 'active')"
+        class="px-2 py-1 bg-indigo-500 text-white rounded text-xs"
     >
         Activate
     </button>
+@endif
+
 
 @elseif($student->status === 'active')
     <div class="flex gap-1">
         <button
-            wire:click="changeStatus({{ $student->id }}, 'completed')"
-            wire:loading.attr="disabled"
-            wire:target="changeStatus({{ $student->id }}, 'completed')"
-            class="px-2 py-1 bg-gray-700 text-white rounded text-xs
-                   flex items-center justify-center gap-1"
-        >
-            <span
-                wire:loading
-                wire:target="changeStatus({{ $student->id }}, 'completed')"
-                class="animate-spin h-3 w-3 border-2 border-white border-t-transparent rounded-full"
-            ></span>
+    wire:click="confirmStatusChange({{ $student->id }}, 'completed')"
+    class="px-2 py-1 bg-gray-700 text-white rounded text-xs hover:bg-gray-800"
+>
+    Complete
+</button>
 
-            <span
-                wire:loading.remove
-                wire:target="changeStatus({{ $student->id }}, 'completed')"
-            >
-                Complete
-            </span>
-        </button>
 
         <button
-            wire:click="changeStatus({{ $student->id }}, 'dropout')"
-            wire:loading.attr="disabled"
-            wire:target="changeStatus({{ $student->id }}, 'dropout')"
-            class="px-2 py-1 bg-red-500 text-white rounded text-xs
-                   flex items-center justify-center gap-1"
-        >
-            <span
-                wire:loading
-                wire:target="changeStatus({{ $student->id }}, 'dropout')"
-                class="animate-spin h-3 w-3 border-2 border-white border-t-transparent rounded-full"
-            ></span>
+    wire:click="confirmStatusChange({{ $student->id }}, 'dropout')"
+    class="px-2 py-1 bg-red-500 text-white rounded text-xs hover:bg-red-600"
+>
+    Dropout
+</button>
 
-            <span
-                wire:loading.remove
-                wire:target="changeStatus({{ $student->id }}, 'dropout')"
-            >
-                Dropout
-            </span>
-        </button>
     </div>
 @endif
-
-
-
                         {{-- View / Edit / Delete Icons --}}
                         <button wire:click="viewStudent({{ $student->id }})"
                             class="text-blue-500 hover:text-blue-700" title="View">
@@ -169,10 +168,14 @@
                             <i class="ri-edit-line text-lg"></i>
                         </button>
 
-                        <button wire:click="deleteStudent({{ $student->id }})"
-                            class="text-red-500 hover:text-red-700" title="Delete">
-                            <i class="ri-delete-bin-line text-lg"></i>
-                        </button>
+                        <button
+    wire:click="confirmDelete({{ $student->id }})"
+    class="text-red-500 hover:text-red-700"
+    title="Delete"
+>
+    <i class="ri-delete-bin-line text-lg"></i>
+</button>
+
 
                     </td>
                 </tr>
@@ -701,6 +704,403 @@
 
     </div>
 </div>
+
+
+{{-- Delete Student Modal --}}
+<div
+    x-data="{ open: @entangle('showDeleteModal') }"
+    x-show="open"
+    x-cloak
+    class="fixed inset-0 z-50 flex items-center justify-center
+           bg-black/60 backdrop-blur-sm px-2"
+>
+    <!-- Modal Box -->
+    <div
+        x-show="open"
+        x-transition
+        class="bg-white w-full max-w-xs rounded-lg shadow-xl overflow-hidden"
+    >
+
+        <!-- Header -->
+        <div class="flex items-center justify-between px-3 py-2 bg-red-600 text-white">
+            <h3 class="text-xs font-semibold">Confirm Delete</h3>
+
+            <button
+                wire:click="$set('showDeleteModal', false)"
+                class="p-1 rounded-full hover:bg-red-500 transition"
+            >
+                <i class="ri-close-line text-sm"></i>
+            </button>
+        </div>
+
+        <!-- Body -->
+        <div class="p-3 space-y-2 text-xs">
+            <p class="text-gray-700">
+                Are you sure you want to delete this student?
+            </p>
+
+            <!-- Student Name -->
+            <div class="p-2 rounded-md bg-gray-50 border text-gray-800 font-medium text-xs">
+                {{ $deleteStudentName ?? 'Selected student' }}
+            </div>
+
+            <p class="text-red-600 flex items-center gap-1 text-[11px]">
+                <i class="ri-alert-line"></i>
+                This action cannot be undone.
+            </p>
+        </div>
+
+        <!-- Footer -->
+        <div class="px-3 py-2 bg-gray-50 border-t flex justify-end gap-1">
+            <button
+                wire:click="$set('showDeleteModal', false)"
+                class="px-2 py-1 text-xs rounded border hover:bg-gray-100"
+            >
+                Cancel
+            </button>
+
+            <button
+                type="button"
+                wire:click="deleteStudent"
+                wire:loading.attr="disabled"
+                class="px-2 py-1 text-xs font-semibold bg-red-600 text-white rounded
+                       hover:bg-red-700 flex items-center gap-1"
+            >
+                <!-- Spinner -->
+                <x-loading-spinner wire:loading />
+
+                <!-- Normal text -->
+                <span wire:loading.remove>Delete</span>
+
+                <!-- Loading text -->
+                <span wire:loading>Deleting…</span>
+            </button>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- Admit Confirmation Modal -->
+<div
+    x-data
+    x-show="$wire.confirmingStatusId !== null"
+    x-cloak
+    class="fixed inset-0 z-50 flex items-center justify-center
+           bg-black/60 backdrop-blur-sm px-2"
+>
+    <div class="bg-white w-full max-w-xs rounded-lg shadow-xl p-3">
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-2">
+            <h2 class="text-sm font-semibold text-gray-700">
+                Confirm Admit
+            </h2>
+
+            <button
+                wire:click="$set('confirmingStatusId', null)"
+                class="text-gray-400 text-xs hover:text-gray-700"
+            >
+                ✕
+            </button>
+        </div>
+
+        <!-- Body -->
+        <p class="text-gray-700 mb-3 text-xs leading-snug">
+            Are you sure you want to admit this student?
+            <br>
+            <span class="text-red-600 text-[11px]">
+                This action may affect records and cannot always be undone.
+            </span>
+        </p>
+
+        <!-- Footer -->
+        <div class="flex justify-end gap-1">
+            <button
+                wire:click="$set('confirmingStatusId', null)"
+                class="px-2 py-1 border rounded text-xs"
+            >
+                Cancel
+            </button>
+
+            <button
+                wire:click="applyConfirmedStatus"
+                wire:loading.attr="disabled"
+                class="px-2 py-1 bg-green-600 text-white rounded
+                       text-xs flex items-center gap-1"
+            >
+                <span
+                    wire:loading
+                    class="animate-spin h-3 w-3 border-2
+                           border-white border-t-transparent rounded-full"
+                ></span>
+
+                <span wire:loading.remove>Confirm</span>
+                <span wire:loading>Processing…</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- Register Confirmation Modal -->
+<div
+    x-data="{ open: false }"
+    x-on:open-register.window="open = true"
+    x-on:close-register.window="open = false"
+    x-show="open"
+    x-cloak
+    class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm px-2"
+>
+    <div class="bg-white w-full max-w-xs rounded-lg shadow-xl p-3">
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-2">
+            <h2 class="text-sm font-semibold text-gray-700">
+                Confirm Registration
+            </h2>
+            <button
+                @click="open = false; $wire.confirmingStatusId = null"
+                class="text-gray-400 text-xs"
+            >
+                ✕
+            </button>
+        </div>
+
+        <!-- Body -->
+        <p class="text-xs text-gray-600 mb-2 leading-snug">
+            Select <strong>Shift</strong> and <strong>Intake</strong>.
+        </p>
+
+        <!-- Shift -->
+        <div class="mb-2">
+            <select
+                wire:model="selectedShift"
+                class="w-full border rounded px-2 py-1 text-xs focus:outline-none"
+            >
+                <option value="">Shift</option>
+                <option value="Morning">Morning</option>
+                <option value="Evening">Evening</option>
+            </select>
+        </div>
+
+        <!-- Intake -->
+        <div class="mb-3">
+            <select
+                wire:model="selectedIntake"
+                class="w-full border rounded px-2 py-1 text-xs focus:outline-none"
+            >
+                <option value="">Intake</option>
+                <option value="January 2026–2027">Sept 2026–2027</option>
+                <option value="August 2026–2027">Sept 2027–2028</option>
+            </select>
+        </div>
+
+        <!-- Footer -->
+        <div class="flex justify-end gap-1">
+            <button
+                @click="open = false; $wire.confirmingStatusId = null"
+                class="px-2 py-1 border rounded text-xs"
+            >
+                Cancel
+            </button>
+
+            <button
+                wire:click="applyConfirmedStatus"
+                wire:loading.attr="disabled"
+                class="px-2 py-1 bg-blue-600 text-white rounded text-xs flex items-center gap-1"
+            >
+                <span
+                    wire:loading
+                    class="animate-spin h-3 w-3 border-2 border-white border-t-transparent rounded-full"
+                ></span>
+                <span wire:loading.remove>Confirm</span>
+                <span wire:loading>Processing…</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+
+{{-- Activate Confirmation Modal --}}
+<div
+    x-data
+    x-show="$wire.confirmingStatusId !== null && $wire.pendingStatus === 'active'"
+    x-cloak
+    class="fixed inset-0 z-50 flex items-center justify-center
+           bg-black/60 backdrop-blur-sm px-1"
+>
+    <div class="bg-white w-full max-w-[20rem] rounded-lg shadow-lg p-3">
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-1">
+            <h2 class="text-[12px] font-semibold text-gray-700">
+                Confirm Activation
+            </h2>
+
+            <button
+                wire:click="$set('confirmingStatusId', null)"
+                class="text-gray-400 hover:text-gray-700 text-xs"
+            >
+                ✕
+            </button>
+        </div>
+
+        <!-- Body -->
+        <p class="text-gray-700 text-[11px] mb-2">
+            Are you sure you want to activate this student?
+            <br>
+            <span class="text-red-600 text-[10px]">
+                This action may affect records and cannot always be undone.
+            </span>
+        </p>
+
+        <!-- Footer -->
+        <div class="flex justify-end gap-1">
+            <button
+                wire:click="$set('confirmingStatusId', null)"
+                class="px-2 py-1 text-[10px] border rounded hover:bg-gray-100"
+            >
+                Cancel
+            </button>
+
+            <button
+                wire:click="applyConfirmedStatus"
+                wire:loading.attr="disabled"
+                class="px-2 py-1 text-[10px] bg-indigo-600 text-white rounded
+                       flex items-center gap-1"
+            >
+                <span
+                    wire:loading
+                    class="animate-spin h-3 w-3 border-2 border-white border-t-transparent rounded-full"
+                ></span>
+
+                <span wire:loading.remove>Confirm</span>
+                <span wire:loading>Processing…</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+
+{{-- Dropout Confirmation Modal --}}
+<div
+    x-data
+    x-show="$wire.confirmingStatusId !== null && $wire.pendingStatus === 'dropout'"
+    x-cloak
+    class="fixed inset-0 z-50 flex items-center justify-center
+           bg-black/60 backdrop-blur-sm px-1"
+>
+    <div class="bg-white w-full max-w-[20rem] rounded-lg shadow-lg p-3">
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-1">
+            <h2 class="text-[12px] font-semibold text-gray-700">
+                Confirm Dropout
+            </h2>
+
+            <button
+                wire:click="$set('confirmingStatusId', null)"
+                class="text-gray-400 hover:text-gray-700 text-xs"
+            >
+                ✕
+            </button>
+        </div>
+
+        <!-- Body -->
+        <p class="text-gray-700 text-[11px] mb-2">
+            Are you sure you want to mark this student as Dropout?
+            <br>
+            <span class="text-red-600 text-[10px]">
+                This action may affect records and cannot always be undone.
+            </span>
+        </p>
+
+        <!-- Footer -->
+        <div class="flex justify-end gap-1">
+            <button
+                wire:click="$set('confirmingStatusId', null)"
+                class="px-2 py-1 text-[10px] border rounded hover:bg-gray-100"
+            >
+                Cancel
+            </button>
+
+            <button
+                wire:click="applyConfirmedStatus"
+                wire:loading.attr="disabled"
+                class="px-2 py-1 text-[10px] bg-red-600 text-white rounded
+                       flex items-center gap-1"
+            >
+                <span
+                    wire:loading
+                    class="animate-spin h-3 w-3 border-2 border-white border-t-transparent rounded-full"
+                ></span>
+
+                <span wire:loading.remove>Confirm</span>
+                <span wire:loading>Processing…</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+
+{{-- Complete Confirmation Modal --}}
+<div
+    x-data
+    x-show="$wire.confirmingStatusId !== null && $wire.pendingStatus === 'completed'"
+    x-cloak
+    class="fixed inset-0 z-50 flex items-center justify-center
+           bg-black/60 backdrop-blur-sm px-1"
+>
+    <div class="bg-white w-full max-w-[20rem] rounded-lg shadow-lg p-3">
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-1">
+            <h2 class="text-[12px] font-semibold text-gray-700">
+                Confirm Completion
+            </h2>
+
+            <button
+                wire:click="$set('confirmingStatusId', null)"
+                class="text-gray-400 hover:text-gray-700 text-xs"
+            >
+                ✕
+            </button>
+        </div>
+
+        <!-- Body -->
+        <p class="text-gray-700 text-[11px] mb-2">
+            Are you sure you want to mark this student as Complete?
+            <br>
+            <span class="text-red-600 text-[10px]">
+                This action may affect records and cannot always be undone.
+            </span>
+        </p>
+
+        <!-- Footer -->
+        <div class="flex justify-end gap-1">
+            <button
+                wire:click="$set('confirmingStatusId', null)"
+                class="px-2 py-1 text-[10px] border rounded hover:bg-gray-100"
+            >
+                Cancel
+            </button>
+
+            <button
+                wire:click="applyConfirmedStatus"
+                wire:loading.attr="disabled"
+                class="px-2 py-1 text-[10px] bg-gray-700 text-white rounded
+                       flex items-center gap-1"
+            >
+                <span
+                    wire:loading
+                    class="animate-spin h-3 w-3 border-2 border-white border-t-transparent rounded-full"
+                ></span>
+
+                <span wire:loading.remove>Confirm</span>
+                <span wire:loading>Processing…</span>
+            </button>
+        </div>
+    </div>
+</div>
+
 
 
 </div>

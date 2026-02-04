@@ -110,16 +110,97 @@ class Index extends Component
     }
 
     /* -------------------------
-        Status & Delete
+        Status   Confirmation State & Delete Buttons
     --------------------------*/
- 
 
-    public function changeStatus(Student $student, $newStatus)
+public $confirmingStatusId = null; // student ID being confirmed
+public $pendingStatus = null;      // status to apply
+// NEW
+public $selectedShift = '';
+public $selectedIntake = '';
+
+
+public function mount()
+{
+    $this->confirmingStatusId = null;
+    $this->pendingStatus = null;
+}
+
+
+/* -------------------------
+    Open Confirmation Modal
+--------------------------*/
+public function confirmStatusChange($studentId, $newStatus)
+{
+    $this->confirmingStatusId = $studentId;
+    $this->pendingStatus = $newStatus;
+
+    // Reset only for registration
+    if ($newStatus === 'registered') {
+        $this->selectedShift = '';
+        $this->selectedIntake = '';
+    }
+}
+
+
+/* -------------------------
+    Apply Status Change
+--------------------------*/
+public function applyConfirmedStatus()
+{
+    if (!$this->confirmingStatusId || !$this->pendingStatus) {
+        return;
+    }
+
+    $student = Student::findOrFail($this->confirmingStatusId);
+
+    // 👇 Registration requires shift + intake
+    if ($this->pendingStatus === 'registered') {
+        if (!$this->selectedShift || !$this->selectedIntake) {
+            $this->dispatch(
+                'notify',
+                message: 'Please select Shift and Intake before confirming.',
+                type: 'error'
+            );
+            return;
+        }
+
+        $student->update([
+            'status' => 'registered',
+            'shift'  => $this->selectedShift,
+            'intake' => $this->selectedIntake,
+        ]);
+    } else {
+        // All other statuses
+        $student->update([
+            'status' => $this->pendingStatus,
+        ]);
+    }
+
+    // Reset state
+    $this->confirmingStatusId = null;
+    $this->pendingStatus = null;
+    $this->selectedShift = '';
+    $this->selectedIntake = '';
+
+      $this->dispatch('close-register');
+    $this->dispatch(
+        'notify',
+        message: 'Student updated successfully!',
+        type: 'success'
+    );
+}
+
+
+/* -------------------------
+    Existing Logic (UNCHANGED)
+--------------------------*/
+public function changeStatus(Student $student, $newStatus)
 {
     $this->loadingStudentId = $student->id;
 
     // Small delay allows spinner to render
-    usleep(300000); // 0.3 seconds
+    usleep(800000); // 0.8 seconds
 
     $student->update(['status' => $newStatus]);
 
@@ -133,32 +214,80 @@ class Index extends Component
 }
 
 
-    public function deleteStudent(Student $student)
-    {
-        $student->delete();
 
-        // ✅ ADDED
-        $this->dispatch(
-            'student-deleted',
-            message: 'Student deleted successfully!'
-        );
-    }
+   public function deleteStudent()
+{
+    Student::findOrFail($this->deleteStudentId)->delete();
+
+    $this->showDeleteModal = false;
+
+    $this->dispatch(
+        'notify',
+        message: 'Student deleted successfully!',
+        type: 'success'
+    );
+}
+
+
+public $showDeleteModal = false;
+public $deleteStudentId;
+public $deleteStudentName;
+
+public function confirmDelete($id)
+{
+    $student = Student::findOrFail($id);
+
+    $this->deleteStudentId = $student->id;
+    $this->deleteStudentName = $student->name;
+    $this->showDeleteModal = true;
+}
 
     /* -------------------------
         Render
     --------------------------*/
+
+    protected $queryString = [];
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingIntake()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingShift()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingStatus()
+    {
+        $this->resetPage();
+    }
+    
     public function render()
     {
         $students = Student::query()
             ->where('status', $this->status)
-            ->when($this->search, fn ($q) =>
+            ->when($this->search, fn($q) => $q->where(function($q){
                 $q->where('name', 'like', "%{$this->search}%")
-            )
+                  ->orWhere('student_id', 'like', "%{$this->search}%");
+            }))
+            ->when($this->intake, fn($q) => $q->where('intake', $this->intake))
+            ->when($this->shift, fn($q) => $q->where('shift', $this->shift))
             ->latest()
             ->paginate(10);
 
-        return view('livewire.admin.students.index', compact('students'));
+        $intakes = Student::whereNotNull('intake')->distinct()->pluck('intake');
+        $shifts = Student::whereNotNull('shift')->distinct()->pluck('shift');
+
+        return view('livewire.admin.students.index', compact('students','intakes','shifts'));
     }
+
+
 
     // =========================
     // Edit Modal Functionality
@@ -260,5 +389,8 @@ public function viewStudent($id)
 
     $this->showViewModal = true;
 }
+
+
+
 
 }

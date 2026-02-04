@@ -1339,13 +1339,6 @@ video {
   }
 }
 
-
-
-
-
-
-
-
     </style>
 </head>
 </body>

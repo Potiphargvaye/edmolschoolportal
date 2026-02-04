@@ -3,275 +3,352 @@
 @section('content')
 <div class="container mx-auto px-4 py-8">
     <!-- Banner Header -->
-    <div class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-6 mb-6 rounded-xl shadow-sm">
-        <h1 class="text-2xl sm:text-3xl font-bold">Fees Management System</h1>
-        <p class="text-indigo-100 mt-2">Manage student fees and payments</p>
+    
+
+    <div class="admin-container px-3 sm:px-4 md:px-6 lg:px-8 max-w-full overflow-x-hidden">
+    <!-- Header + Assign Button -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-3">
+        <h2 class="text-base sm:text-lg font-bold text-gray-800">Fees Management</h2>
+         <button
+    onclick="openModal('assignFeeModal')"
+    class="bg-[#0a1f44] text-white px-2.5 py-1 sm:px-3 sm:py-1.5
+           rounded-md hover:opacity-90 transition
+           flex items-center gap-1
+           text-xs font-semibold shadow-sm"
+>
+    <i class="fas fa-plus text-xs"></i>
+    <span class="hidden xs:inline"></span>
+    Assign Fees
+</button>
+
     </div>
 
-    <div class="admin-container">
-        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-            <h2 class="text-xl font-bold text-gray-800">Fees Management</h2>
-            <button onclick="openModal('assignFeeModal')" class="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition-all duration-200 font-semibold flex items-center gap-2 shadow-md hover:shadow-lg">
-                <i class="fas fa-plus"></i>
-                Assign New Fee
-            </button>
+    <!-- Academic Year Filter -->
+<div class="academic-year-filter mb-3 w-full">
+    <form method="GET" action="{{ route('admin.fees.index') }}" 
+          class="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3 w-full">
+        <label for="academic_year" class="text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-0">
+            Filter by Academic Year:
+        </label>
+        <select id="academic_year" name="academic_year" onchange="this.form.submit()" 
+                class="mt-1 sm:mt-0 block w-full sm:w-auto text-xs sm:text-sm pl-2 pr-6 py-1.5 
+                       border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 
+                       focus:border-indigo-500 truncate max-w-full">
+            <option value="all" {{ empty($selected_year) || $selected_year == 'all' ? 'selected' : '' }}>
+                All Academic Years
+            </option>
+            @foreach($academic_years as $year)
+                <option value="{{ $year }}" class="truncate" {{ $selected_year == $year ? 'selected' : '' }}>
+                    {{ $year }}
+                </option>
+            @endforeach
+        </select>
+    </form>
+</div>
+
+
+    <!-- Statistics Dashboard -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3 w-full">
+        <div class="bg-white rounded-md shadow-sm p-3 w-full border-l-4 border-indigo-500">
+            <h3 class="text-sm font-semibold text-gray-700 mb-1">Total Fees Due {{ !empty($selected_year) && $selected_year != 'all' ? "($selected_year)" : '' }}</h3>
+            <div class="text-lg sm:text-xl font-bold text-indigo-600">${{ number_format($remaining_fees_due, 2) }}</div>
+            <div class="text-xs sm:text-sm text-gray-500 mt-1">
+                From {{ $stats->total_records }} fee records
+                @if(!empty($selected_year) && $selected_year != 'all')
+                    <div class="flex items-center mt-1 text-xs">
+                        <i class="fas fa-filter mr-1"></i> Filtered by: {{ $selected_year }}
+                    </div>
+                @endif
+            </div>
         </div>
 
-        <!-- Academic Year Filter -->
-        <div class="academic-year-filter mb-6">
-            <form method="GET" action="{{ route('admin.fees.index') }}" class="flex items-center gap-4">
-                <label for="academic_year" class="block text-sm font-medium text-gray-700 mb-0">Filter by Academic Year:</label>
-                <select id="academic_year" name="academic_year" onchange="this.form.submit()" class="mt-1 block w-auto pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-lg">
-                    <option value="all" {{ empty($selected_year) || $selected_year == 'all' ? 'selected' : '' }}>All Academic Years</option>
-                    @foreach($academic_years as $year)
-                        <option value="{{ $year }}" {{ $selected_year == $year ? 'selected' : '' }}>
-                            {{ $year }}
+        <div class="bg-white rounded-md shadow-sm p-3 w-full border-l-4 border-green-500">
+            <h3 class="text-sm font-semibold text-gray-700 mb-1">Total Fees Collected {{ !empty($selected_year) && $selected_year != 'all' ? "($selected_year)" : '' }}</h3>
+            <div class="text-lg sm:text-xl font-bold text-green-600">${{ number_format($stats->total_fees_collected, 2) }}</div>
+            <div class="text-xs sm:text-sm text-gray-500 mt-1">
+                @if($stats->total_fees_due > 0)
+                    {{ number_format(($stats->total_fees_collected / $stats->total_fees_due) * 100, 1) }}% collected
+                @else
+                    No fees due
+                @endif
+            </div>
+        </div>
+    </div>
+
+    <!-- Status Breakdown -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4 w-full">
+        <div class="bg-white rounded-md shadow-sm p-2 text-center border-t-4 border-yellow-500 w-full">
+            <span class="bg-yellow-500 inline-block w-2 h-2 rounded-full mb-1"></span>
+            <span class="font-semibold text-gray-700 text-xs sm:text-sm">{{ $stats->pending_count }} Pending</span>
+        </div>
+        <div class="bg-white rounded-md shadow-sm p-2 text-center border-t-4 border-blue-500 w-full">
+            <span class="bg-blue-500 inline-block w-2 h-2 rounded-full mb-1"></span>
+            <span class="font-semibold text-gray-700 text-xs sm:text-sm">{{ $stats->partial_count }} Partial</span>
+        </div>
+        <div class="bg-white rounded-md shadow-sm p-2 text-center border-t-4 border-green-500 w-full">
+            <span class="bg-green-500 inline-block w-2 h-2 rounded-full mb-1"></span>
+            <span class="font-semibold text-gray-700 text-xs sm:text-sm">{{ $stats->paid_count }} Paid</span>
+        </div>
+        <div class="bg-white rounded-md shadow-sm p-2 text-center border-t-4 border-red-500 w-full">
+            <span class="bg-red-500 inline-block w-2 h-2 rounded-full mb-1"></span>
+            <span class="font-semibold text-gray-700 text-xs sm:text-sm">{{ $stats->overdue_count }} Overdue</span>
+        </div>
+    </div>
+</div>
+
+
+        <!-- Payment Form -->
+<div class="bg-white rounded-md shadow-sm p-4 sm:p-6 mb-4 border border-gray-200 max-w-full overflow-x-hidden">
+    <h3 class="text-sm sm:text-base font-semibold text-gray-800 mb-3">Record Payment</h3>
+    <form action="{{ route('admin.fees.payment', 0) }}" method="POST" id="paymentForm" class="w-full">
+        @csrf
+        <!-- First Row: Fee Record + Amount -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 mb-3 w-full">
+            <div class="form-group w-full">
+                <label for="fee_id" class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Select Fee Record</label>
+                <select id="fee_id" name="fee_id" required
+                        class="mt-1 block w-full text-xs sm:text-sm pl-2 pr-6 py-1.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 truncate">
+                    <option value="">Select Fee Record</option>
+                    @foreach($fees as $fee)
+                        <option value="{{ $fee->fee_id }}">
+                            {{ $fee->student->name }} - {{ $fee->fee_type }} (${{ number_format($fee->amount, 2) }})
                         </option>
                     @endforeach
                 </select>
-            </form>
-        </div>
-
-        <!-- Statistics Dashboard -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <div class="bg-white rounded-lg shadow p-6 border-l-4 border-indigo-500">
-                <h3 class="text-lg font-semibold text-gray-700 mb-2">Total Fees Due {{ !empty($selected_year) && $selected_year != 'all' ? "($selected_year)" : '' }}</h3>
-                <div class="text-2xl font-bold text-indigo-600">${{ number_format($remaining_fees_due, 2) }}</div>
-                <div class="text-sm text-gray-500 mt-2">
-                    From {{ $stats->total_records }} fee records
-                    @if(!empty($selected_year) && $selected_year != 'all')
-                        <div class="flex items-center mt-1">
-                            <i class="fas fa-filter text-xs mr-1"></i> Filtered by: {{ $selected_year }}
-                        </div>
-                    @endif
-                </div>
             </div>
-
-            <div class="bg-white rounded-lg shadow p-6 border-l-4 border-green-500">
-                <h3 class="text-lg font-semibold text-gray-700 mb-2">Total Fees Collected {{ !empty($selected_year) && $selected_year != 'all' ? "($selected_year)" : '' }}</h3>
-                <div class="text-2xl font-bold text-green-600">${{ number_format($stats->total_fees_collected, 2) }}</div>
-                <div class="text-sm text-gray-500 mt-2">
-                    @if($stats->total_fees_due > 0)
-                        {{ number_format(($stats->total_fees_collected / $stats->total_fees_due) * 100, 1) }}% collected
-                    @else
-                        No fees due
-                    @endif
-                </div>
+            <div class="form-group w-full">
+                <label for="paid_amount" class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Amount Paid</label>
+                <input type="number" id="paid_amount" name="paid_amount" step="0.01" required
+                       class="mt-1 block w-full text-xs sm:text-sm pl-2 pr-6 py-1.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
             </div>
         </div>
 
-        <!-- Status Breakdown -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-            <div class="bg-white rounded-lg shadow p-4 text-center border-t-4 border-yellow-500">
-                <span class="bg-yellow-500 inline-block w-3 h-3 rounded-full mb-2"></span>
-                <span class="font-semibold text-gray-700">{{ $stats->pending_count }} Pending</span>
-            </div>
-            <div class="bg-white rounded-lg shadow p-4 text-center border-t-4 border-blue-500">
-                <span class="bg-blue-500 inline-block w-3 h-3 rounded-full mb-2"></span>
-                <span class="font-semibold text-gray-700">{{ $stats->partial_count }} Partial</span>
-            </div>
-            <div class="bg-white rounded-lg shadow p-4 text-center border-t-4 border-green-500">
-                <span class="bg-green-500 inline-block w-3 h-3 rounded-full mb-2"></span>
-                <span class="font-semibold text-gray-700">{{ $stats->paid_count }} Paid</span>
-            </div>
-            <div class="bg-white rounded-lg shadow p-4 text-center border-t-4 border-red-500">
-                <span class="bg-red-500 inline-block w-3 h-3 rounded-full mb-2"></span>
-                <span class="font-semibold text-gray-700">{{ $stats->overdue_count }} Overdue</span>
-            </div>
-        </div>
+        <!-- Second Row: Payment Method + Reference -->
+       <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 mb-3 w-full">
+    <div class="form-group w-full">
+        <label for="payment_method" class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
+            Payment Method
+        </label>
+        <select id="payment_method" name="payment_method" required
+                class="mt-1 block w-full text-xs sm:text-sm pl-2 pr-6 py-1.5 border border-gray-300 rounded-md
+                       focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500
+                       truncate max-w-full">
+            <option value="">Select Method</option>
+            <option value="Cash" class="truncate">Cash</option>
+            <option value="Check" class="truncate">Check</option>
+            <option value="Bank Transfer" class="truncate">Bank Transfer</option>
+            <option value="Credit Card" class="truncate">Credit Card</option>
+            <option value="Mobile Money" class="truncate">Mobile Money</option>
+        </select>
+    </div>
 
-        <!-- Payment Form -->
-        <div class="bg-white rounded-lg shadow p-6 mb-6 border border-gray-200">
-            <h3 class="text-lg font-semibold text-gray-800 mb-4">Record Payment</h3>
-            <form action="{{ route('admin.fees.payment', 0) }}" method="POST" id="paymentForm">
-                @csrf
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div class="form-group">
-                        <label for="fee_id" class="block text-sm font-medium text-gray-700 mb-1">Select Fee Record</label>
-                        <select id="fee_id" name="fee_id" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-lg" required>
-                            <option value="">Select Fee Record</option>
-                            @foreach($fees as $fee)
-                                <option value="{{ $fee->fee_id }}">
-                                    {{ $fee->student->name }} - {{ $fee->fee_type }} (${{ number_format($fee->amount, 2) }})
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="paid_amount" class="block text-sm font-medium text-gray-700 mb-1">Amount Paid</label>
-                        <input type="number" id="paid_amount" name="paid_amount" step="0.01" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-lg" required>
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div class="form-group">
-                        <label for="payment_method" class="block text-sm font-medium text-gray-700 mb-1">Payment Method</label>
-                        <select id="payment_method" name="payment_method" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-lg" required>
-                            <option value="">Select Method</option>
-                            <option value="Cash">Cash</option>
-                            <option value="Check">Check</option>
-                            <option value="Bank Transfer">Bank Transfer</option>
-                            <option value="Credit Card">Credit Card</option>
-                            <option value="Mobile Money">Mobile Money</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="reference_number" class="block text-sm font-medium text-gray-700 mb-1">Reference Number</label>
-                        <input type="text" id="reference_number" name="reference_number" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-lg">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition-all duration-200 font-semibold flex items-center gap-2 shadow-md hover:shadow-lg">
-                        <i class="fas fa-money-bill-wave"></i>
-                        Record Payment
-                    </button>
-                </div>
-            </form>
-        </div>
+    <div class="form-group w-full">
+        <label for="reference_number" class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
+            Reference Number
+        </label>
+        <input type="text" id="reference_number" name="reference_number"
+               class="mt-1 block w-full text-xs sm:text-sm pl-2 pr-6 py-1.5 border border-gray-300 rounded-md
+                      focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 truncate max-w-full">
+    </div>
+</div>
+
+
+        <!-- Submit Button -->
+       <button
+    type="submit"
+    class="bg-[#0a1f44] text-white px-3 py-1.5
+           rounded-md hover:opacity-90 transition
+           flex items-center gap-1
+           text-xs font-semibold shadow-sm"
+>
+    <i class="fas fa-money-bill-wave text-xs"></i>
+    Record
+</button>
+
+    </form>
+</div>
 
         <!-- Search and Filter Section -->
-        <div class="bg-white rounded-lg shadow-sm p-6 mb-6 bg-gradient-to-r from-gray-50 to-gray-100 border border-gray-200">
-            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                <div class="flex-1">
-                    <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <i class="fas fa-search text-gray-400"></i>
-                        </div>
-                        <input 
-                            type="text" 
-                            id="feeSearchInput" 
-                            placeholder="Search fees by student, fee type, status, amount..." 
-                            class="pl-10 pr-10 py-3 border-2 border-gray-200 rounded-lg w-full focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-300"
-                        >
-                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
-                            <button id="clearSearch" class="text-gray-400 hover:text-gray-600 hidden transition-colors duration-200">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="flex flex-wrap gap-3">
-                    <select id="statusFilter" class="py-2 px-3 border-2 border-gray-200 rounded-lg bg-white text-sm min-w-[140px] transition-colors duration-300 focus:outline-none focus:border-blue-500">
-                        <option value="">All Statuses</option>
-                        <option value="pending">Pending</option>
-                        <option value="partial">Partial</option>
-                        <option value="paid">Paid</option>
-                        <option value="overdue">Overdue</option>
-                    </select>
-                    
-                    <select id="feeTypeFilter" class="py-2 px-3 border-2 border-gray-200 rounded-lg bg-white text-sm min-w-[140px] transition-colors duration-300 focus:outline-none focus:border-blue-500">
-                        <option value="">All Fee Types</option>
-                        <option value="Tuition Fee">Tuition Fee</option>
-                        <option value="Registration Fee">Registration Fee</option>
-                        <option value="Activity Fee">Activity Fee</option>
-                        <option value="Technology Fee">Technology Fee</option>
-                        <option value="Library Fee">Library Fee</option>
-                    </select>
-                </div>
+<div class="bg-white rounded-lg shadow-sm p-4 sm:p-6 mb-6 border border-gray-200 w-full">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 sm:gap-4 w-full">
+        <!-- Search Input -->
+        <div class="flex-1 relative w-full">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <i class="fas fa-search text-gray-400 text-sm sm:text-base"></i>
             </div>
-            
-            <div class="mt-4 flex flex-wrap items-center gap-4">
-                <span class="text-sm text-gray-600" id="searchResultsCount">
-                    Showing {{ count($fees) }} records
-                </span>
-                <button id="resetFilters" class="text-sm text-blue-600 hover:text-blue-800 transition-colors duration-200 font-medium">
-                    <i class="fas fa-refresh mr-1"></i> Reset Filters
+            <input 
+                type="text" 
+                id="feeSearchInput" 
+                placeholder="Search fees by student, fee type, status, amount..." 
+                class="pl-10 pr-10 py-2 sm:py-2.5 border border-gray-300 rounded-md w-full text-xs sm:text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 truncate transition-colors duration-300"
+            >
+            <div class="absolute inset-y-0 right-0 pr-2 flex items-center">
+                <button id="clearSearch" class="text-gray-400 hover:text-gray-600 hidden transition-colors duration-200 text-sm sm:text-base">
+                    <i class="fas fa-times"></i>
                 </button>
             </div>
         </div>
 
-        <!-- Loading Spinner -->
-        <div id="searchLoadingSpinner" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div class="bg-white rounded-xl p-8 shadow-2xl">
-                <div class="flex flex-col items-center">
-                    <div class="relative">
-                        <i class="fas fa-spinner fa-spin text-4xl text-blue-500 mb-2"></i>
-                        <div class="absolute inset-0 bg-blue-500 rounded-full animate-ping opacity-20"></div>
-                    </div>
-                    <p class="mt-2 text-gray-600 font-medium">Searching fees...</p>
-                    <p class="text-sm text-gray-400">Please wait while we find the best matches</p>
-                </div>
-            </div>
+        <!-- Filters -->
+        <div class="flex flex-wrap gap-2 sm:gap-3 mt-2 md:mt-0">
+            <select id="statusFilter" 
+                    class="py-1.5 px-2 sm:py-2 sm:px-3 border border-gray-300 rounded-md text-xs sm:text-sm bg-white min-w-[120px] max-w-full truncate focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                <option value="">All Statuses</option>
+                <option value="pending">Pending</option>
+                <option value="partial">Partial</option>
+                <option value="paid">Paid</option>
+                <option value="overdue">Overdue</option>
+            </select>
+
+            <select id="feeTypeFilter" 
+                    class="py-1.5 px-2 sm:py-2 sm:px-3 border border-gray-300 rounded-md text-xs sm:text-sm bg-white min-w-[120px] max-w-full truncate focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                <option value="">All Fee Types</option>
+                <option value="Tuition Fee">Tuition Fee</option>
+                <option value="Registration Fee">Registration Fees</option>
+                <option value="Activity Fee">Activity Fee</option>
+                <option value="Technology Fee">Technology Fee</option>
+                <option value="Library Fee">Library Fee</option>
+            </select>
         </div>
+    </div>
+
+    <!-- Results Count & Reset -->
+    <div class="mt-3 flex flex-wrap items-center gap-3">
+        <span class="text-sm text-gray-600" id="searchResultsCount">
+            Showing {{ count($fees) }} records
+        </span>
+        <button id="resetFilters" class="text-sm text-blue-600 hover:text-blue-800 transition-colors duration-200 font-medium flex items-center gap-1">
+            <i class="fas fa-refresh text-xs sm:text-sm"></i> Reset Filters
+        </button>
+    </div>
+</div>
+
+<!-- Loading Spinner --> 
+<div id="searchLoadingSpinner" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-xl p-4 shadow-2xl w-36 sm:w-44">
+        <div class="flex flex-col items-center">
+            <div class="relative">
+                <i class="fas fa-spinner fa-spin text-2xl text-blue-500 mb-1"></i>
+                <div class="absolute inset-0 bg-blue-500 rounded-full animate-ping opacity-20"></div>
+            </div>
+            <p class="mt-1 text-gray-600 font-medium text-xs sm:text-sm text-center">Searching fees...</p>
+            <p class="text-[10px] sm:text-xs text-gray-400 text-center">Please wait while we find the best matches</p>
+        </div>
+    </div>
+</div>
+
+
 
         <!-- Fees Table -->
-        <h3 class="text-lg font-semibold text-gray-800 mb-4">Fee Records</h3>
-        <div class="bg-white rounded-lg shadow overflow-hidden border border-gray-200">
-            <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200">
-                    <thead class="bg-gray-50">
-                        <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Student</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fee Type</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Installment</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Paid</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Due Date</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y divide-gray-200" id="feesTableBody">
-                        @foreach($fees as $fee)
-                        <tr class="hover:bg-gray-50 transition-colors duration-200 fee-row">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $fee->student->name }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $fee->fee_type }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $fee->installment_number }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-semibold">${{ number_format($fee->amount, 2) }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${{ number_format($fee->paid_amount, 2) }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $fee->due_date->format('M j, Y') }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                @php
-                                    $statusClasses = [
-                                        'pending' => 'bg-yellow-100 text-yellow-800 border-yellow-200',
-                                        'partial' => 'bg-blue-100 text-blue-800 border-blue-200',
-                                        'paid' => 'bg-green-100 text-green-800 border-green-200',
-                                        'overdue' => 'bg-red-100 text-red-800 border-red-200'
-                                    ];
-                                    $statusClass = $statusClasses[$fee->status] ?? 'bg-gray-100 text-gray-800 border-gray-200';
-                                @endphp
-                                <span class="px-3 py-1 rounded-full text-xs font-medium border {{ $statusClass }}">
-                                    {{ ucfirst($fee->status) }}
-                                </span>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                <div class="flex space-x-2">
-                                    <button onclick="viewFee({{ $fee->fee_id }})" class="bg-blue-600 text-white px-3 py-2 rounded-lg hover:bg-blue-700 transition-all duration-200 text-sm font-medium flex items-center gap-1 shadow-sm hover:shadow-md">
-                                        <i class="fas fa-eye text-xs"></i> View
-                                    </button>
-                                    <button onclick="editFee({{ $fee->fee_id }})" class="bg-yellow-600 text-white px-3 py-2 rounded-lg hover:bg-yellow-700 transition-all duration-200 text-sm font-medium flex items-center gap-1 shadow-sm hover:shadow-md">
-                                        <i class="fas fa-edit text-xs"></i> Edit
-                                    </button>
-                                    <button onclick="confirmDelete({{ $fee->fee_id }}, '{{ addslashes($fee->student->name . ' - ' . $fee->fee_type) }}')" class="bg-red-600 text-white px-3 py-2 rounded-lg hover:bg-red-700 transition-all duration-200 text-sm font-medium flex items-center gap-1 shadow-sm hover:shadow-md">
-                                        <i class="fas fa-trash text-xs"></i> Delete
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+<h3 class="text-base sm:text-lg font-semibold text-gray-800 mb-3">Fee Records</h3>
+<div class="bg-white rounded-lg shadow-sm overflow-hidden border border-gray-200">
+    <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200 text-xs sm:text-sm">
+            <thead class="bg-gray-50">
+             <tr>
+        <th class="px-3 py-2 text-left font-medium text-gray-500 uppercase tracking-wider">No.</th>
+        <th class="px-3 py-2 text-left font-medium text-gray-500 uppercase tracking-wider">Student</th>
+        <th class="px-3 py-2 text-left font-medium text-gray-500 uppercase tracking-wider">Class</th>
+        <th class="px-3 py-2 text-left font-medium text-gray-500 uppercase tracking-wider">Fee Type</th>
+        <th class="px-3 py-2 text-left font-medium text-gray-500 uppercase tracking-wider">Installment</th>
+        <th class="px-3 py-2 text-left font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+        <th class="px-3 py-2 text-left font-medium text-gray-500 uppercase tracking-wider">Paid</th>
+        <th class="px-3 py-2 text-left font-medium text-gray-500 uppercase tracking-wider">Balance</th>
+        <th class="px-3 py-2 text-left font-medium text-gray-500 uppercase tracking-wider">Due Date</th>
+        <th class="px-3 py-2 text-left font-medium text-gray-500 uppercase tracking-wider">Status</th>
+        <th class="px-3 py-2 text-left font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+    </tr>
+
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200" id="feesTableBody">
+               @foreach($fees as $index => $fee)
+<tr class="hover:bg-gray-50 transition-colors duration-200 fee-row">
+    <td class="px-3 py-2 whitespace-nowrap text-gray-900">{{ $loop->iteration }}</td> <!-- No. -->
+    <td class="px-3 py-2 whitespace-nowrap text-gray-900">{{ $fee->student->name }}</td>
+    <td
+    class="px-3 py-2 whitespace-nowrap text-xs font-black"
+    style="font-family: Arial Black; color: #0a1f44;"
+>
+    {{ $fee->student->class_applying_for ?? 'N/A' }}
+</td>
+    <td class="px-3 py-2 whitespace-nowrap text-gray-900">{{ $fee->fee_type }}</td>
+    <td class="px-3 py-2 whitespace-nowrap text-gray-900">{{ $fee->installment_number }}</td>
+    <td class="px-3 py-2 whitespace-nowrap text-green-600 font-semibold">${{ number_format($fee->amount, 2) }}</td>
+    <td class="px-3 py-2 whitespace-nowrap text-gray-900">${{ number_format($fee->paid_amount, 2) }}</td>
+    <td class="px-3 py-2 whitespace-nowrap text-red-600 font-semibold">
+        ${{ number_format($fee->amount - $fee->paid_amount, 2) }}
+    </td> <!-- Balance -->
+    <td class="px-3 py-2 whitespace-nowrap text-gray-900">{{ $fee->due_date->format('M j, Y') }}</td>
+    <td class="px-3 py-2 whitespace-nowrap">
+        @php
+            $statusClasses = [
+                'pending' => 'bg-yellow-100 text-yellow-800 border-yellow-200',
+                'partial' => 'bg-blue-100 text-blue-800 border-blue-200',
+                'paid' => 'bg-green-100 text-green-800 border-green-200',
+                'overdue' => 'bg-red-100 text-red-800 border-red-200'
+            ];
+            $statusClass = $statusClasses[$fee->status] ?? 'bg-gray-100 text-gray-800 border-gray-200';
+        @endphp
+        <span class="px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-medium border {{ $statusClass }}">
+            {{ ucfirst($fee->status) }}
+        </span>
+    </td>
+    <td class="px-3 py-2 whitespace-nowrap text-sm font-medium">
+        <div class="flex space-x-1">
+            <button onclick="viewFee({{ $fee->fee_id }})" class="bg-blue-600 hover:bg-blue-700 text-white p-1 rounded-md flex items-center justify-center">
+                <i class="fas fa-eye text-xs"></i>
+            </button>
+            <button onclick="editFee({{ $fee->fee_id }})" class="bg-yellow-600 hover:bg-yellow-700 text-white p-1 rounded-md flex items-center justify-center">
+                <i class="fas fa-edit text-xs"></i>
+            </button>
+            <button onclick="confirmDelete({{ $fee->fee_id }}, '{{ addslashes($fee->student->name . ' - ' . $fee->fee_type) }}')" class="bg-red-600 hover:bg-red-700 text-white p-1 rounded-md flex items-center justify-center">
+                <i class="fas fa-trash text-xs"></i>
+            </button>
         </div>
+    </td>
+</tr>
+@endforeach
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
     </div>
 </div>
 
 <!-- Modals -->
 <!-- Assign Fee Modal -->
-<div id="assignFeeModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden transition-opacity duration-300">
-    <div class="fixed inset-0 flex items-center justify-center p-4">
-        <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto transform transition-all duration-300 scale-95 opacity-0" id="assignFeeModalContent">
-            <div class="bg-indigo-600 text-white p-4 rounded-t-lg flex justify-between items-center">
-                <h3 class="text-xl font-semibold">Assign New Fee</h3>
-                <button class="text-red-500 text-2xl hover:text-red-700 transition-colors" onclick="closeModal('assignFeeModal')">&times;</button>
+<div id="assignFeeModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+    <div class="fixed inset-0 flex items-center justify-center p-2">
+        <div
+            id="assignFeeModalContent"
+            class="bg-white rounded-md shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto transform scale-95 opacity-0 transition-all duration-300"
+        >
+
+            <!-- Header -->
+            <div class="bg-[#0a1f44] text-white px-4 py-3 rounded-t-md flex justify-between items-center">
+                <h3 class="text-sm sm:text-base font-semibold">Assign New Fee</h3>
+                <button
+                    class="text-red-500 text-xl hover:text-red-700"
+                    onclick="closeModal('assignFeeModal')"
+                >&times;</button>
             </div>
-            <div class="p-6">
+
+            <!-- Body -->
+            <div class="p-3">
                 <form action="{{ route('admin.fees.store') }}" method="POST" id="assignFeeForm">
                     @csrf
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+
+                    <!-- Student & Fee Type -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
                         <div>
-                            <label for="student_id" class="block text-sm font-medium text-gray-700 mb-1">Student</label>
-                            <select id="student_id" name="student_id" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-lg" required>
+                            <label class="block text-xs font-medium text-gray-700 mb-1">Student</label>
+                            <select
+                                name="student_id"
+                                required
+                                class="w-full text-xs py-1.5 px-2 border rounded-md focus:ring-1 focus:ring-indigo-500"
+                            >
                                 <option value="">Select Student</option>
                                 @foreach($students as $student)
                                     <option value="{{ $student->student_id }}">
@@ -280,216 +357,415 @@
                                 @endforeach
                             </select>
                         </div>
+
                         <div>
-                            <label for="fee_type" class="block text-sm font-medium text-gray-700 mb-1">Fee Type</label>
-                            <select id="fee_type" name="fee_type" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-lg" required>
+                            <label class="block text-xs font-medium text-gray-700 mb-1">Fee Type</label>
+                            <select
+                                name="fee_type"
+                                required
+                                class="w-full text-xs py-1.5 px-2 border rounded-md focus:ring-1 focus:ring-indigo-500"
+                            >
                                 <option value="">Select Fee Type</option>
-                                <option value="Tuition Fee">Tuition Fee</option>
-                                <option value="Registration Fee">Registration Fee</option>
-                                <option value="Activity Fee">Activity Fee</option>
-                                <option value="Technology Fee">Technology Fee</option>
-                                <option value="Library Fee">Library Fee</option>
+                                <option>Tuition Fee</option>
+                                <option>Registration</option>
+                                <option>Activity Fee</option>
+                                <option>Technology Fee</option>
+                                <option>Library Fee</option>
                             </select>
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+
+                    <!-- Installment & Academic Year -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
                         <div>
-                            <label for="installment_number" class="block text-sm font-medium text-gray-700 mb-1">Installment Number</label>
-                            <select id="installment_number" name="installment_number" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-lg">
-                                <option value="1">1st Installment</option>
-                                <option value="2">2nd Installment</option>
-                                <option value="3">3rd Installment</option>
+                            <label class="block text-xs font-medium text-gray-700 mb-1">Installment</label>
+                            <select
+                                name="installment_number"
+                                class="w-full text-xs py-1.5 px-2 border rounded-md"
+                            >
+     <option value="Registration Fees">Registration Fees</option>
+    <option value="1st installment">1st installment</option>
+    <option value="2nd installment">2nd installment</option>
+    <option value="3rd installment">3rd installment</option>
+    <option value="Other">Other</option>
                             </select>
                         </div>
+
                         <div>
-                            <label for="academic_year" class="block text-sm font-medium text-gray-700 mb-1">Academic Year</label>
-                            <input type="text" id="academic_year" name="academic_year" value="{{ date('Y') . '/' . (date('Y') + 1) }}" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-lg" required>
+                            <label class="block text-xs font-medium text-gray-700 mb-1">Academic Year</label>
+                            <input
+                                type="text"
+                                name="academic_year"
+                                value="{{ date('Y') . '/' . (date('Y') + 1) }}"
+                                required
+                                class="w-full text-xs py-1.5 px-2 border rounded-md"
+                            >
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+
+                    <!-- Amount & Due Date -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
                         <div>
-                            <label for="amount" class="block text-sm font-medium text-gray-700 mb-1">Amount</label>
-                            <input type="number" id="amount" name="amount" step="0.01" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-lg" required>
+                            <label class="block text-xs font-medium text-gray-700 mb-1">Amount</label>
+                            <input
+                                type="number"
+                                step="0.01"
+                                name="amount"
+                                required
+                                class="w-full text-xs py-1.5 px-2 border rounded-md"
+                            >
                         </div>
+
                         <div>
-                            <label for="due_date" class="block text-sm font-medium text-gray-700 mb-1">Due Date</label>
-                            <input type="date" id="due_date" name="due_date" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-lg" required>
+                            <label class="block text-xs font-medium text-gray-700 mb-1">Due Date</label>
+                            <input
+                                type="date"
+                                name="due_date"
+                                required
+                                class="w-full text-xs py-1.5 px-2 border rounded-md"
+                            >
                         </div>
                     </div>
-                    <div class="bg-gray-50 p-4 rounded-b-lg flex justify-end space-x-3">
-                        <button type="button" class="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition-all duration-200 font-semibold flex items-center gap-2" onclick="closeModal('assignFeeModal')">
-                            <i class="fas fa-times"></i> Cancel
-                        </button>
-                        <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-all duration-200 font-semibold flex items-center gap-2">
-                            <i class="fas fa-save"></i> Assign Fee
-                        </button>
+
+                    <!-- Footer -->
+                    <div class="bg-gray-50 px-3 py-2 rounded-b-md flex justify-end gap-2">
+                        <!-- Cancel (UNCHANGED per request) -->
+                        <button
+    type="button"
+    class="bg-red-600 text-white px-3 py-1 text-xs rounded-md hover:bg-red-700 flex items-center gap-1"
+    onclick="closeModal('assignFeeModal')"
+>
+    <i class="fas fa-times text-xs"></i>
+    Close
+</button>
+
+<button
+    type="submit"
+    class="bg-[#0a1f44] text-white px-3 py-1 text-xs rounded-md hover:opacity-90 flex items-center gap-1"
+>
+    <i class="fas fa-save text-xs"></i>
+    Assign
+</button>
+
                     </div>
                 </form>
             </div>
+
         </div>
     </div>
 </div>
 
-<!-- Delete Confirmation Modal -->
-<div id="deleteFeeModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden transition-opacity duration-300">
-    <div class="fixed inset-0 flex items-center justify-center p-4">
-        <div class="bg-white rounded-lg shadow-xl max-w-md w-full transform transition-all duration-300 scale-95 opacity-0" id="deleteFeeModalContent">
-            <div class="bg-red-600 text-white p-4 rounded-t-lg flex justify-between items-center">
-                <h3 class="text-xl font-semibold">Confirm Delete</h3>
-                <button class="text-red-500 text-2xl hover:text-red-700 transition-colors" onclick="closeModal('deleteFeeModal')">&times;</button>
-            </div>
-            <div class="p-6">
-                <p class="text-gray-700">Are you sure you want to delete the fee record for:</p>
-                <p id="delete-fee-details" class="font-bold my-3 p-3 bg-gray-50 rounded border"></p>
-                <p class="text-red-600 flex items-center gap-2">
-                    <i class="fas fa-exclamation-triangle"></i>This action cannot be undone.
-                </p>
-            </div>
-            <div class="bg-gray-50 p-4 rounded-b-lg flex justify-end space-x-3">
-                <button type="button" class="bg-gray-600 text-white px-6 py-2 rounded-lg hover:bg-gray-700 transition-all duration-200 font-semibold flex items-center gap-2" onclick="closeModal('deleteFeeModal')">
-                    <i class="fas fa-times"></i> Cancel
-                </button>
-                <form id="deleteForm" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition-all duration-200 font-semibold flex items-center gap-2">
-                        <i class="fas fa-trash"></i> Delete Permanently
-                    </button>
-                </form>
-            </div>
+
+<!-- Delete Fee Modal -->
+<div
+    id="deleteFeeModal"
+    class="fixed inset-0 z-50 hidden
+           flex items-center justify-center
+           bg-black/60 backdrop-blur-sm px-2"
+>
+    <!-- Modal Box -->
+    <div
+        id="deleteFeeModalContent"
+        class="bg-white w-full max-w-xs rounded-lg shadow-xl overflow-hidden
+               transform scale-95 opacity-0 transition-all duration-200"
+    >
+
+        <!-- Header -->
+        <div class="flex items-center justify-between px-3 py-2 bg-red-600 text-white">
+            <h3 class="text-xs font-semibold">Confirm Delete</h3>
+
+            <button
+                onclick="closeModal('deleteFeeModal')"
+                class="p-1 rounded-full hover:bg-red-500 transition"
+            >
+                <i class="fas fa-times text-sm"></i>
+            </button>
         </div>
+
+        <!-- Body -->
+        <div class="p-3 space-y-2 text-xs">
+            <p class="text-gray-700">
+                Are you sure you want to delete this fee record?
+            </p>
+
+            <!-- Fee Details -->
+            <div
+                id="delete-fee-details"
+                class="p-2 rounded-md bg-gray-50 border
+                       text-gray-800 font-medium text-xs"
+            >
+                Selected fee
+            </div>
+
+            <p class="text-red-600 flex items-center gap-1 text-[11px]">
+                <i class="fas fa-exclamation-triangle"></i>
+                This action cannot be undone.
+            </p>
+        </div>
+
+        <!-- Footer -->
+        <div class="px-3 py-2 bg-gray-50 border-t flex justify-end gap-1">
+            <button
+                type="button"
+                onclick="closeModal('deleteFeeModal')"
+                class="px-2 py-1 text-xs rounded border hover:bg-gray-100"
+            >
+                Cancel
+            </button>
+
+            <form id="deleteForm" method="POST">
+                @csrf
+                @method('DELETE')
+                <button
+                    type="submit"
+                    class="px-2 py-1 text-xs font-semibold
+                           bg-red-600 text-white rounded
+                           hover:bg-red-700
+                           flex items-center gap-1"
+                >
+                    <i class="fas fa-trash text-xs"></i>
+                    Delete
+                </button>
+            </form>
+        </div>
+
     </div>
 </div>
 
 <!-- View Fee Modal -->
-<div id="viewFeeModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden transition-opacity duration-300">
-    <div class="fixed inset-0 flex items-center justify-center p-4">
-        <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto transform transition-all duration-300 scale-95 opacity-0" id="viewFeeModalContent">
-            <div class="bg-blue-600 text-white p-4 rounded-t-lg flex justify-between items-center">
-                <div class="flex items-center">
-                    <button onclick="enhancedPrintFeeDetails()" class="bg-white bg-opacity-20 p-2 rounded-lg mr-3 hover:bg-opacity-30 transition-all duration-200" title="Print Fee Details">
-                        <i class="fas fa-print"></i>
+<div id="viewFeeModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+    <div class="fixed inset-0 flex items-center justify-center p-2">
+        <div
+            id="viewFeeModalContent"
+            class="bg-white rounded-md shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto transform scale-95 opacity-0 transition-all duration-300"
+        >
+
+            <!-- Header -->
+            <div class="bg-[#0a1f44] text-white px-4 py-3 rounded-t-md flex justify-between items-center">
+                <div class="flex items-center gap-2">
+                    <button
+                        onclick="enhancedPrintFeeDetails()"
+                        class="bg-white bg-opacity-20 p-1.5 rounded-md hover:bg-opacity-30 transition"
+                        title="Print Fee Details"
+                    >
+                        <i class="fas fa-print text-xs"></i>
                     </button>
-                    <h3 class="text-xl font-semibold">Fee Details</h3>
+                    <h3 class="text-sm sm:text-base font-semibold">Fee Details</h3>
                 </div>
-                <button class="text-red-500 text-2xl hover:text-red-700 transition-colors" onclick="closeModal('viewFeeModal')">&times;</button>
+
+                <button
+                    class="text-red-500 text-xl hover:text-red-700"
+                    onclick="closeModal('viewFeeModal')"
+                >&times;</button>
             </div>
-            <div class="p-6">
-                <!-- Printable content container -->
+
+            <!-- Body -->
+            <div class="p-3 text-xs">
                 <div id="printable-fee-details">
-                    <div class="print-header hidden">
-                        <h2 class="text-2xl font-bold text-center mb-4">Fee Details Receipt</h2>
-                        <div class="border-b-2 border-gray-300 mb-4"></div>
-                    </div>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                        <div class="detail-group">
-                            <label class="detail-label font-semibold text-gray-700">Student:</label>
-                            <p class="detail-value text-gray-900" id="view-student">Loading...</p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
+                        <div>
+                            <label class="font-medium text-gray-600">Student</label>
+                            <p class="text-gray-900 truncate" id="view-student">Loading...</p>
                         </div>
-                        <div class="detail-group">
-                            <label class="detail-label font-semibold text-gray-700">Fee Type:</label>
-                            <p class="detail-value text-gray-900" id="view-fee-type">Loading...</p>
+
+                        <div>
+                            <label class="font-medium text-gray-600">Fee Type</label>
+                            <p class="text-gray-900 truncate" id="view-fee-type">Loading...</p>
                         </div>
-                        <div class="detail-group">
-                            <label class="detail-label font-semibold text-gray-700">Installment:</label>
-                            <p class="detail-value text-gray-900" id="view-installment">Loading...</p>
+
+                        <div>
+                            <label class="font-medium text-gray-600">Installment</label>
+                            <p class="text-gray-900" id="view-installment">Loading...</p>
                         </div>
-                        <div class="detail-group">
-                            <label class="detail-label font-semibold text-gray-700">Academic Year:</label>
-                            <p class="detail-value text-gray-900" id="view-academic-year">Loading...</p>
+
+                        <div>
+                            <label class="font-medium text-gray-600">Academic Year</label>
+                            <p class="text-gray-900" id="view-academic-year">Loading...</p>
                         </div>
-                        <div class="detail-group">
-                            <label class="detail-label font-semibold text-gray-700">Amount:</label>
-                            <p class="detail-value text-gray-900 font-semibold" id="view-amount">Loading...</p>
+
+                        <div>
+                            <label class="font-medium text-gray-600">Amount</label>
+                            <p class="text-gray-900 font-semibold" id="view-amount">Loading...</p>
                         </div>
-                        <div class="detail-group">
-                            <label class="detail-label font-semibold text-gray-700">Paid Amount:</label>
-                            <p class="detail-value text-gray-900 font-semibold" id="view-paid-amount">Loading...</p>
+
+                        <div>
+                            <label class="font-medium text-gray-600">Paid</label>
+                            <p class="text-gray-900 font-semibold" id="view-paid-amount">Loading...</p>
                         </div>
-                        <div class="detail-group">
-                            <label class="detail-label font-semibold text-gray-700">Due Date:</label>
-                            <p class="detail-value text-gray-900" id="view-due-date">Loading...</p>
+
+                        <div>
+                            <label class="font-medium text-gray-600">Due Date</label>
+                            <p class="text-gray-900" id="view-due-date">Loading...</p>
                         </div>
-                        <div class="detail-group">
-                            <label class="detail-label font-semibold text-gray-700">Status:</label>
-                            <p class="detail-value" id="view-status">Loading...</p>
+
+                        <div>
+                            <label class="font-medium text-gray-600">Status</label>
+                            <p id="view-status">Loading...</p>
                         </div>
                     </div>
 
-                    <!-- Payment History Section -->
-                    <div class="payment-history mt-6">
-                        <h4 class="text-lg font-semibold mb-3 text-gray-800">Payment History</h4>
-                        <div id="payment-history-container">
-                            <!-- Payment history will be dynamically inserted here -->
+                    <!-- Payment History -->
+                    <div class="mt-4">
+                        <h4 class="font-semibold text-gray-700 mb-2 text-xs">
+                            Payment History
+                        </h4>
+
+                        <div
+                            id="payment-history-container"
+                            class="space-y-2 max-h-48 overflow-y-auto pr-1"
+                        >
+                            <!-- Dynamic payments -->
                         </div>
                     </div>
+
+
+
+
+                    <!-- Installments Table -->
+<div class="mt-4">
+    <h4 class="font-semibold text-gray-700 mb-2 text-xs">All Installments</h4>
+    <table class="min-w-full text-xs border border-gray-200 rounded-md">
+        <thead class="bg-gray-50">
+            <tr>
+                <th class="px-2 py-1 text-left font-medium text-gray-500">Installment</th>
+                <th class="px-2 py-1 text-left font-medium text-gray-500">Amount</th>
+            </tr>
+        </thead>
+        <tbody id="installments-table-body" class="divide-y divide-gray-200">
+            <!-- Dynamic rows inserted via JS -->
+        </tbody>
+    </table>
+</div>
+
                 </div>
             </div>
-            <div class="bg-gray-50 p-4 rounded-b-lg flex justify-end">
-                <button type="button" class="bg-gray-600 text-white px-6 py-2 rounded-lg hover:bg-gray-700 transition-all duration-200 font-semibold flex items-center gap-2" onclick="closeModal('viewFeeModal')">
-                    <i class="fas fa-times"></i> Close
+
+            <!-- Footer -->
+            <div class="bg-gray-50 px-3 py-2 rounded-b-md flex justify-end">
+                <button
+                    type="button"
+                    class="bg-[#0a1f44] text-white px-3 py-1 text-xs rounded-md hover:opacity-90 flex items-center gap-1"
+                    onclick="closeModal('viewFeeModal')"
+                >
+                    <i class="fas fa-times text-xs"></i>
+                    Close
                 </button>
             </div>
+
         </div>
     </div>
 </div>
 
+
 <!-- Edit Fee Modal -->
-<div id="editFeeModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden transition-opacity duration-300">
-    <div class="fixed inset-0 flex items-center justify-center p-4">
-        <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto transform transition-all duration-300 scale-95 opacity-0" id="editFeeModalContent">
-            <div class="bg-indigo-600 text-white p-4 rounded-t-lg flex justify-between items-center">
-                <h3 class="text-xl font-semibold">Edit Fee</h3>
-                <button class="text-red-500 text-2xl hover:text-red-700 transition-colors" onclick="closeModal('editFeeModal')">&times;</button>
+<div id="editFeeModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+    <div class="fixed inset-0 flex items-center justify-center p-2">
+        <div
+            id="editFeeModalContent"
+            class="bg-white rounded-md shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto transform scale-95 opacity-0 transition-all duration-300"
+        >
+
+            <!-- Header -->
+            <div class="bg-[#0a1f44] text-white px-4 py-3 rounded-t-md flex justify-between items-center">
+                <h3 class="text-sm sm:text-base font-semibold">Edit Fee</h3>
+                <button
+                    class="text-red-500 text-xl hover:text-red-700"
+                    onclick="closeModal('editFeeModal')"
+                >&times;</button>
             </div>
-            <div class="p-6">
-                <form id="editFeeForm" method="POST">
+
+            <!-- Body -->
+            <div class="p-3">
+                <form id="editFeeForm" method="POST" class="text-xs">
                     @csrf
                     @method('PUT')
+
                     <input type="hidden" id="edit-fee-id" name="fee_id">
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                        <div class="form-group">
-                            <label for="edit-fee-type" class="block text-sm font-medium text-gray-700 mb-1">Fee Type</label>
-                            <select id="edit-fee-type" name="fee_type" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-lg" required>
+
+                    <!-- Fee Type & Installment -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
+                        <div>
+                            <label class="block font-medium text-gray-700 mb-1">Fee Type</label>
+                            <select
+                                id="edit-fee-type"
+                                name="fee_type"
+                                required
+                                class="w-full py-1.5 px-2 border rounded-md text-xs focus:ring-1 focus:ring-indigo-500"
+                            >
                                 <option value="">Select Fee Type</option>
                                 <option value="Tuition Fee">Tuition Fee</option>
-                                <option value="Registration Fee">Registration Fee</option>
+                                <option value="Registration Fee">Registration</option>
                                 <option value="Activity Fee">Activity Fee</option>
                                 <option value="Technology Fee">Technology Fee</option>
                                 <option value="Library Fee">Library Fee</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label for="edit-installment" class="block text-sm font-medium text-gray-700 mb-1">Installment</label>
-                            <select id="edit-installment" name="installment_number" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-lg" required>
-                                <option value="1">1st Installment</option>
-                                <option value="2">2nd Installment</option>
-                                <option value="3">3rd Installment</option>
+
+                        <div>
+                            <label class="block font-medium text-gray-700 mb-1">Installment</label>
+                            <select
+                                id="edit-installment"
+                                name="installment_number"
+                                required
+                                class="w-full py-1.5 px-2 border rounded-md text-xs"
+                            >
+     <option value="Registration Fees">Registration Fees</option>
+     <option value="1st installment">1st installment</option>
+    <option value="2nd installment">2nd installment</option>
+    <option value="3rd installment">3rd installment</option>
+    <option value="Other">Other</option>
                             </select>
                         </div>
                     </div>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                        <div class="form-group">
-                            <label for="edit-amount" class="block text-sm font-medium text-gray-700 mb-1">Amount ($)</label>
-                            <input type="number" id="edit-amount" name="amount" step="0.01" min="0" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-lg" required>
+
+                    <!-- Amount & Paid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
+                        <div>
+                            <label class="block font-medium text-gray-700 mb-1">Amount</label>
+                            <input
+                                type="number"
+                                id="edit-amount"
+                                name="amount"
+                                step="0.01"
+                                required
+                                class="w-full py-1.5 px-2 border rounded-md text-xs"
+                            >
                         </div>
-                        <div class="form-group">
-                            <label for="edit-paid-amount" class="block text-sm font-medium text-gray-700 mb-1">Paid Amount ($)</label>
-                            <input type="number" id="edit-paid-amount" name="paid_amount" step="0.01" min="0" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-lg">
+
+                        <div>
+                            <label class="block font-medium text-gray-700 mb-1">Paid Amount</label>
+                            <input
+                                type="number"
+                                id="edit-paid-amount"
+                                name="paid_amount"
+                                step="0.01"
+                                class="w-full py-1.5 px-2 border rounded-md text-xs"
+                            >
                         </div>
                     </div>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                        <div class="form-group">
-                            <label for="edit-due-date" class="block text-sm font-medium text-gray-700 mb-1">Due Date</label>
-                            <input type="date" id="edit-due-date" name="due_date" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-lg" required>
+
+                    <!-- Due Date & Status -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
+                        <div>
+                            <label class="block font-medium text-gray-700 mb-1">Due Date</label>
+                            <input
+                                type="date"
+                                id="edit-due-date"
+                                name="due_date"
+                                required
+                                class="w-full py-1.5 px-2 border rounded-md text-xs"
+                            >
                         </div>
-                        <div class="form-group">
-                            <label for="edit-status" class="block text-sm font-medium text-gray-700 mb-1">Status</label>
-                            <select id="edit-status" name="status" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-lg" required>
+
+                        <div>
+                            <label class="block font-medium text-gray-700 mb-1">Status</label>
+                            <select
+                                id="edit-status"
+                                name="status"
+                                required
+                                class="w-full py-1.5 px-2 border rounded-md text-xs"
+                            >
                                 <option value="pending">Pending</option>
                                 <option value="partial">Partial</option>
                                 <option value="paid">Paid</option>
@@ -497,32 +773,45 @@
                             </select>
                         </div>
                     </div>
-                    
-                    <div class="bg-gray-50 p-4 rounded-b-lg flex justify-end space-x-3">
-                        <button type="button" class="bg-gray-600 text-white px-6 py-2 rounded-lg hover:bg-gray-700 transition-all duration-200 font-semibold flex items-center gap-2" onclick="closeModal('editFeeModal')">
-                            <i class="fas fa-times"></i> Cancel
+
+                    <!-- Footer -->
+                    <div class="bg-gray-50 px-3 py-2 rounded-b-md flex justify-end gap-2">
+                        <button
+                            type="button"
+                            class="bg-red-600 text-white px-3 py-1 text-xs rounded-md hover:bg-red-700 flex items-center gap-1"
+                            onclick="closeModal('editFeeModal')"
+                        >
+                            <i class="fas fa-times text-xs"></i>
+                            Close
                         </button>
-                        <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition-all duration-200 font-semibold flex items-center gap-2">
-                            <i class="fas fa-save"></i> Update Fee
+
+                        <button
+                            type="submit"
+                            class="bg-[#0a1f44] text-white px-3 py-1 text-xs rounded-md hover:opacity-90 flex items-center gap-1"
+                        >
+                            <i class="fas fa-save text-xs"></i>
+                            Update
                         </button>
                     </div>
+
                 </form>
             </div>
+
         </div>
     </div>
 </div>
 
 
 <script>
-// ========== NOTIFICATION SYSTEM ==========
+// ==========NOTIFICATION SYSTEM ==========
 function showNotification(message, type = 'success') {
     const notification = document.createElement('div');
-    
+
     const styles = {
-        success: 'bg-gradient-to-r from-green-500 to-green-600 border-l-4 border-green-700',
-        error: 'bg-gradient-to-r from-red-500 to-red-600 border-l-4 border-red-700',
-        warning: 'bg-gradient-to-r from-yellow-500 to-yellow-600 border-l-4 border-yellow-700',
-        info: 'bg-gradient-to-r from-blue-500 to-blue-600 border-l-4 border-blue-700'
+        success: 'bg-green-600 border-green-700',
+        error: 'bg-red-600 border-red-700',
+        warning: 'bg-yellow-500 border-yellow-700',
+        info: 'bg-blue-600 border-blue-700'
     };
 
     const icons = {
@@ -532,39 +821,54 @@ function showNotification(message, type = 'success') {
         info: 'fa-info-circle'
     };
 
-    notification.className = `fixed top-4 right-4 z-50 transform translate-x-full opacity-0 transition-all duration-500 ease-in-out ${styles[type]} text-white p-4 rounded-xl shadow-2xl max-w-sm min-w-80 backdrop-blur-sm border-l-4`;
-    
+    notification.className = `
+        fixed top-3 right-3 sm:top-4 sm:right-4 z-50
+        transform translate-x-full opacity-0
+        transition-all duration-300 ease-out
+        ${styles[type]}
+        text-white
+        px-3 py-2
+        rounded-lg shadow-lg
+        border-l-4
+        w-auto max-w-[90vw] sm:max-w-xs
+        text-xs sm:text-sm
+    `;
+
     notification.innerHTML = `
-        <div class="flex items-center gap-3">
-            <i class="fas ${icons[type]} text-xl flex-shrink-0"></i>
-            <span class="flex-1 text-sm font-medium">${message}</span>
-            <button onclick="this.parentElement.parentElement.remove()" 
-                    class="flex-shrink-0 p-1 rounded-lg hover:bg-white hover:bg-opacity-20 transition-colors duration-200">
-                <i class="fas fa-times text-sm"></i>
+        <div class="flex items-start gap-2">
+            <i class="fas ${icons[type]} text-sm sm:text-base mt-0.5"></i>
+            <span class="flex-1 leading-snug">${message}</span>
+            <button
+                onclick="this.closest('div').parentElement.remove()"
+                class="ml-1 text-white opacity-80 hover:opacity-100 transition"
+                aria-label="Close notification"
+            >
+                <i class="fas fa-times text-xs"></i>
             </button>
         </div>
     `;
 
     document.body.appendChild(notification);
 
+    // Slide in
     setTimeout(() => {
         notification.classList.remove('translate-x-full', 'opacity-0');
         notification.classList.add('translate-x-0', 'opacity-100');
-    }, 10);
+    }, 20);
 
+    // Auto close
     setTimeout(() => {
         if (notification.parentElement) {
             notification.classList.remove('translate-x-0', 'opacity-100');
             notification.classList.add('translate-x-full', 'opacity-0');
             setTimeout(() => {
-                if (notification.parentElement) {
-                    notification.remove();
-                }
-            }, 500);
+                notification.remove();
+            }, 700);
         }
     }, 7000);
 }
 
+// Helper wrappers (UNCHANGED API)
 function showSuccessMessage(message) {
     showNotification(message, 'success');
 }
@@ -977,9 +1281,18 @@ function setViewModalLoading(loading) {
 }
 
 function updateViewModalWithData(feeData) {
-    document.getElementById('view-student').textContent = `${feeData.student.name} (ID: ${feeData.student.student_id})`;
+    // ---------- Existing Fee Details ----------
+    document.getElementById('view-student').innerHTML = `
+    ${feeData.student.name} (ID: ${feeData.student.student_id})
+    <div class="mt-1 text-[14px]"
+         style="color:#0a1f44; font-family:'Arial Black', Arial, sans-serif;">
+     Class: ${feeData.student.class_applying_for}
+
+    </div>
+`;
+
     document.getElementById('view-fee-type').textContent = feeData.fee_type;
-    document.getElementById('view-installment').textContent = `${feeData.installment_number}${getOrdinalSuffix(feeData.installment_number)} Installment`;
+    document.getElementById('view-installment').textContent = feeData.installment_number;
     document.getElementById('view-academic-year').textContent = feeData.academic_year;
     document.getElementById('view-amount').textContent = `$${parseFloat(feeData.amount).toFixed(2)}`;
     document.getElementById('view-paid-amount').textContent = `$${parseFloat(feeData.paid_amount).toFixed(2)}`;
@@ -988,16 +1301,41 @@ function updateViewModalWithData(feeData) {
         month: 'short', 
         day: 'numeric' 
     });
-    
+
     const statusClass = {
         'pending': 'bg-yellow-100 text-yellow-800 border-yellow-200',
         'partial': 'bg-blue-100 text-blue-800 border-blue-200',
         'paid': 'bg-green-100 text-green-800 border-green-200',
         'overdue': 'bg-red-100 text-red-800 border-red-200'
     }[feeData.status] || 'bg-gray-100 text-gray-800 border-gray-200';
-    
+
     document.getElementById('view-status').innerHTML = `<span class="px-3 py-1 rounded-full text-xs font-medium border ${statusClass}">${feeData.status.charAt(0).toUpperCase() + feeData.status.slice(1)}</span>`;
+
+    // ---------- New Installments Table ----------
+    const tbody = document.getElementById('installments-table-body');
+    if(tbody) {
+        tbody.innerHTML = ''; // Clear old rows if any
+
+        // Loop through all installments
+        feeData.installments_table.forEach(item => {
+            const row = document.createElement('tr');
+
+            const installmentCell = document.createElement('td');
+            installmentCell.className = 'px-2 py-1 text-gray-900';
+            installmentCell.textContent = item.installment;
+
+            const amountCell = document.createElement('td');
+            amountCell.className = 'px-2 py-1 font-semibold';
+            amountCell.textContent = item.amount === 'Not assigned' ? 'Not assigned' : `$${parseFloat(item.amount).toFixed(2)}`;
+            if(item.amount !== 'Not assigned') amountCell.classList.add('text-green-600'); // Optional color for assigned amounts
+
+            row.appendChild(installmentCell);
+            row.appendChild(amountCell);
+            tbody.appendChild(row);
+        });
+    }
 }
+
 
 function populateEditForm(feeData) {
     document.getElementById('edit-fee-id').value = feeData.fee_id;
@@ -1012,7 +1350,7 @@ function populateEditForm(feeData) {
 }
 
 function getOrdinalSuffix(number) {
-    const suffixes = ['th', 'st', 'nd', 'rd'];
+    const suffixes = [ ''];
     const value = number % 100;
     return suffixes[(value - 20) % 10] || suffixes[value] || suffixes[0];
 }
@@ -1200,61 +1538,191 @@ document.addEventListener('click', function(event) {
     }
 });
 
-// ========== ENHANCED PRINT FUNCTION ==========
+// ========== ENHANCED PRINT FUNCTION (PRO DOCUMENT) ==========
 function enhancedPrintFeeDetails() {
-    const printableContent = document.getElementById('printable-fee-details').cloneNode(true);
+    const printableContent = document
+        .getElementById('printable-fee-details')
+        .cloneNode(true);
+
     const printHeader = printableContent.querySelector('.print-header');
-    
     if (printHeader) {
         printHeader.classList.remove('hidden');
     }
-    
-    const printWindow = window.open('', '_blank', 'width=800,height=600'); 
-    
+
+    const schoolName =
+        document.querySelector('.school-name')?.textContent ||
+        'EDMOL Baptist School';
+
+    const printWindow = window.open('', '_blank', 'width=900,height=650');
+
     printWindow.document.write(`
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <title>Fee Details Receipt - ${document.querySelector('.school-name')?.textContent || 'EDMOL Baptist'}</title>
-            <style>
-                body { font-family: Arial, sans-serif; margin: 25px; color: #000; }
-                .header { text-align: center; margin-bottom: 25px; }
-                .school-info { margin-bottom: 15px; }
-                .school-name { font-size: 24px; font-weight: bold; margin-bottom: 5px; }
-                .receipt-title { font-size: 20px; margin: 15px 0; color: #2c5282; }
-                .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 20px 0; }
-                .detail-group { margin-bottom: 12px; page-break-inside: avoid; }
-                .detail-label { font-weight: bold; color: #000; }
-                .detail-value { color: #000; }
-                .payment-history { margin-top: 25px; border-top: 1px solid #ccc; padding-top: 15px; }
-                .footer { margin-top: 30px; text-align: center; font-size: 12px; color: #666; }
-                @media print { body { margin: 15mm; } }
-            </style>
-        </head>
-        <body>
-            <div class="header">
-                <div class="school-info">
-                    <div class="school-name">${document.querySelector('.school-name')?.textContent || 'EDMOL Baptist'}</div>
-                    <div>Fee Details Receipt</div>
-                </div>
-                <div style="border-bottom: 2px solid #333; margin: 15px 0;"></div>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fee Receipt - ${schoolName}</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 25px;
+            color: #000;
+            font-size: 14px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .school-name {
+            font-size: 26px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .receipt-title {
+            font-size: 18px;
+            margin-top: 8px;
+            color: #2c5282;
+            font-weight: bold;
+        }
+
+        .divider {
+            border-bottom: 2px solid #333;
+            margin: 15px 0;
+        }
+
+        .section {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-bottom: 18px;
+            border-radius: 6px;
+            page-break-inside: avoid;
+        }
+
+        .section-title {
+            font-weight: bold;
+            font-size: 15px;
+            margin-bottom: 10px;
+            color: #2c5282;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px 20px;
+        }
+
+        .detail-group {
+            margin-bottom: 6px;
+        }
+
+        .detail-label {
+            font-weight: bold;
+        }
+
+        .amount {
+            font-weight: bold;
+        }
+
+        .amount-total {
+            color: #166534;
+        }
+
+        .amount-paid {
+            color: #065f46;
+        }
+
+        .amount-balance {
+            color: #b91c1c;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            border: 1px solid #999;
+        }
+
+        .footer {
+            margin-top: 35px;
+            font-size: 12px;
+            color: #555;
+            text-align: center;
+        }
+
+        .signature-section {
+            margin-top: 40px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .signature-box {
+            width: 45%;
+            text-align: center;
+        }
+
+        .signature-line {
+            border-top: 1px solid #000;
+            margin-top: 40px;
+        }
+
+        @media print {
+            body {
+                margin: 15mm;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="school-name">${schoolName}</div>
+        <div class="receipt-title">Student Fee Receipt</div>
+        <div class="divider"></div>
+    </div>
+
+    ${printableContent.innerHTML}
+
+    <div class="section">
+        <div class="section-title">Authorization</div>
+        <div class="signature-section">
+            <div class="signature-box">
+                <div class="signature-line"></div>
+                <div>School Bursar / Accountant</div>
             </div>
-            ${printableContent.innerHTML}
-            <div class="footer">
-                Printed on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}
+            <div class="signature-box">
+                <div class="signature-line"></div>
+                <div>Authorized Signature</div>
             </div>
-        </body>
-        </html>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div>
+            Printed on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}
+        </div>
+        <div>
+            This document is system-generated and valid without a stamp.
+        </div>
+    </div>
+
+</body>
+</html>
     `);
-    
+
     printWindow.document.close();
-    
-    printWindow.onload = function() {
+
+    printWindow.onload = function () {
         printWindow.focus();
         setTimeout(() => {
             printWindow.print();
-        }, 250);
+        }, 300);
     };
 }
+
 </script>
 @endsection

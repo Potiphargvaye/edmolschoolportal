@@ -11,62 +11,64 @@ use Illuminate\Support\Facades\DB;
 
 class FeeController extends Controller
 {
-    public function index(Request $request)
-    {
-        $selected_year = $request->get('academic_year', '');
+   public function index(Request $request)
+{
+    $selected_year = $request->get('academic_year', '');
 
-        // Get statistics
-        $statsQuery = StudentFee::select(
-            DB::raw('SUM(amount) as total_fees_due'),
-            DB::raw('SUM(paid_amount) as total_fees_collected'),
-            DB::raw('COUNT(*) as total_records'),
-            DB::raw("SUM(CASE WHEN status = 'pending' THEN 1 ELSE 0 END) as pending_count"),
-            DB::raw("SUM(CASE WHEN status = 'partial' THEN 1 ELSE 0 END) as partial_count"),
-            DB::raw("SUM(CASE WHEN status = 'paid' THEN 1 ELSE 0 END) as paid_count"),
-            DB::raw("SUM(CASE WHEN status = 'overdue' THEN 1 ELSE 0 END) as overdue_count")
+    // Base query (single source of truth)
+    $baseQuery = StudentFee::query();
 
-        );
-
-        if (!empty($selected_year) && $selected_year != 'all') {
-            $statsQuery->where('academic_year', $selected_year);
-        }
-
-        $stats = $statsQuery->first();
-        $remaining_fees_due = $stats->total_fees_due - $stats->total_fees_collected;
-
-        // Get academic years for filter
-        $academic_years = StudentFee::select('academic_year')
-            ->distinct()
-            ->orderBy('academic_year', 'desc')
-            ->pluck('academic_year');
-
-        // Get fees with students
-        $feesQuery = StudentFee::with('student')
-            ->orderBy('due_date', 'desc');
-
-        if (!empty($selected_year) && $selected_year != 'all') {
-            $feesQuery->where('academic_year', $selected_year);
-        }
-
-        $fees = $feesQuery->get();
-        $students = Student::orderBy('name')->get();
-
-        return view('admin.fees.index', compact(
-            'stats',
-            'remaining_fees_due',
-            'academic_years',
-            'selected_year',
-            'fees',
-            'students'
-        ));
+    if (!empty($selected_year) && $selected_year !== 'all') {
+        $baseQuery->where('academic_year', $selected_year);
     }
+
+    // Statistics (clone base query)
+    $stats = (clone $baseQuery)->select(
+        DB::raw('COALESCE(SUM(amount), 0) as total_fees_due'),
+        DB::raw('COALESCE(SUM(paid_amount), 0) as total_fees_collected'),
+        DB::raw('COUNT(*) as total_records'),
+        DB::raw("SUM(CASE WHEN status = 'pending' THEN 1 ELSE 0 END) as pending_count"),
+        DB::raw("SUM(CASE WHEN status = 'partial' THEN 1 ELSE 0 END) as partial_count"),
+        DB::raw("SUM(CASE WHEN status = 'paid' THEN 1 ELSE 0 END) as paid_count"),
+        DB::raw("SUM(CASE WHEN status = 'overdue' THEN 1 ELSE 0 END) as overdue_count")
+    )->first();
+
+    $remaining_fees_due = $stats->total_fees_due - $stats->total_fees_collected;
+
+    // Academic years for filter
+    $academic_years = StudentFee::select('academic_year')
+        ->distinct()
+        ->orderBy('academic_year', 'desc')
+        ->pluck('academic_year');
+
+    // Fees table (same base query)
+    $fees = (clone $baseQuery)
+        ->with('student')
+        ->orderBy('due_date', 'desc')
+        ->get();
+
+    // Students
+    $students = Student::where('status', 'registered')
+        ->orderBy('name')
+        ->get();
+
+    return view('admin.fees.index', compact(
+        'stats',
+        'remaining_fees_due',
+        'academic_years',
+        'selected_year',
+        'fees',
+        'students'
+    ));
+}
+
 
     public function store(Request $request)
 {
     $request->validate([
         'student_id' => 'required|exists:students,student_id',
         'fee_type' => 'required|string|max:255',
-        'installment_number' => 'required|integer|min:1',
+        'installment_number' => 'required|string|max:255',
         'academic_year' => 'required|string|max:255',
         'amount' => 'required|numeric|min:0',
         'due_date' => 'required|date',
@@ -159,7 +161,7 @@ public function update(Request $request, $id)
 {
     $request->validate([
         'fee_type' => 'required|string|max:255',
-        'installment_number' => 'required|integer|min:1',
+       'installment_number' => 'required|string|max:255',
         'amount' => 'required|numeric|min:0',
         'paid_amount' => 'required|numeric|min:0',
         'due_date' => 'required|date',
@@ -199,13 +201,45 @@ public function getFeeDetails($id)
 {
     try {
         $fee = StudentFee::with('student')->findOrFail($id);
-        
+
+        // Define all possible installments
+        $allInstallments = [
+            'Registration Fees',
+            '1st installment',
+            '2nd installment',
+            '3rd installment',
+            'Other'
+        ];
+
+        // Get all fees for this student and academic year
+        $studentFees = StudentFee::where('student_id', $fee->student_id)
+            ->where('academic_year', $fee->academic_year)
+            ->get()
+            ->keyBy('installment_number'); // key = installment name
+
+        // Prepare installments table
+        $installmentsTable = [];
+        foreach ($allInstallments as $installment) {
+            if (isset($studentFees[$installment])) {
+                $installmentsTable[] = [
+                    'installment' => $installment,
+                    'amount' => $studentFees[$installment]->amount
+                ];
+            } else {
+                $installmentsTable[] = [
+                    'installment' => $installment,
+                    'amount' => 'Not assigned'
+                ];
+            }
+        }
+
         return response()->json([
             'success' => true,
             'fee_id' => $fee->fee_id,
             'student' => [
                 'name' => $fee->student->name,
-                'student_id' => $fee->student->student_id
+                'student_id' => $fee->student->student_id,
+                 'class_applying_for' => $fee->student->class_applying_for
             ],
             'fee_type' => $fee->fee_type,
             'installment_number' => $fee->installment_number,
@@ -213,8 +247,10 @@ public function getFeeDetails($id)
             'amount' => (float) $fee->amount,
             'paid_amount' => (float) $fee->paid_amount,
             'due_date' => $fee->due_date->toDateString(),
-            'status' => $fee->status
+            'status' => $fee->status,
+            'installments_table' => $installmentsTable
         ]);
+
     } catch (\Exception $e) {
         return response()->json([
             'success' => false,
@@ -223,6 +259,7 @@ public function getFeeDetails($id)
         ], 500);
     }
 }
+
 
 /**
  * Get fee data for editing (API endpoint)

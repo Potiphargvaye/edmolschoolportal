@@ -67,19 +67,31 @@
 
         <!-- Admin image & name section -->
         <li class="dropdown ml-3">
-            <button type="button" class="dropdown-toggle flex items-center">   
-                <div class="flex-shrink-0 w-10 h-10 relative">
-                    <div class="p-1 bg-white rounded-full focus:outline-none focus:ring">
-                        <img class="w-8 h-8 rounded-full" src="https://laravelui.spruko.com/tailwind/ynex/build/assets/images/faces/9.jpg" alt=""/>
-                        <div class="top-0 left-7 absolute w-3 h-3 bg-lime-400 border-2 border-white rounded-full animate-ping"></div>
-                        <div class="top-0 left-7 absolute w-3 h-3 bg-lime-500 border-2 border-white rounded-full"></div>
-                    </div>
-                </div>
-                <div class="p-2 md:block text-left">
-                   <h2 class="text-sm font-semibold text-white">Potiphar Vaye</h2>
-<p class="text-xs text-white/70">Administrator</p>
-                </div>                
-            </button>
+          <button type="button" class="dropdown-toggle flex items-center">
+    <div class="flex-shrink-0 w-10 h-10 relative">
+        @if(Auth::user()->image)
+            <div class="p-1 bg-white rounded-full focus:outline-none focus:ring">
+                <img class="w-8 h-8 rounded-full object-cover" 
+                     src="{{ asset('storage/' . Auth::user()->image) }}" 
+                     alt="{{ Auth::user()->name }}" />
+                <div class="top-0 left-7 absolute w-3 h-3 bg-lime-400 border-2 border-white rounded-full animate-ping"></div>
+                <div class="top-0 left-7 absolute w-3 h-3 bg-lime-500 border-2 border-white rounded-full"></div>
+            </div>
+        @else
+            <div class="p-1 bg-white rounded-full flex items-center justify-center">
+                <span class="text-sm font-bold text-gray-800">{{ substr(Auth::user()->name, 0, 1) }}</span>
+                <div class="top-0 left-7 absolute w-3 h-3 bg-lime-400 border-2 border-white rounded-full animate-ping"></div>
+                <div class="top-0 left-7 absolute w-3 h-3 bg-lime-500 border-2 border-white rounded-full"></div>
+            </div>
+        @endif
+    </div>
+
+    <div class="p-2 md:block text-left">
+        <h2 class="text-sm font-semibold text-white">{{ Auth::user()->name }}</h2>
+        <p class="text-xs text-white/70">{{ ucfirst(Auth::user()->role) }}</p>
+    </div>
+</button>
+
             <ul class="dropdown-menu shadow-md shadow-black/5 z-30 hidden py-1.5 rounded-md bg-white border border-gray-100 w-full max-w-[140px]">
                 <li>
                     <a href="#" class="flex items-center text-[13px] py-1.5 px-4 text-gray-600 hover:text-[#f84525] hover:bg-gray-50">Profile</a>

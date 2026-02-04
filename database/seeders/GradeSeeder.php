@@ -9,20 +9,28 @@ class GradeSeeder extends Seeder
 {
     public function run()
     {
-        $sections = ['A', 'B'];
-        
-        // Create grades from level 1 to 12 with sections A and B
-        foreach (range(1, 12) as $level) {
-            foreach ($sections as $section) {
-                Grade::create([
-                    'level' => $level,
-                    'section' => $section,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
-            }
+        $grades = [
+            'K-G',
+            'Grade 1',
+            'Grade 2',
+            'Grade 3',
+            'Grade 4',
+            'Grade 5',
+            'Grade 6',
+            'Grade 7',
+            'Grade 8',
+            'Grade 9',
+            'Grade 10',
+            'Grade 11',
+            'Grade 12',
+        ];
+
+        foreach ($grades as $grade) {
+            Grade::create([
+                'level' => $grade,
+            ]);
         }
-        
-        $this->command->info('Successfully created grades for levels 1-12 with sections A and B!');
+
+        $this->command->info('Grades K-G to Grade 12 seeded successfully!');
     }
 }
