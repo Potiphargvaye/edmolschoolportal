@@ -96,14 +96,15 @@
     </div>
 </div>
 
-
-        <!-- Payment Form -->
+<!-- Payment Form -->
 <div class="bg-white rounded-md shadow-sm p-4 sm:p-6 mb-4 border border-gray-200 max-w-full overflow-x-hidden">
     <h3 class="text-sm sm:text-base font-semibold text-gray-800 mb-3">Record Payment</h3>
     <form action="{{ route('admin.fees.payment', 0) }}" method="POST" id="paymentForm" class="w-full">
         @csrf
+
         <!-- First Row: Fee Record + Amount -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 mb-3 w-full">
+            <!-- Fee Record -->
             <div class="form-group w-full">
                 <label for="fee_id" class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Select Fee Record</label>
                 <select id="fee_id" name="fee_id" required
@@ -116,6 +117,8 @@
                     @endforeach
                 </select>
             </div>
+
+            <!-- Amount Paid -->
             <div class="form-group w-full">
                 <label for="paid_amount" class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Amount Paid</label>
                 <input type="number" id="paid_amount" name="paid_amount" step="0.01" required
@@ -124,49 +127,56 @@
         </div>
 
         <!-- Second Row: Payment Method + Reference -->
-       <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 mb-3 w-full">
-    <div class="form-group w-full">
-        <label for="payment_method" class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
-            Payment Method
-        </label>
-        <select id="payment_method" name="payment_method" required
-                class="mt-1 block w-full text-xs sm:text-sm pl-2 pr-6 py-1.5 border border-gray-300 rounded-md
-                       focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500
-                       truncate max-w-full">
-            <option value="">Select Method</option>
-            <option value="Cash" class="truncate">Cash</option>
-            <option value="Check" class="truncate">Check</option>
-            <option value="Bank Transfer" class="truncate">Bank Transfer</option>
-            <option value="Credit Card" class="truncate">Credit Card</option>
-            <option value="Mobile Money" class="truncate">Mobile Money</option>
-        </select>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 mb-3 w-full">
+            <!-- Payment Method -->
+            <div class="form-group w-full">
+                <label for="payment_method" class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Payment Method</label>
+                <select id="payment_method" name="payment_method" required
+                        class="mt-1 block w-full text-xs sm:text-sm pl-2 pr-6 py-1.5 border border-gray-300 rounded-md
+                               focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 truncate max-w-full">
+                    <option value="">Select Method</option>
+                    <option value="Cash" class="truncate">Cash</option>
+                    <option value="Check" class="truncate">Check</option>
+                    <option value="Bank Transfer" class="truncate">Bank Transfer</option>
+                    <option value="Credit Card" class="truncate">Credit Card</option>
+                    <option value="Mobile Money" class="truncate">Mobile Money</option>
+                </select>
+            </div>
+
+            <!-- Reference Number -->
+            <div class="form-group w-full">
+                <label for="reference_number" class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Reference Number</label>
+                <input type="text" id="reference_number" name="reference_number"
+                       class="mt-1 block w-full text-xs sm:text-sm pl-2 pr-6 py-1.5 border border-gray-300 rounded-md
+                              focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 truncate max-w-full">
+            </div>
+        </div>
+
+       <!-- Payment Date + Submit Button -->
+<div class="flex items-center gap-2">
+    <!-- Payment Date -->
+    <div class="relative">
+        <label for="payment_date" class="sr-only">Payment Date</label>
+        <input type="date" id="payment_date" name="payment_date" required
+               class="pl-8 pr-3 py-1.5 border border-gray-300 rounded-md text-xs sm:text-sm
+                      focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+               value="{{ date('Y-m-d') }}">
+        <span class="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400">
+            <i class="fas fa-calendar-alt text-xs sm:text-sm"></i>
+        </span>
     </div>
 
-    <div class="form-group w-full">
-        <label for="reference_number" class="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
-            Reference Number
-        </label>
-        <input type="text" id="reference_number" name="reference_number"
-               class="mt-1 block w-full text-xs sm:text-sm pl-2 pr-6 py-1.5 border border-gray-300 rounded-md
-                      focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 truncate max-w-full">
-    </div>
+    <!-- Record Button -->
+    <button type="submit"
+            class="bg-[#0a1f44] text-white px-3 py-1.5 rounded-md hover:opacity-90 transition flex items-center gap-1 text-xs font-semibold shadow-sm">
+        <i class="fas fa-money-bill-wave text-xs"></i>
+        Record
+    </button>
 </div>
-
-
-        <!-- Submit Button -->
-       <button
-    type="submit"
-    class="bg-[#0a1f44] text-white px-3 py-1.5
-           rounded-md hover:opacity-90 transition
-           flex items-center gap-1
-           text-xs font-semibold shadow-sm"
->
-    <i class="fas fa-money-bill-wave text-xs"></i>
-    Record
-</button>
 
     </form>
 </div>
+
 
         <!-- Search and Filter Section -->
 <div class="bg-white rounded-lg shadow-sm p-4 sm:p-6 mb-6 border border-gray-200 w-full">

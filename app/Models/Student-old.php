@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Models;
 
@@ -19,48 +19,26 @@ class Student extends Model
         'transcript',
         'recommendation_letter',
         'class_applying_for',
-        'date_of_admission',
-        'status', // ✅ added
-        'status',
-        'shift',
-        'intake',
-        'grade_id',
-        'subjects',
-         'class_applying_for',
-          'last_school_attended'
-
+        'date_of_admission'
     ];
+
+
 
     protected $casts = [
-        'date_of_admission' => 'date',
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
-        'subjects' => 'array',
-        'grade_id' => 'integer',
-    ];
-
-    public function grade()
-{
-    return $this->belongsTo(Grade::class, 'grade_id');
-}
-
-public function assignSubjects(array $subjects)
-{
-    $this->update(['subjects' => $subjects]);
-}
-
+    'date_of_admission' => 'date',
+    'created_at' => 'datetime',
+    'updated_at' => 'datetime',
+];
 
     protected static function boot()
     {
         parent::boot();
 
         static::creating(function ($student) {
+            // Generate custom student ID: EDMOL0001/2025
             $latestStudent = static::latest('id')->first();
             $nextId = $latestStudent ? $latestStudent->id + 1 : 1;
             $student->student_id = 'EDMOL' . str_pad($nextId, 4, '0', STR_PAD_LEFT) . '/' . date('Y');
-
-            // ✅ ensure default status
-            $student->status = $student->status ?? 'candidate';
         });
     }
 }

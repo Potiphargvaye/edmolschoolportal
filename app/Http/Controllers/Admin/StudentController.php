@@ -22,7 +22,7 @@ class StudentController extends Controller
         'students',
         'totalStudents',
         'maleStudents',
-        'femaleStudents'
+        'femaleStudents'   
     ));
 }
 
@@ -42,7 +42,9 @@ class StudentController extends Controller
             'date_of_admission' => 'required|date',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'transcript' => 'nullable|file|mimes:pdf,doc,docx|max:5120',
-            'recommendation_letter' => 'nullable|file|mimes:pdf,doc,docx|max:5120'
+            'recommendation_letter' => 'nullable|file|mimes:pdf,doc,docx|max:5120',
+            'student_type' => 'required|in:New,Old',
+             'last_school_attended' => 'required|string|max:255'
         ]);
 
         $data = $request->except(['_token', 'image', 'transcript', 'recommendation_letter']);
@@ -65,7 +67,6 @@ class StudentController extends Controller
         return redirect()->route('admin.students.index')
             ->with('success', 'Student registered successfully.');
     }
-
     public function show(Student $student)
 {
     if (request()->ajax() || request()->wantsJson()) {

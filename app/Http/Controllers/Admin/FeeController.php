@@ -14,6 +14,9 @@ class FeeController extends Controller
    public function index(Request $request)
 {
     $selected_year = $request->get('academic_year', '');
+    // 🔹 Save selected year for dashboard sync
+session(['dashboard_academic_year' => $selected_year]);
+
 
     // Base query (single source of truth)
     $baseQuery = StudentFee::query();
@@ -88,12 +91,15 @@ class FeeController extends Controller
         ->with('success', 'Fee assigned successfully!');
 }
 
+
 public function updatePayment(Request $request, $id)
 {
+    // Validate including the payment_date
     $request->validate([
         'paid_amount' => 'required|numeric|min:0',
         'payment_method' => 'required|string|max:255',
         'reference_number' => 'nullable|string|max:255',
+        'payment_date' => 'required|date', // ✅ Add this
     ]);
 
     $fee = StudentFee::findOrFail($id);
@@ -108,13 +114,13 @@ public function updatePayment(Request $request, $id)
 
     $fee->update([
         'paid_amount' => $new_paid_amount,
-        'payment_date' => now(),
+        'payment_date' => $request->payment_date, // ✅ Corrected key
         'payment_method' => $request->payment_method,
         'reference_number' => $request->reference_number,
         'status' => $status,
     ]);
 
-    // Check if it's an AJAX request
+    // AJAX response if requested
     if ($request->ajax() || $request->wantsJson()) {
         return response()->json([
             'success' => true,
@@ -125,6 +131,7 @@ public function updatePayment(Request $request, $id)
     return redirect()->route('admin.fees.index')
         ->with('success', 'Payment recorded successfully!');
 }
+
 
 public function destroy(Request $request, $id)
 {

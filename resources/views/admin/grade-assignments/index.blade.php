@@ -99,19 +99,20 @@
 
             <!-- Student -->
             <div>
-                <label class="block text-xs font-medium text-gray-600 mb-1">Student</label>
-                <select name="student_id"
-                    class="w-full px-3 py-1.5 text-xs border border-gray-300 rounded-md
-                           focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                    required>
-                    <option value="">Select Student</option>
-                    @foreach($unassignedStudents as $student)
-                        <option value="{{ $student->id }}">
-                            {{ $student->name }} ({{ $student->registration_id }})
-                        </option>
-                    @endforeach
-                </select>
-            </div>
+    <label class="block text-xs font-medium text-gray-600 mb-1">Student</label>
+    <select name="student_id"
+        class="w-full px-3 py-1.5 text-xs border border-gray-300 rounded-md
+               focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+        required>
+        <option value="">Select Student</option>
+        @foreach($unassignedStudents as $student)
+            <option value="{{ $student->id }}">
+                {{ $student->name }} ({{ $student->student_id }})
+            </option>
+        @endforeach
+    </select>
+</div>
+
 
             <!-- Grade -->
             <div>

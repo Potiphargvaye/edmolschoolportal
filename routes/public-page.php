@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+  use App\Http\Controllers\Public\PublicStudentController;
 
 Route::get('/', function () {
     return view('public.index'); // <- note the dot notation for subfolders
@@ -34,6 +35,16 @@ Route::get('/blog', function () {
 });
 
 
-Route::get('/hello', function () {
-    return view('public.hello');
+Route::get('/registeration-form', function () {
+    return view('public.registeration-form');
 });
+
+
+
+
+  
+Route::get('/student/register', [PublicStudentController::class, 'create'])
+    ->name('public.students.create');
+
+Route::post('/student/register', [PublicStudentController::class, 'store'])
+    ->name('public.students.store');

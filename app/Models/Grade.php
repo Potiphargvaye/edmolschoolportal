@@ -43,12 +43,12 @@ class Grade extends Model
                     ?->pivot
                     ?->subjects ?? [];
     }
-
-    // Relationship: Get all students in this grade
+    
+// Updated: point to Student model instead of User
     public function students(): HasMany
     {
-        return $this->hasMany(User::class, 'grade_id')
-                    ->where('role', 'student');
+        return $this->hasMany(Student::class, 'grade_id')
+                    ->where('status', 'registered');
     }
 
     public function TeacherMaterial()

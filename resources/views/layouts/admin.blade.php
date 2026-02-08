@@ -10,6 +10,9 @@
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ asset('kiddos-school-master/css/templatemo-glass-admin-style.css') }}">
+<script src="{{ asset('kiddos-school-master/js/templatemo-glass-admin-script.js') }}"></script>
+
     @include('partials.admin.admin-head')
     @livewireStyles
 </head>
@@ -22,8 +25,10 @@
     {{-- Mobile overlay --}}
     <div class="fixed top-0 left-0 w-full h-full bg-black/50 z-40 md:hidden sidebar-overlay hidden"></div>
 
-    {{-- Main --}}
-   <main class="w-full md:w-[calc(100%-256px)] md:ml-64 bg-white min-h-screen transition-all main">
+    {{-- Main 
+   <main class="w-full md:w-[calc(100%-256px)] md:ml-64 bg-white min-h-screen transition-all main">--}}
+    <main class="w-full md:w-[calc(100%-256px)] md:ml-64 min-h-screen transition-all main bg-transparent">
+
 
 
         {{-- Navbar --}} 
@@ -31,8 +36,11 @@
 
         {{-- Page Content --}}
         <section class="p-6">
-            @yield('content')
-        </section>
+    <div class="dashboard-glass">
+        @yield('content')
+    </div>
+     </section>
+
 
     </main>
 

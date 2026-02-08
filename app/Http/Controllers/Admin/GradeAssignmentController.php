@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Subject;
+use App\Models\Student;
 
 class GradeAssignmentController extends Controller
 {
@@ -19,9 +20,10 @@ public function index()
     }, 'students'])->get();
     
     $allTeachers = User::where('role', 'teacher')->get();
-    $unassignedStudents = User::where('role', 'student')
-                            ->whereNull('grade_id')
-                            ->get();
+   $unassignedStudents = Student::where('status', 'registered')
+                             ->whereNull('grade_id')
+                             ->get();
+
     
     $allSubjects = \App\Models\Subject::orderBy('name')->get();
     
@@ -103,12 +105,14 @@ public function index()
     public function assignStudent(Request $request)
     {
         $validated = $request->validate([
-            'student_id' => 'required|exists:users,id',
-            'grade_id' => 'required|exists:grades,id',
-            'subjects' => 'required|array|min:1'
-        ]);
+    'student_id' => 'required|exists:students,id',
+    'grade_id' => 'required|exists:grades,id',
+    'subjects' => 'required|array|min:1'
+]);
 
-        $student = User::findOrFail($validated['student_id']);
+
+$student = Student::findOrFail($validated['student_id']);
+
         $student->update([
             'grade_id' => $validated['grade_id'],
             'subjects' => json_encode($validated['subjects'])
@@ -117,14 +121,13 @@ public function index()
         return back()->with('success', 'Student assigned successfully');
     }
 
-    public function unassignStudent(Request $request, User $student)
+public function unassignStudent(Request $request, Student $student)
 {
     $student->update([
         'grade_id' => null,
         'subjects' => null
     ]);
 
-    // Check if it's an AJAX request
     if ($request->ajax() || $request->wantsJson()) {
         return response()->json([
             'success' => true,
@@ -134,6 +137,7 @@ public function index()
 
     return back()->with('success', 'Student unassigned successfully');
 }
+
 
     public function updateSubjects(Request $request, Grade $grade)
     {

@@ -148,110 +148,107 @@ use Illuminate\Support\Facades\Storage;
 <body class="bg-gray-50 min-h-screen">
     <div class="container mx-auto px-4 py-8">
         <!-- Stats Grid -->
-        <div class="stats-cards grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <!-- Total Users Card -->
-            <div class="stat-card bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl p-6 shadow-lg">
-                <div class="flex items-center">
-                    <div class="stat-icon bg-white/20 p-3 rounded-full text-white mr-4">
-                        <i class="fas fa-users text-xl"></i>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-600 font-medium">Total Users</p>
-                    <h3 class="text-2xl font-bold text-gray-800">{{ $totalUsers }}</h3>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Teachers Card -->
-            <div class="stat-card bg-gradient-to-r from-green-500 to-green-600 text-white rounded-xl p-6 shadow-lg">
-                <div class="flex items-center">
-                    <div class="stat-icon bg-white/20 p-3 rounded-full text-white mr-4">
-                        <i class="fas fa-chalkboard-teacher text-xl"></i>
-                    </div>
-                    <div>
-                         <p class="text-sm text-gray-600 font-medium">Teachers</p>
-                    <h3 class="text-2xl font-bold text-gray-800">{{ $totalTeachers }}</h3>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Students Card -->
-            <div class="stat-card bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-xl p-6 shadow-lg">
-                <div class="flex items-center">
-                    <div class="stat-icon bg-white/20 p-3 rounded-full text-white mr-4">
-                        <i class="fas fa-user-graduate text-xl"></i>
-                    </div>
-                    <div>
-                       <p class="text-sm text-gray-600 font-medium">Students</p>
-                    <h3 class="text-2xl font-bold text-gray-800">{{ $totalStudents }}</h3>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Administrators Card -->
-            <div class="stat-card bg-gradient-to-r from-red-500 to-red-600 text-white rounded-xl p-6 shadow-lg">
-                <div class="flex items-center">
-                    <div class="stat-icon bg-white/20 p-3 rounded-full text-white mr-4">
-                        <i class="fas fa-user-shield text-xl"></i>
-                    </div>
-                    <div>
-                        <p class="text-sm text-gray-600 font-medium">Administrators</p>
-                    <h3 class="text-2xl font-bold text-gray-800">{{ $totalAdmins }}</h3>
-                    </div>
-                </div>
-            </div>
+       <div class="stats-cards grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+    <!-- Total Users Card -->
+    <div class="stat-card bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg p-4 shadow-md flex items-center">
+        <div class="stat-icon bg-white/20 p-2 rounded-full text-white mr-3 flex-shrink-0">
+            <i class="fas fa-users text-sm sm:text-base"></i>
         </div>
-
-        <!-- Top Bar with Search -->
-        <div class="top-bar bg-white rounded-xl shadow-sm p-5 mb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <div class="flex justify-between items-center w-full md:w-auto">
-                <h1 class="text-2xl font-bold text-gray-800">Users Management</h1>
-            </div>
-            
-            <div class="flex flex-col md:flex-row items-start md:items-center gap-4 w-full md:w-auto">
-                <!-- Search Bar -->
-                <div class="search-bar flex items-center bg-gray-100 py-2 px-4 rounded-full w-full md:w-96">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                    <input type="text" id="searchInput" placeholder="Search users..." 
-                           class="bg-transparent py-1 px-3 w-full focus:outline-none search-input">
-                </div>
-                
-                <!-- Add New User Button -->
-                <button onclick="openCreateUserModal()" class="flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors whitespace-nowrap">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                    </svg>
-                    Add New User
-                </button>
-                
-               <!-- Admin Profile -->
-          <div class="user-profile cursor-pointer">
-        @if(auth()->user()->image)
-        <img src="{{ asset('storage/'.auth()->user()->image) }}" 
-             alt="Admin" 
-             class="w-14 h-14 rounded-full object-cover border-2 border-indigo-300 shadow-sm">
-        @else
-        <div class="w-14 h-14 rounded-full bg-gradient-to-br from-indigo-100 to-purple-100 text-indigo-700 flex items-center justify-center font-bold text-xl shadow-sm">
-            {{ substr(auth()->user()->name, 0, 1) }}
-        </div>
-    @endif
-    </div>
+        <div class="flex-1">
+            <p class="text-xs sm:text-sm font-medium text-white">Total Users</p>
+            <h3 class="text-lg sm:text-xl font-bold text-white">{{ $totalUsers }}</h3>
         </div>
     </div>
 
-    <!-- Loading Spinner -->
-    <div id="loadingSpinner" class="loading-spinner">
-        <div class="flex flex-col items-center">
-            <div class="relative">
-                <i class="fas fa-spinner fa-spin text-4xl text-indigo-500 mb-2"></i>
-                <div class="absolute inset-0 bg-indigo-500 rounded-full animate-ping opacity-20"></div>
-            </div>
-            <p class="mt-2 text-gray-600 font-medium">Searching users...</p>
-            <p class="text-sm text-gray-400">Please wait while we find the best matches</p>
+    <!-- Teachers Card -->
+    <div class="stat-card bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg p-4 shadow-md flex items-center">
+        <div class="stat-icon bg-white/20 p-2 rounded-full text-white mr-3 flex-shrink-0">
+            <i class="fas fa-chalkboard-teacher text-sm sm:text-base"></i>
+        </div>
+        <div class="flex-1">
+            <p class="text-xs sm:text-sm font-medium text-white">Teachers</p>
+            <h3 class="text-lg sm:text-xl font-bold text-white">{{ $totalTeachers }}</h3>
         </div>
     </div>
+
+    <!-- Students Card -->
+    <div class="stat-card bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-lg p-4 shadow-md flex items-center">
+        <div class="stat-icon bg-white/20 p-2 rounded-full text-white mr-3 flex-shrink-0">
+            <i class="fas fa-user-graduate text-sm sm:text-base"></i>
+        </div>
+        <div class="flex-1">
+            <p class="text-xs sm:text-sm font-medium text-white">Students</p>
+            <h3 class="text-lg sm:text-xl font-bold text-white">{{ $totalStudents }}</h3>
+        </div>
+    </div>
+
+    <!-- Administrators Card -->
+    <div class="stat-card bg-gradient-to-r from-red-500 to-red-600 text-white rounded-lg p-4 shadow-md flex items-center">
+        <div class="stat-icon bg-white/20 p-2 rounded-full text-white mr-3 flex-shrink-0">
+            <i class="fas fa-user-shield text-sm sm:text-base"></i>
+        </div>
+        <div class="flex-1">
+            <p class="text-xs sm:text-sm font-medium text-white">Administrators</p>
+            <h3 class="text-lg sm:text-xl font-bold text-white">{{ $totalAdmins }}</h3>
+        </div>
+    </div>
+</div>
+
+
+       <!-- Top Bar with Search -->
+<div class="top-bar bg-white rounded-lg shadow-sm p-3 mb-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
+    <div class="flex justify-between items-center w-full md:w-auto">
+        <h1 class="text-xl md:text-2xl font-semibold text-gray-800">Users Management</h1>
+    </div>
+    
+    <div class="flex flex-col md:flex-row items-start md:items-center gap-3 w-full md:w-auto">
+        <!-- Search Bar -->
+        <div class="search-bar flex items-center bg-gray-100 py-1.5 px-3 rounded-full w-full md:w-80">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <input type="text" id="searchInput" placeholder="Search users..." 
+                   class="bg-transparent py-1 px-2 w-full focus:outline-none text-sm search-input">
+        </div>
+        
+        <!-- Add New User Button -->
+        <button onclick="openCreateUserModal()" class="flex items-center gap-1.5 bg-indigo-600 text-white px-3 py-1.5 rounded-md hover:bg-indigo-700 transition-colors whitespace-nowrap text-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+            Add New User
+        </button>
+        
+        <!-- Admin Profile -->
+        <div class="user-profile cursor-pointer">
+            @if(auth()->user()->image)
+            <img src="{{ asset('storage/'.auth()->user()->image) }}" 
+                 alt="Admin" 
+                 class="w-10 h-10 md:w-12 md:h-12 rounded-full object-cover border-2 border-indigo-300 shadow-sm">
+            @else
+            <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-br from-indigo-100 to-purple-100 text-indigo-700 flex items-center justify-center font-semibold text-lg md:text-xl shadow-sm">
+                {{ substr(auth()->user()->name, 0, 1) }}
+            </div>
+            @endif
+        </div>
+    </div>
+</div>
+
+
+    <!-- Loading Spinner --> 
+<div id="loadingSpinner" class="loading-spinner">
+    <div class="flex flex-col items-center">
+        <div class="relative">
+            <!-- Smaller spinner icon -->
+            <i class="fas fa-spinner fa-spin text-2xl text-indigo-500 mb-1"></i>
+            <div class="absolute inset-0 bg-indigo-500 rounded-full animate-ping opacity-20"></div>
+        </div>
+        <!-- Smaller text -->
+        <p class="mt-1 text-gray-600 text-sm font-medium">Searching users...</p>
+        <p class="text-xs text-gray-400">Please wait while we find the best matches</p>
+    </div>
+</div>
+
         
     <!-- Users Table -->
     <div class="bg-white rounded-lg shadow overflow-hidden">
@@ -365,58 +362,57 @@ use Illuminate\Support\Facades\Storage;
 
 <!-- Add User Modal -->
 <div id="createUserModal" class="fixed inset-0 bg-blue-900 bg-opacity-60 backdrop-blur-sm overflow-y-auto h-full w-full z-50 hidden">
-    <div class="relative top-8 mx-auto p-2 w-full max-w-2xl">
-        <div class="bg-white rounded-2xl shadow-2xl border border-blue-100 transform transition-all duration-300 hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)]">
+    <div class="relative top-8 mx-auto p-2 w-full max-w-lg">
+        <div class="bg-white rounded-xl shadow-xl border border-blue-100 transform transition-all duration-200">
             <!-- Modal Header -->
-            <div class="flex items-center justify-between p-6 bg-gradient-to-r from-indigo-600 to-indigo-700 rounded-t-2xl">
+            <div class="flex items-center justify-between p-4 bg-gradient-to-r from-blue-800 to-blue-900 rounded-t-xl">
                 <div class="text-white">
-                    <h3 class="text-2xl font-bold">Add New System User</h3>
-                    <p class="text-indigo-100 mt-1">Admin panel for registering new users</p>
+                    <h3 class="text-lg font-bold">Add New System User</h3>
+                    <p class="text-blue-200 text-sm mt-1">Admin panel for registering new users</p>
                 </div>
-                <button onclick="closeCreateUserModal()" class="text-white hover:bg-red-500 hover:scale-110 transition-all duration-200 p-2 rounded-full bg-red-400">
-                    <i class="fas fa-times text-xl"></i>
+                <button onclick="closeCreateUserModal()" class="text-white hover:bg-red-500 hover:scale-110 transition-all duration-200 p-1.5 rounded-full bg-red-400">
+                    <i class="fas fa-times text-base"></i>
                 </button>
             </div>
 
             <!-- Modal Body -->
-            <div class="p-6 max-h-[80vh] overflow-y-auto">
-                <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data" id="registrationForm">
+            <div class="p-4 max-h-[75vh] overflow-y-auto">
+                <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data" id="registrationForm" class="space-y-4">
                     @csrf
 
                     <!-- Profile Image Upload -->
-                    <div class="mb-6">
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Profile Photo</label>
-                        <div class="flex items-center space-x-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Profile Photo</label>
+                        <div class="flex items-center space-x-3">
                             <div class="relative">
-                                <img id="image-preview" src="{{ asset('images/default-avatar.png') }}" 
-                                     class="h-16 w-16 rounded-full object-cover border-2 border-white shadow">
-                                <div class="absolute -bottom-1 -right-1 bg-indigo-600 rounded-full p-1">
+                                <img id="image-preview" src="{{ asset('images/default-avatar.png') }}" class="h-12 w-12 rounded-full object-cover border-2 border-white shadow">
+                                <div class="absolute -bottom-1 -right-1 bg-blue-800 rounded-full p-1">
                                     <i class="fas fa-camera text-white text-xs"></i>
                                 </div>
                             </div>
                             <label class="file-upload flex-1">
                                 <input type="file" id="image" name="image" accept="image/*" class="hidden">
-                                <div class="file-upload-label border-2 border-dashed border-gray-300 rounded-lg p-4 text-center cursor-pointer hover:border-blue-400 transition-colors">
-                                    <p class="text-sm text-gray-600">Click to upload photo</p>
-                                    <p class="text-xs text-gray-500 mt-1">PNG, JPG up to 2MB</p>
+                                <div class="file-upload-label border-2 border-dashed border-gray-300 rounded-lg p-2 text-center cursor-pointer hover:border-blue-600 transition-colors">
+                                    <p class="text-xs text-gray-600">Click to upload photo</p>
+                                    <p class="text-[10px] text-gray-500 mt-0.5">PNG, JPG up to 2MB</p>
                                 </div>
                             </label>
                         </div>
                         @error('image')
-                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
 
                     <!-- Grid Layout for Form Fields -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                         <!-- Name -->
                         <div>
                             <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
                             <input type="text" id="name" name="name" value="{{ old('name') }}" required
-                                   class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                   class="w-full px-3 py-1.5 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
                                    placeholder="John Doe">
                             @error('name')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
 
@@ -424,10 +420,10 @@ use Illuminate\Support\Facades\Storage;
                         <div>
                             <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email *</label>
                             <input type="email" id="email" name="email" value="{{ old('email') }}" required
-                                   class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                   class="w-full px-3 py-1.5 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
                                    placeholder="user@example.com">
                             @error('email')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
 
@@ -435,10 +431,10 @@ use Illuminate\Support\Facades\Storage;
                         <div>
                             <label for="registration_id" class="block text-sm font-medium text-gray-700 mb-1">Registration ID *</label>
                             <input type="text" id="registration_id" name="registration_id" value="{{ old('registration_id') }}" required
-                                   class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                   class="w-full px-3 py-1.5 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
                                    placeholder="EDMOL0001/2025">
                             @error('registration_id')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
 
@@ -446,14 +442,14 @@ use Illuminate\Support\Facades\Storage;
                         <div>
                             <label for="role" class="block text-sm font-medium text-gray-700 mb-1">User Role *</label>
                             <select id="role" name="role" required
-                                    class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all appearance-none bg-white">
+                                    class="w-full px-3 py-1.5 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm appearance-none bg-white">
                                 <option value="">Select a role</option>
                                 <option value="student" {{ old('role') == 'student' ? 'selected' : '' }}>Student</option>
                                 <option value="teacher" {{ old('role') == 'teacher' ? 'selected' : '' }}>Teacher</option>
                                 <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Administrator</option>
                             </select>
                             @error('role')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
 
@@ -461,35 +457,35 @@ use Illuminate\Support\Facades\Storage;
                         <div>
                             <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password *</label>
                             <input type="password" id="password" name="password" required
-                                   class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                   class="w-full px-3 py-1.5 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
                                    placeholder="••••••">
                             @error('password')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                             @enderror
-                            <p class="mt-1 text-xs text-gray-500">6-8 characters with letters and numbers</p>
+                            <p class="mt-1 text-[10px] text-gray-500">6-8 characters with letters and numbers</p>
                         </div>
 
                         <!-- Confirm Password -->
                         <div>
                             <label for="password_confirmation" class="block text-sm font-medium text-gray-700 mb-1">Confirm Password *</label>
                             <input type="password" id="password_confirmation" name="password_confirmation" required
-                                   class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                                   class="w-full px-3 py-1.5 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
                                    placeholder="••••••">
                             @error('password_confirmation')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
                     </div>
 
                     <!-- Form Actions -->
-                    <div class="mt-8 pt-6 border-t border-blue-200 flex flex-col sm:flex-row justify-end gap-3">
+                    <div class="pt-4 flex flex-col sm:flex-row justify-end gap-2">
                         <button type="button" onclick="closeCreateUserModal()" 
-                                class="px-6 py-3 border border-blue-300 text-blue-700 rounded-xl hover:bg-blue-50 hover:border-blue-400 hover:scale-105 transition-all duration-200 font-medium order-2 sm:order-1">
+                                class="px-4 py-2 border border-blue-300 text-blue-700 rounded-md hover:bg-blue-50 hover:border-blue-400 hover:scale-105 transition-all duration-200 text-sm">
                             Cancel
                         </button>
                         <button type="submit" 
-                                class="px-8 py-3 bg-gradient-to-r from-indigo-600 to-indigo-700 text-white rounded-xl hover:from-indigo-700 hover:to-indigo-800 hover:scale-105 transform transition-all duration-200 font-semibold shadow-lg hover:shadow-xl order-1 sm:order-2 flex items-center justify-center">
-                            <i class="fas fa-user-plus mr-2"></i> Register User
+                                class="px-5 py-2 bg-gradient-to-r from-blue-800 to-blue-900 text-white rounded-md hover:from-blue-900 hover:to-blue-950 hover:scale-105 transform transition-all duration-200 text-sm flex items-center justify-center gap-1">
+                            <i class="fas fa-user-plus text-xs"></i> Register
                         </button>
                     </div>
                 </form>
@@ -499,275 +495,310 @@ use Illuminate\Support\Facades\Storage;
 </div>
 
 <!-- Delete Confirmation Modal -->
-<div id="deleteUserModal" class="fixed inset-0 bg-blue-900 bg-opacity-60 backdrop-blur-sm overflow-y-auto h-full w-full z-50 hidden">
-    <div class="relative top-20 mx-auto p-2 w-full max-w-md">
-        <div class="bg-white rounded-2xl shadow-2xl border border-red-100">
-            <!-- Modal Header -->
-            <div class="flex items-center justify-between p-4 bg-gradient-to-r from-red-600 to-red-700 rounded-t-2xl">
-                <div class="text-white">
-                    <h3 class="text-xl font-bold">Confirm Delete</h3>
-                </div>
-                <button onclick="closeDeleteModal()" class="text-white hover:bg-red-500 hover:scale-110 transition-all duration-200 p-2 rounded-full">
-                    <i class="fas fa-times text-lg"></i>
+<div id="deleteUserModal"
+     class="fixed inset-0 bg-blue-900/60 backdrop-blur-sm z-50 hidden">
+
+    <div class="fixed inset-0 flex items-center justify-center p-3">
+        <div class="bg-white w-full max-w-sm rounded-xl shadow-xl border border-red-100">
+
+            <!-- Header -->
+            <div class="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-red-600 to-red-700 rounded-t-xl">
+                <h3 class="text-sm font-semibold text-white">
+                    Confirm Delete
+                </h3>
+                <button onclick="closeDeleteModal()"
+                        class="text-white text-lg leading-none hover:scale-110 transition">
+                    &times;
                 </button>
             </div>
 
-            <!-- Modal Body -->
-            <div class="p-6">
-                <p class="text-gray-700 mb-4">Are you sure you want to delete this user?</p>
-                <p id="deleteUserDetails" class="font-bold text-gray-800 my-3 p-3 bg-gray-50 rounded-lg border border-gray-200"></p>
-                <p class="text-red-600 flex items-center">
-                    <i class="fas fa-exclamation-triangle mr-2"></i>This action cannot be undone.
+            <!-- Body -->
+            <div class="px-4 py-3 space-y-2">
+                <p class="text-sm text-gray-700">
+                    Are you sure you want to delete this user?
+                </p>
+
+                <p id="deleteUserDetails"
+                   class="text-xs font-medium text-gray-800 px-3 py-2 bg-gray-50 border border-gray-200 rounded-md">
+                </p>
+
+                <p class="flex items-center gap-1 text-xs text-red-600">
+                    <i class="fas fa-exclamation-triangle text-xs"></i>
+                    This action cannot be undone.
                 </p>
             </div>
 
-            <!-- Modal Footer -->
-            <div class="bg-gray-50 p-4 rounded-b-2xl border-t border-gray-200 flex justify-end space-x-3">
-                <button type="button" onclick="closeDeleteModal()" 
-                        class="px-6 py-2 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 font-medium">
-                    <i class="fas fa-times mr-2"></i> Cancel
+            <!-- Footer -->
+            <div class="px-4 py-3 border-t border-gray-200 flex justify-end gap-2">
+                <button type="button"
+                        onclick="closeDeleteModal()"
+                        class="px-3 py-1.5 text-xs border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100 transition">
+                    Cancel
                 </button>
+
                 <form id="deleteUserForm" method="POST">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" 
-                            class="px-6 py-2 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-xl hover:from-red-700 hover:to-red-800 transition-all duration-200 font-semibold">
-                        <i class="fas fa-trash mr-2"></i> Delete User!
+                    <button type="submit"
+                            class="px-3 py-1.5 text-xs bg-red-600 text-white rounded-md hover:bg-red-700 transition flex items-center gap-1">
+                        <i class="fas fa-trash text-[10px]"></i>
+                        Delete
                     </button>
                 </form>
             </div>
+
         </div>
     </div>
 </div>
-
 
 <!-- Edit User Modal -->
-<div id="editUserModal" class="fixed inset-0 bg-blue-900 bg-opacity-60 backdrop-blur-sm overflow-y-auto h-full w-full z-50 hidden">
-    <div class="relative top-8 mx-auto p-2 w-full max-w-2xl">
-        <div class="bg-white rounded-2xl shadow-2xl border border-blue-100 transform transition-all duration-300 hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)]">
-            <!-- Modal Header -->
-            <div class="flex items-center justify-between p-6 bg-gradient-to-r from-indigo-600 to-indigo-700 rounded-t-2xl">
-                <div class="text-white">
-                    <h3 class="text-2xl font-bold">Edit User</h3>
-                    <p class="text-indigo-100 mt-1">Update user information</p>
-                </div>
-                <button onclick="closeEditModal()" class="text-white hover:bg-red-500 hover:scale-110 transition-all duration-200 p-2 rounded-full bg-red-400">
-                    <i class="fas fa-times text-xl"></i>
-                </button>
+<div id="editUserModal"
+     class="fixed inset-0 bg-blue-900 bg-opacity-60 backdrop-blur-sm z-50 hidden
+            flex items-center justify-center px-3 py-6 overflow-y-auto">
+
+
+    <div class="w-full max-w-lg bg-white rounded-xl shadow-xl border border-indigo-100 overflow-hidden">
+
+        <!-- Header -->
+        <div class="flex items-center justify-between px-3 py-2 bg-indigo-600">
+            <div class="text-white">
+                <h3 class="text-sm font-semibold leading-tight">Edit User</h3>
+                <p class="text-[11px] text-indigo-100">Update details</p>
             </div>
+            <button onclick="closeEditModal()"
+                    class="text-white bg-indigo-500 hover:bg-red-500 transition rounded-full p-1.5">
+                <i class="fas fa-times text-xs"></i>
+            </button>
+        </div>
 
-            <!-- Modal Body -->
-            <div class="p-6 max-h-[80vh] overflow-y-auto">
-                <form id="editUserForm" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    @method('PUT')
+        <!-- Body -->
+        <div class="p-3 max-h-[85vh] overflow-y-auto">
+            <form id="editUserForm" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <!-- Name -->
-                        <div>
-                            <label for="edit_name" class="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
-                            <input type="text" name="name" id="edit_name" required
-                                   class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-                                   placeholder="John Doe">
-                        </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
 
-                        <!-- Email -->
-                        <div>
-                            <label for="edit_email" class="block text-sm font-medium text-gray-700 mb-1">Email *</label>
-                            <input type="email" name="email" id="edit_email" required
-                                   class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-                                   placeholder="user@example.com">
-                        </div>
+                    <!-- Name -->
+                    <div>
+                        <label class="block text-[11px] font-medium text-gray-600 mb-0.5">
+                            Full Name *
+                        </label>
+                        <input type="text" name="name" id="edit_name" required
+                               class="w-full px-2 py-1.5 text-xs rounded-md border border-gray-300 focus:ring-1 focus:ring-indigo-500">
+                    </div>
 
-                        <!-- Registration ID -->
-                        <div>
-                            <label for="edit_registration_id" class="block text-sm font-medium text-gray-700 mb-1">Registration ID *</label>
-                            <input type="text" name="registration_id" id="edit_registration_id" required
-                                   class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-                                   placeholder="EDMOL0001/2025">
-                        </div>
+                    <!-- Email -->
+                    <div>
+                        <label class="block text-[11px] font-medium text-gray-600 mb-0.5">
+                            Email *
+                        </label>
+                        <input type="email" name="email" id="edit_email" required
+                               class="w-full px-2 py-1.5 text-xs rounded-md border border-gray-300 focus:ring-1 focus:ring-indigo-500">
+                    </div>
 
-                        <!-- Role Selection -->
-                        <div>
-                            <label for="edit_role" class="block text-sm font-medium text-gray-700 mb-1">User Role *</label>
-                            <select name="role" id="edit_role" required
-                                    class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all appearance-none bg-white">
-                                <option value="">Select a role</option>
-                                <option value="student">Student</option>
-                                <option value="teacher">Teacher</option>
-                                <option value="admin">Administrator</option>
-                            </select>
-                        </div>
+                    <!-- Registration ID -->
+                    <div>
+                        <label class="block text-[11px] font-medium text-gray-600 mb-0.5">
+                            Reg. ID *
+                        </label>
+                        <input type="text" name="registration_id" id="edit_registration_id" required
+                               class="w-full px-2 py-1.5 text-xs rounded-md border border-gray-300 focus:ring-1 focus:ring-indigo-500">
+                    </div>
 
-                        <!-- Profile Image Upload -->
-                        <div class="md:col-span-2">
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Profile Photo</label>
-                            <div class="flex items-center space-x-6">
-                                <div class="relative">
-                                    <img id="edit_image_preview" src="{{ asset('images/default-avatar.png') }}" 
-                                         class="h-24 w-24 rounded-full object-cover border-2 border-white shadow">
-                                    <div class="absolute -bottom-1 -right-1 bg-indigo-600 rounded-full p-1">
-                                        <i class="fas fa-camera text-white text-xs"></i>
-                                    </div>
+                    <!-- Role -->
+                    <div>
+                        <label class="block text-[11px] font-medium text-gray-600 mb-0.5">
+                            Role *
+                        </label>
+                        <select name="role" id="edit_role" required
+                                class="w-full px-2 py-1.5 text-xs rounded-md border border-gray-300 focus:ring-1 focus:ring-indigo-500 bg-white">
+                            <option value="">Select</option>
+                            <option value="student">Student</option>
+                            <option value="teacher">Teacher</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+
+                    <!-- Profile Image -->
+                    <div class="sm:col-span-2">
+                        <label class="block text-[11px] font-medium text-gray-600 mb-1">
+                            Profile Photo
+                        </label>
+
+                        <div class="flex items-center gap-3">
+                            <div class="relative">
+                                <img id="edit_image_preview"
+                                     src="{{ asset('images/default-avatar.png') }}"
+                                     class="h-14 w-14 rounded-full object-cover border border-indigo-200">
+                                <span class="absolute -bottom-1 -right-1 bg-indigo-600 text-white rounded-full p-1">
+                                    <i class="fas fa-camera text-[9px]"></i>
+                                </span>
+                            </div>
+
+                            <label class="flex-1 cursor-pointer">
+                                <input type="file" id="edit_image" name="image" accept="image/*"
+                                       class="hidden" onchange="displayEditImagePreview(this)">
+                                <div class="border border-dashed border-gray-300 rounded-md px-2 py-2 text-center hover:border-indigo-400 transition">
+                                    <p class="text-[11px] text-gray-600">Tap to upload</p>
+                                    <p class="text-[10px] text-gray-400">PNG / JPG</p>
                                 </div>
-                                <div class="flex-1">
-                                    <label class="file-upload">
-                                        <input type="file" id="edit_image" name="image" accept="image/*" class="hidden" onchange="displayEditImagePreview(this)">
-                                        <div class="file-upload-label border-2 border-dashed border-gray-300 rounded-lg p-4 text-center cursor-pointer hover:border-blue-400 transition-colors">
-                                            <p class="text-sm text-gray-600">Click to upload new photo</p>
-                                            <p class="text-xs text-gray-500 mt-1">PNG, JPG up to 2MB</p>
-                                        </div>
-                                    </label>
-                                    <div id="currentImageContainer" class="mt-3 p-3 bg-blue-50 border border-blue-200 rounded-lg hidden">
-                                        <p class="text-sm text-blue-700 flex items-center">
-                                            <i class="fas fa-info-circle mr-2"></i>
-                                            <span id="currentImageText">Current image will be kept if no new file is selected</span>
-                                        </p>
-                                    </div>
-                                </div>
+                            </label>
+                        </div>
+
+                        <div id="currentImageContainer"
+                             class="hidden mt-2 px-2 py-1.5 bg-indigo-50 border border-indigo-200 rounded-md">
+                            <p class="text-[10px] text-indigo-700 flex items-center">
+                                <i class="fas fa-info-circle mr-1"></i>
+                                <span id="currentImageText">
+                                    Current image kept
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="mt-3 pt-3 border-t border-indigo-100 flex justify-end gap-2">
+                    <button type="button" onclick="closeEditModal()"
+                            class="px-3 py-1.5 text-xs rounded-md border border-gray-300 text-gray-600 hover:bg-gray-100">
+                        Cancel
+                    </button>
+
+                    <button type="submit"
+                            class="px-4 py-1.5 text-xs rounded-md bg-indigo-600 text-white hover:bg-indigo-700 font-medium flex items-center">
+                        <i class="fas fa-save mr-1 text-[10px]"></i>
+                        Update
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- View User Modal -->
+<div id="viewUserModal"
+     class="fixed inset-0 bg-slate-900 bg-opacity-70 backdrop-blur-sm z-50 hidden
+            flex items-start sm:items-center justify-center px-2 pt-6 sm:pt-0">
+
+    <div class="w-full max-w-lg bg-white rounded-lg shadow-lg border border-slate-200 overflow-hidden">
+
+        <!-- Header -->
+        <div class="flex items-center justify-between px-3 py-2 bg-slate-800">
+            <div class="text-white">
+                <h3 class="text-sm font-semibold leading-tight">User Details</h3>
+                <p class="text-[10px] text-slate-200">Overview</p>
+            </div>
+            <button onclick="closeViewModal()"
+                    class="text-white bg-slate-700 hover:bg-red-600 transition rounded-full p-1">
+                <i class="fas fa-times text-[10px]"></i>
+            </button>
+        </div>
+
+        <!-- Body -->
+        <div class="p-2 max-h-[80vh] overflow-y-auto">
+            <div class="flex flex-col sm:flex-row gap-2">
+
+                <!-- Left Column -->
+                <div class="sm:w-1/3 space-y-2 text-center">
+
+                    <!-- Profile -->
+                    <div class="relative inline-block">
+                        <img id="view_image"
+                             src="{{ asset('images/default-avatar.png') }}"
+                             class="h-14 w-14 rounded-full object-cover border border-slate-300 mx-auto">
+                        <span class="absolute -bottom-1 -right-1 bg-green-600 text-white rounded-full p-1">
+                            <i class="fas fa-check text-[8px]"></i>
+                        </span>
+                    </div>
+                    <h2 id="view_name" class="text-xs font-semibold text-gray-800 mt-1"></h2>
+                    <p id="view_role" class="text-[10px] text-gray-500 capitalize"></p>
+
+                    <!-- Actions -->
+                    <div class="bg-slate-50 border border-slate-200 rounded-md p-1 space-y-1">
+                        <button onclick="switchToEditFromView()"
+                                class="w-full text-[10px] bg-slate-800 text-white py-1 rounded-md hover:bg-slate-900 flex items-center justify-center gap-1">
+                            <i class="fas fa-edit text-[8px]"></i> Edit
+                        </button>
+                        <button id="view_delete_btn"
+                                class="w-full text-[10px] bg-red-600 text-white py-1 rounded-md hover:bg-red-700 flex items-center justify-center gap-1">
+                            <i class="fas fa-trash text-[8px]"></i> Delete
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div class="sm:w-2/3 space-y-1 text-xs">
+
+                    <!-- Basic Info -->
+                    <div class="bg-gray-50 border border-gray-200 rounded-md p-2">
+                        <h4 class="font-semibold text-gray-700 mb-1 flex items-center">
+                            <i class="fas fa-id-card mr-1 text-slate-700"></i> Basic Info
+                        </h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-1">
+                            <div>
+                                <span class="text-gray-500 text-[10px]">Reg ID</span>
+                                <p id="view_registration_id" class="font-semibold text-gray-800 text-[10px]"></p>
+                            </div>
+                            <div>
+                                <span class="text-gray-500 text-[10px]">Email</span>
+                                <p id="view_email" class="font-semibold text-gray-800 break-all text-[10px]"></p>
+                            </div>
+                            <div>
+                                <span class="text-gray-500 text-[10px]">Status</span>
+                                <p id="view_status" class="font-semibold text-[10px]"></p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Form Actions -->
-                    <div class="mt-8 pt-6 border-t border-blue-200 flex flex-col sm:flex-row justify-end gap-3">
-                        <button type="button" onclick="closeEditModal()" 
-                                class="px-6 py-3 border border-blue-300 text-blue-700 rounded-xl hover:bg-blue-50 hover:border-blue-400 hover:scale-105 transition-all duration-200 font-medium order-2 sm:order-1">
-                            Cancel
-                        </button>
-                        <button type="submit" 
-                                class="px-8 py-3 bg-gradient-to-r from-indigo-600 to-indigo-700 text-white rounded-xl hover:from-indigo-700 hover:to-indigo-800 hover:scale-105 transform transition-all duration-200 font-semibold shadow-lg hover:shadow-xl order-1 sm:order-2 flex items-center justify-center">
-                            <i class="fas fa-save mr-2"></i> Update User
-                        </button>
+                    <!-- Role & Grade -->
+                    <div class="bg-gray-50 border border-gray-200 rounded-md p-2">
+                        <h4 class="font-semibold text-gray-700 mb-1 flex items-center">
+                            <i class="fas fa-users-cog mr-1 text-slate-700"></i> Role & Grade
+                        </h4>
+                        <div class="grid grid-cols-2 gap-1">
+                            <div>
+                                <span class="text-gray-500 text-[10px]">Role</span>
+                                <p id="view_role_badge" class="font-semibold text-[10px]"></p>
+                            </div>
+                            <div>
+                                <span class="text-gray-500 text-[10px]">Grade</span>
+                                <p id="view_grade" class="font-semibold text-gray-800 text-[10px]">N/A</p>
+                            </div>
+                        </div>
                     </div>
-                </form>
+
+                    <!-- Account Info -->
+                    <div class="bg-gray-50 border border-gray-200 rounded-md p-2">
+                        <h4 class="font-semibold text-gray-700 mb-1 flex items-center">
+                            <i class="fas fa-calendar-alt mr-1 text-slate-700"></i> Account
+                        </h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-1">
+                            <div>
+                                <span class="text-gray-500 text-[10px]">Created</span>
+                                <p id="view_created_at" class="font-semibold text-gray-800 text-[10px]"></p>
+                            </div>
+                            <div>
+                                <span class="text-gray-500 text-[10px]">Updated</span>
+                                <p id="view_updated_at" class="font-semibold text-gray-800 text-[10px]"></p>
+                            </div>
+                            <div>
+                                <span class="text-gray-500 text-[10px]">Email Verified</span>
+                                <p id="view_email_verified" class="font-semibold text-[10px]"></p>
+                            </div>
+                            <div>
+                                <span class="text-gray-500 text-[10px]">User ID</span>
+                                <p id="view_user_id" class="font-semibold text-gray-800 font-mono break-all text-[10px]"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-
-<!-- View User Modal -->
-<div id="viewUserModal" class="fixed inset-0 bg-blue-900 bg-opacity-60 backdrop-blur-sm overflow-y-auto h-full w-full z-50 hidden">
-    <div class="relative top-8 mx-auto p-2 w-full max-w-4xl">
-        <div class="bg-white rounded-2xl shadow-2xl border border-blue-100 transform transition-all duration-300 hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)]">
-            <!-- Modal Header -->
-            <div class="flex items-center justify-between p-6 bg-gradient-to-r from-blue-600 to-blue-700 rounded-t-2xl">
-                <div class="text-white">
-                    <h3 class="text-2xl font-bold">User Details</h3>
-                    <p class="text-blue-100 mt-1">Complete user information</p>
-                </div>
-                <button onclick="closeViewModal()" class="text-white hover:bg-red-500 hover:scale-110 transition-all duration-200 p-2 rounded-full bg-red-400">
-                    <i class="fas fa-times text-xl"></i>
-                </button>
-            </div>
-
-            <!-- Modal Body -->
-            <div class="p-6 max-h-[80vh] overflow-y-auto">
-                <div class="flex flex-col lg:flex-row gap-8">
-                    <!-- Left Column - Profile & Basic Info -->
-                    <div class="lg:w-1/3">
-                        <!-- Profile Image -->
-                        <div class="text-center mb-6">
-                            <div class="relative inline-block">
-                                <img id="view_image" src="{{ asset('images/default-avatar.png') }}" 
-                                     class="h-32 w-32 rounded-full object-cover border-4 border-white shadow-lg mx-auto">
-                                <div class="absolute -bottom-2 -right-2 bg-green-500 rounded-full p-2 shadow-lg">
-                                    <i class="fas fa-check text-white text-sm"></i>
-                                </div>
-                            </div>
-                            <h2 id="view_name" class="text-xl font-bold text-gray-800 mt-4"></h2>
-                            <p id="view_role" class="text-sm text-gray-600 capitalize"></p>
-                        </div>
-
-                        <!-- Quick Actions -->
-                        <div class="bg-blue-50 rounded-xl p-4 border border-blue-200">
-                            <h4 class="font-semibold text-blue-800 mb-3 flex items-center">
-                                <i class="fas fa-bolt mr-2"></i> Quick Actions
-                            </h4>
-                            <div class="space-y-2">
-                                <button onclick="switchToEditFromView()" 
-                                        class="w-full flex items-center justify-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors font-medium">
-                                    <i class="fas fa-edit"></i> Edit User
-                                </button>
-                                <button id="view_delete_btn" 
-                                        class="w-full flex items-center justify-center gap-2 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors font-medium">
-                                    <i class="fas fa-trash"></i> Delete User
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Right Column - Detailed Information -->
-                    <div class="lg:w-2/3">
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <!-- Basic Information -->
-                            <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
-                                <h4 class="font-semibold text-gray-800 mb-3 flex items-center">
-                                    <i class="fas fa-id-card mr-2 text-blue-600"></i> Basic Information
-                                </h4>
-                                <div class="space-y-3">
-                                    <div>
-                                        <label class="text-xs font-medium text-gray-500">Registration ID</label>
-                                        <p id="view_registration_id" class="font-semibold text-gray-800"></p>
-                                    </div>
-                                    <div>
-                                        <label class="text-xs font-medium text-gray-500">Email Address</label>
-                                        <p id="view_email" class="font-semibold text-gray-800"></p>
-                                    </div>
-                                    <div>
-                                        <label class="text-xs font-medium text-gray-500">Account Status</label>
-                                        <p id="view_status" class="font-semibold"></p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Role & Grade -->
-                            <div class="bg-gray-50 p-4 rounded-xl border border-gray-200">
-                                <h4 class="font-semibold text-gray-800 mb-3 flex items-center">
-                                    <i class="fas fa-users-cog mr-2 text-purple-600"></i> Role & Grade
-                                </h4>
-                                <div class="space-y-3">
-                                    <div>
-                                        <label class="text-xs font-medium text-gray-500">User Role</label>
-                                        <p id="view_role_badge" class="font-semibold"></p>
-                                    </div>
-                                    <div>
-                                        <label class="text-xs font-medium text-gray-500">Grade/Class</label>
-                                        <p id="view_grade" class="font-semibold text-gray-800">N/A</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Account Information -->
-                            <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 md:col-span-2">
-                                <h4 class="font-semibold text-gray-800 mb-3 flex items-center">
-                                    <i class="fas fa-calendar-alt mr-2 text-green-600"></i> Account Information
-                                </h4>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <div>
-                                        <label class="text-xs font-medium text-gray-500">Member Since</label>
-                                        <p id="view_created_at" class="font-semibold text-gray-800"></p>
-                                    </div>
-                                    <div>
-                                        <label class="text-xs font-medium text-gray-500">Last Updated</label>
-                                        <p id="view_updated_at" class="font-semibold text-gray-800"></p>
-                                    </div>
-                                    <div>
-                                        <label class="text-xs font-medium text-gray-500">Email Verified</label>
-                                        <p id="view_email_verified" class="font-semibold"></p>
-                                    </div>
-                                    <div>
-                                        <label class="text-xs font-medium text-gray-500">User ID</label>
-                                        <p id="view_user_id" class="font-semibold text-gray-800 font-mono"></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 <script>
