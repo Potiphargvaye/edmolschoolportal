@@ -9666,14 +9666,18 @@ textarea.form-control {
   -webkit-transform: rotate(0deg);
   -ms-transform: rotate(0deg);
   transform: rotate(0deg); }
-
+  /* ✅ ADDED THIS LINE (Navy Blue Spinner Color) */
 #ftco-loader .path {
+  stroke: #0a2a66;   /* ✅ ADDED THIS LINE (Navy Blue Spinner Color) */
   stroke-dasharray: 1, 200;
   stroke-dashoffset: 0;
   -webkit-animation: loader-dash 1.5s ease-in-out infinite;
   animation: loader-dash 1.5s ease-in-out infinite;
-  stroke-linecap: round; }
+  stroke-linecap: round;
   
+
+}
+
 /* === Landind and home page ===*/
 
 /* ===brand color for the school name ===*/

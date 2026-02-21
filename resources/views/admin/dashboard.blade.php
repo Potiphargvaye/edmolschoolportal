@@ -408,11 +408,8 @@
         </div>
     </div>
 </div>
-            </section>
+ </section>
         
-
-
-
             <!-- Content Grid -->
             <section class="content-grid">
                 <!-- Chart Card -->
@@ -431,12 +428,12 @@
                     <div class="chart-wrapper">
                         <div class="chart-container">
                             <div class="chart-y-axis">
-                                <span class="y-value">$100LRD</span>
-                                <span class="y-value">$80LRD</span>
-                                <span class="y-value">$6LRD</span>
-                                <span class="y-value">$40LRD</span>
-                                <span class="y-value">$20LRD</span>
-                                <span class="y-value">$0LRD</span>
+                                <span class="y-value">$00LRD</span>
+                                <span class="y-value">$00LRD</span>
+                                <span class="y-value">$00LRD</span>
+                                <span class="y-value">$00LRD</span>
+                                <span class="y-value">$00LRD</span>
+                                <span class="y-value">$00LRD</span>
                             </div>
                             <div class="chart-placeholder">
                                 <div class="chart-bar-group"><div class="chart-bar bar-emerald" style="height: 120px;"></div><span class="chart-label">Jan</span></div>
@@ -460,7 +457,7 @@
                 <div class="glass-card activity-card">
                     <div class="card-header">
                         <div>
-                            <h2 class="card-title">Recent Activity</h2>
+                            <h2 class="card-title" style="color: #f0f3f7">Recent Activity</h2>
                             <p class="card-subtitle">Latest transactions</p>
                         </div>
                     </div>
@@ -574,7 +571,7 @@
                <!-- Calendar Widget -->
 <div class="glass-card">
     <div class="calendar-header">
-        <h2  class="card-title" style="color: #f0f3f7" id="calendarTitle"></h2>
+        <h2  class="card-title" style="color: aquamarine" id="calendarTitle"></h2>
         <div class="calendar-nav">
             <button class="calendar-nav-btn" id="prevMonth">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -597,7 +594,7 @@
                 <div class="glass-card">
                     <div class="card-header">
                         <div>
-                            <h2 class="card-title">Traffic Sources</h2>
+                            <h2 class="card-title" style="color: aquamarine">Traffic Sources</h2>
                             <p class="card-subtitle">User acquisition breakdown</p>
                         </div>
                     </div>
@@ -610,7 +607,7 @@
                                 <circle class="donut-segment" cx="70" cy="70" r="54" stroke="var(--coral)" stroke-dasharray="67.9 339.3" stroke-dashoffset="-271.4"/>
                             </svg>
                             <div class="donut-center">
-                                <div class="donut-value">24.5K</div>
+                                <div class="donut-value" style="color: aqua">24.5K</div>
                                 <div class="donut-label">Visitors</div>
                             </div>
                         </div>
@@ -626,24 +623,24 @@
                 <div class="glass-card progress-card">
                     <div class="card-header">
                         <div>
-                            <h2 class="card-title">Project Progress</h2>
-                            <p class="card-subtitle">Current sprint status</p>
+                            <h2 class="card-title" style="color: aqua">Students Progress by class</h2>
+                            <p class="card-subtitle" style="color: aqua">Coming-Soon!</p>
                         </div>
                     </div>
                     <div class="progress-item">
-                        <div class="progress-header"><span class="progress-label">UI Design</span><span class="progress-value">85%</span></div>
+                        <div class="progress-header"><span class="progress-label">Grade 9th</span><span class="progress-value">85%</span></div>
                         <div class="progress-bar"><div class="progress-fill cyan" style="width: 85%;"></div></div>
                     </div>
                     <div class="progress-item">
-                        <div class="progress-header"><span class="progress-label">Backend API</span><span class="progress-value">62%</span></div>
+                        <div class="progress-header"><span class="progress-label">Grade 10th</span><span class="progress-value">62%</span></div>
                         <div class="progress-bar"><div class="progress-fill magenta" style="width: 62%;"></div></div>
                     </div>
                     <div class="progress-item">
-                        <div class="progress-header"><span class="progress-label">Testing</span><span class="progress-value">45%</span></div>
+                        <div class="progress-header"><span class="progress-label">Grade 11th</span><span class="progress-value">45%</span></div>
                         <div class="progress-bar"><div class="progress-fill purple" style="width: 45%;"></div></div>
                     </div>
                     <div class="progress-item">
-                        <div class="progress-header"><span class="progress-label">Documentation</span><span class="progress-value">28%</span></div>
+                        <div class="progress-header"><span class="progress-label">Grade 12th </span><span class="progress-value">28%</span></div>
                         <div class="progress-bar"><div class="progress-fill cyan" style="width: 28%;"></div></div>
                     </div>
                 </div>

@@ -9,6 +9,11 @@
             <button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 flex items-center gap-1">
                 SMS
             </button>
+            <button wire:click="exportExcel"
+    class="px-4 py-2 bg-purple-500 text-white rounded hover:bg-purple-600 flex items-center gap-1">
+    <i class="ri-file-excel-line"></i> Export Excel
+</button>
+
             <button class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 flex items-center gap-1">
                 Email
             </button>
@@ -19,16 +24,59 @@
         </div>
     </div>
 
-    {{-- Status Tabs --}}
-    <div class="flex flex-wrap gap-2 border-b pb-2 mt-2">
-        @foreach(['candidate','admitted','registered','active','dropout','completed'] as $tab)
-            <button wire:click="$set('status','{{ $tab }}')"
-                class="px-3 py-1 rounded font-semibold text-sm
-                {{ $status === $tab ? 'bg-[#f84525] text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300' }}">
+   {{-- Status Tabs --}}
+<div class="flex flex-wrap gap-2 border-b pb-3 mt-3 overflow-x-auto">
+
+    @php
+        $tabs = [
+            'candidate'  => 'ri-user-search-line',
+            'admitted'   => 'ri-user-follow-line',
+            'registered' => 'ri-user-add-line',
+            'active'     => 'ri-user-star-line',
+            'dropout'    => 'ri-user-unfollow-line',
+            'completed'  => 'ri-graduation-cap-line',
+        ];
+    @endphp
+
+    @foreach($tabs as $tab => $icon)
+
+        @php
+            $count = $statusCounts[$tab] ?? 0;
+        @endphp
+
+        <button 
+            wire:click="$set('status','{{ $tab }}')"
+            class="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold transition-all duration-200 whitespace-nowrap
+
+            {{ $status === $tab 
+                ? 'bg-[#f84525] text-white shadow-md scale-105' 
+                : 'bg-gray-100 text-gray-700 hover:bg-gray-200 hover:shadow-sm' 
+            }}"
+        >
+            {{-- Icon --}}
+            <i class="{{ $icon }} text-base"></i>
+
+            {{-- Text (Hidden on very small screens) --}}
+            <span class="hidden sm:inline">
                 {{ ucfirst($tab) }}
-            </button>
-        @endforeach
-    </div>
+            </span>
+
+            {{-- Count Badge --}}
+            <span class="text-xs px-2 py-0.5 rounded-full font-bold
+                {{ $status === $tab 
+                    ? 'bg-white text-[#f84525]' 
+                    : 'bg-gray-300 text-gray-800' 
+                }}"
+            >
+                {{ $count }}
+            </span>
+
+        </button>
+
+    @endforeach
+
+</div>
+
 
     {{-- Filters --}}
 <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-2 mt-3 gap-2">
@@ -160,12 +208,12 @@
                         {{-- View / Edit / Delete Icons --}}
                         <button wire:click="viewStudent({{ $student->id }})"
                             class="text-blue-500 hover:text-blue-700" title="View">
-                            <i class="ri-eye-line text-lg"></i>
+                             <i class="fas fa-eye text-xs"></i>
                         </button>
 
                         <button wire:click="editStudent({{ $student->id }})"
                             class="text-yellow-500 hover:text-yellow-700" title="Edit">
-                            <i class="ri-edit-line text-lg"></i>
+                           <i class="fas fa-edit text-xs"></i>
                         </button>
 
                         <button
@@ -173,7 +221,7 @@
     class="text-red-500 hover:text-red-700"
     title="Delete"
 >
-    <i class="ri-delete-bin-line text-lg"></i>
+    <i class="fas fa-trash text-xs"></i>
 </button>
 
 

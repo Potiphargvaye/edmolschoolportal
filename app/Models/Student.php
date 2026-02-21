@@ -26,8 +26,8 @@ class Student extends Model
         'intake',
         'grade_id',
         'subjects',
-         'class_applying_for',
-          'last_school_attended'
+          'last_school_attended',
+          'student_type'
 
     ];
 

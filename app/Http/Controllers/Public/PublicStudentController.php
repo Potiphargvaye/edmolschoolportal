@@ -22,7 +22,7 @@ public function store(Request $request)
 {
     $request->validate([
         'name' => 'required|string|max:255',
-        'age' => 'required|integer|min:5|max:25',
+        'age' => 'required|integer|min:5|max:45',
         'gender' => 'required|in:Male,Female,Other',
         'parent_phone' => 'required|string|max:15',
         'class_applying_for' => 'required|string|max:100',
@@ -50,13 +50,20 @@ public function store(Request $request)
         $data['recommendation_letter'] = $request->file('recommendation_letter')
             ->store('students/recommendations', 'public');
     }
+Student::create($data);
 
-    Student::create($data);
-
-    return redirect()->route('public.students.create')
-        ->with('success', 'Your application has been submitted successfully.');
+if ($request->ajax()) {
+    return response()->json([
+        'status' => 'success',
+        'message' => 'Registration completed'
+    ]);
 }
 
+return redirect()->back()->with(
+    'success',
+    'Your application has been submitted successfully.'
+);
+}
 
 }
 

@@ -37,7 +37,7 @@
    <nav class="navbar navbar-expand-lg navbar-light bg-white ftco_navbar ftco-navbar-light" id="ftco-navbar">
 
 	    <div class="container d-flex align-items-center">
-	    	<a class="navbar-brand" href="index.html">Edmol Baptist School</a>
+	    	<a class="navbar-brand"  href="{{ url('/') }}">Edmol Baptist School</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 	        <span class="oi oi-menu"></span> Menu
 	      </button>
@@ -51,6 +51,13 @@
             <li class="nav-item"><a href="{{ url('/fees-structure') }}" class="nav-link">Fees-structure</a></li>
             <li class="nav-item"><a href="{{ url('/blog') }}" class="nav-link">Blog</a></li>
             <li class="nav-item"><a href="{{ url('/contact-us') }}" class="nav-link">Contact-Us</a></li>
+             <li class="nav-item ml-lg-4">
+  <a href="{{ route('login') }}" class="nav-link login-ghost" id="loginBtn">
+    <span class="login-text">Login to Portal</span>
+    <span class="login-arrow">→</span>
+    <span class="login-spinner" style="display:none;"></span> <!-- CSS spinner -->
+  </a>
+</li>
 	        </ul>
 	      </div>
 	    </div>
@@ -64,7 +71,7 @@
         <div class="row no-gutters slider-text align-items-center justify-content-center">
           <div class="col-md-9 ftco-animate text-center">
             <h1 class="mb-2 bread">About Us</h1>
-            <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>About us <i class="ion-ios-arrow-forward"></i></span></p>
+            <p class="breadcrumbs"><span class="mr-2"><a  href="{{ url('/') }}" >Home <i class="ion-ios-arrow-forward"></i></a></span> <span>About us <i class="ion-ios-arrow-forward"></i></span></p>
           </div>
         </div>
       </div>
@@ -506,7 +513,7 @@ style="background-image: url('{{ asset('kiddos-school-master/images/blog_post1.j
             	<h2 class="ftco-heading-2">Have a Questions?</h2>
             	<div class="block-23 mb-3">
 	              <ul>
-	                <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
+	                <li><span class="icon icon-map-marker"></span><span class="text">New Matadi, Opposite Don-Bossco Youth-Center Monrovia, Liberia </span></li>
 	                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929 210</span></a></li>
 	                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a></li>
 	              </ul>
@@ -544,11 +551,11 @@ style="background-image: url('{{ asset('kiddos-school-master/images/blog_post1.j
             <div class="ftco-footer-widget mb-5 ml-md-4">
               <h2 class="ftco-heading-2">Links</h2>
               <ul class="list-unstyled">
-                <li><a href="#"><span class="ion-ios-arrow-round-forward mr-2"></span>Home</a></li>
-                <li><a href="#"><span class="ion-ios-arrow-round-forward mr-2"></span>About</a></li>
-                <li><a href="#"><span class="ion-ios-arrow-round-forward mr-2"></span>Services</a></li>
-                <li><a href="#"><span class="ion-ios-arrow-round-forward mr-2"></span>Deparments</a></li>
-                <li><a href="#"><span class="ion-ios-arrow-round-forward mr-2"></span>Contact</a></li>
+                <li><a  href="{{ url('/') }}"><span class="ion-ios-arrow-round-forward mr-2"></span>Home</a></li>
+                <li><a  href="{{ url('/about-us') }}" ><span class="ion-ios-arrow-round-forward mr-2"></span>About</a></li>
+                <li><a  href="{{ url('/courses') }}"><span class="ion-ios-arrow-round-forward mr-2"></span>Special-Courses</a></li>
+                <li><a  href="{{ url('/fees-structure') }}"><span class="ion-ios-arrow-round-forward mr-2"></span>Fees-Structure</a></li>
+                <li><a  href="{{ url('/contact') }}"><span class="ion-ios-arrow-round-forward mr-2"></span>Contact</a></li>
               </ul>
             </div>
           </div>
@@ -573,12 +580,15 @@ style="background-image: url('{{ asset('kiddos-school-master/images/blog_post1.j
           </div>
         </div>
         <div class="row">
-          <div class="col-md-12 text-center">
-
-            <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="potiphar@gmail.com" target="_blank">Potiphar Gaye Gvay</a>
-  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
-          </div>
+         <div class="col-md-12 text-center">
+  <p style="color:#bec8d1;"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+    Copyright &copy;<script>document.write(new Date().getFullYear());</script> 
+    All rights reserved | Edmol-Baptish-School 
+    <span style="margin:0 5px;">🎓</span> 
+    Developed by:<a href="potiphar" target="_blank" style="color:#001f3f; text-decoration:none;">
+    Potiphar G Vaye
+    </a></p>
+</div>
         </div>
       </div>
 	</div>
@@ -596,6 +606,8 @@ style="background-image: url('{{ asset('kiddos-school-master/images/blog_post1.j
   <i class="fab fa-whatsapp"></i>
   <span class="whatsapp-tooltip">Message us on WhatsApp</span>
 </a>
+
+<script scr="js/redirecting-state.js"> </script>
   <script src="js/jquery.min.js"></script>
   <script src="js/jquery-migrate-3.0.1.min.js"></script>
   <script src="js/popper.min.js"></script>
@@ -612,5 +624,52 @@ style="background-image: url('{{ asset('kiddos-school-master/images/blog_post1.j
   <script src="js/google-map.js"></script>
   <script src="js/main.js"></script>
     
+  <script>
+document.addEventListener("DOMContentLoaded", function() {
+  const loginBtn = document.getElementById("loginBtn");
+  const loginText = loginBtn.querySelector(".login-text");
+  const loginArrow = loginBtn.querySelector(".login-arrow");
+  const loginSpinner = loginBtn.querySelector(".login-spinner");
+
+  // Reset button state on page load
+  function resetLoginButton() {
+    loginText.textContent = "Login to Portal";
+    loginArrow.style.display = "inline-block";
+    loginSpinner.style.display = "none";
+    loginBtn.style.pointerEvents = "auto";
+  }
+
+  resetLoginButton(); // run immediately on load
+
+  loginBtn.addEventListener("click", function(e) {
+    e.preventDefault(); // prevent immediate redirect
+
+    // Disable button so user can't click again
+    loginBtn.style.pointerEvents = "none";
+
+    // Change text and show spinner
+    loginText.textContent = "Redirecting...";
+    loginSpinner.style.display = "inline-block";
+    loginArrow.style.display = "none";
+
+    // Optional: Add spinning animation with CSS
+    loginSpinner.style.animation = "spin 1s linear infinite";
+
+    // Wait 8 seconds then redirect
+    setTimeout(function() {
+      window.location.href = loginBtn.href; // go to login page
+    }, 3000);
+  });
+
+  // Optional: reset if user navigates back via browser history
+  window.addEventListener("pageshow", function(event) {
+    if (event.persisted) {
+      resetLoginButton();
+    }
+  });
+});
+</script>
+
+
   </body>
 @endsection

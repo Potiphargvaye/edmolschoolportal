@@ -6,9 +6,12 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 use App\Models\Student;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\StudentsExport;
 
 class Index extends Component
 {
+    
     use WithPagination, WithFileUploads;
 
     protected $paginationTheme = 'tailwind';
@@ -116,7 +119,7 @@ class Index extends Component
 public $confirmingStatusId = null; // student ID being confirmed
 public $pendingStatus = null;      // status to apply
 // NEW
-public $selectedShift = '';
+public $selectedShift = ''; 
 public $selectedIntake = '';
 
 
@@ -124,6 +127,11 @@ public function mount()
 {
     $this->confirmingStatusId = null;
     $this->pendingStatus = null;
+    $this->statusCounts = Student::selectRaw('status, COUNT(*) as total')
+    ->groupBy('status')
+    ->pluck('total', 'status')
+    ->toArray();
+
 }
 
 
@@ -390,7 +398,19 @@ public function viewStudent($id)
     $this->showViewModal = true;
 }
 
+/* -------------------------
+    Status Count Badge  and Download student and export to excel doc
+--------------------------*/
+public $statusCounts = [];
 
-
+public function exportExcel()
+{
+    return Excel::download(new StudentsExport(
+        $this->status,
+        $this->search,
+        $this->intake,
+        $this->shift
+    ), 'students.xlsx');
+}
 
 }

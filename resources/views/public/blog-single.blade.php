@@ -29,7 +29,7 @@
     </div>
      <nav class="navbar navbar-expand-lg navbar-light bg-white ftco_navbar ftco-navbar-light" id="ftco-navbar">
 	    <div class="container d-flex align-items-center">
-	    	<a class="navbar-brand" href="index.html">Edmol Baptist School</a>
+	    	<a class="navbar-brand"  href="{{ url('/') }}" >Edmol Baptist School</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 	        <span class="oi oi-menu"></span> Menu
 	      </button>
@@ -43,6 +43,13 @@
             <li class="nav-item"><a href="{{ url('/fees-structure') }}" class="nav-link">Fees-structure</a></li>
             <li class="nav-item"><a href="{{ url('/blog') }}" class="nav-link">Blog</a></li>
             <li class="nav-item"><a href="{{ url('/contact-us') }}" class="nav-link">Contact-Us</a></li>
+             <li class="nav-item ml-lg-4">
+  <a href="{{ route('login') }}" class="nav-link login-ghost" id="loginBtn">
+    <span class="login-text">Login to Portal</span>
+    <span class="login-arrow">→</span>
+    <span class="login-spinner" style="display:none;"></span> <!-- CSS spinner -->
+  </a>
+</li>
 	        </ul>
 	      </div>
 	    </div>
@@ -114,7 +121,7 @@ document.getElementById('loginForm').addEventListener('submit', function () {
             	<h2 class="ftco-heading-2">Have a Questions?</h2>
             	<div class="block-23 mb-3">
 	              <ul>
-	                <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
+	                <li><span class="icon icon-map-marker"></span><span class="text">New Matadi, Opposite Don-Bossco Youth-Center Monrovia, Liberia </span></li>
 	                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929 210</span></a></li>
 	                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a></li>
 	              </ul>
@@ -182,11 +189,14 @@ document.getElementById('loginForm').addEventListener('submit', function () {
         </div>
         <div class="row">
           <div class="col-md-12 text-center">
-
-            <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
-          </div>
+  <p style="color:#bec8d1;"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+    Copyright &copy;<script>document.write(new Date().getFullYear());</script> 
+    All rights reserved | Edmol-Baptish-School 
+    <span style="margin:0 5px;">🎓</span> 
+    Developed by:<a href="potiphar" target="_blank" style="color:#001f3f; text-decoration:none;">
+    Potiphar G Vaye
+    </a></p>
+</div>
         </div>
       </div>
     </footer>

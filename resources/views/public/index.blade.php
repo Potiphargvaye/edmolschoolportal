@@ -32,7 +32,7 @@
    <nav class="navbar navbar-expand-lg navbar-light bg-white ftco_navbar ftco-navbar-light" id="ftco-navbar">
 
 	    <div class="container d-flex align-items-center">
-	    	<a class="navbar-brand" href="index.html">Edmol Baptist School</a>
+	    	<a class="navbar-brand"  href="{{ url('/') }}" >Edmol Baptist School</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 	        <span class="oi oi-menu"></span> Menu
 	      </button>
@@ -47,12 +47,12 @@
             <li class="nav-item"><a href="{{ url('/blog') }}" class="nav-link">Blog</a></li>
             <li class="nav-item"><a href="{{ url('/contact-us') }}" class="nav-link">Contact-Us</a></li>
             <li class="nav-item ml-lg-4">
-  <a href="{{ route('login') }}" class="nav-link login-ghost" id="loginBtn">
-    <span class="login-text">Login to Portal</span>
-    <span class="login-arrow">→</span>
-    <span class="login-spinner" style="display:none;"></span> <!-- CSS spinner -->
-  </a>
-</li>
+           <a href="{{ route('login') }}" class="nav-link login-ghost" id="loginBtn">
+           <span class="login-text">Login to Portal</span>
+           <span class="login-arrow">→</span>
+          <span class="login-spinner" style="display:none;"></span> <!-- CSS spinner -->
+          </a>
+          </li>
 
 
 
@@ -72,7 +72,7 @@
            
 			<h1 class="mb-4">Welcome to <span>Edmol Baptist School</span></h1>
              <h2 class="mb-3">Where Faith, Excellence, and Leadership Meet</h2>
-            <p><a href="#" class="btn btn-secondary px-4 py-3 mt-3">Read More</a></p>
+             <p><a href="{{ url('/registeration-form') }}" class="btn btn-secondary px-4 py-3 mt-3">Register Now!</a></p>
           </div>
         </div>
         </div>
@@ -85,7 +85,7 @@
           <div class="row no-gutters slider-text align-items-center justify-content-center" data-scrollax-parent="true">
           <div class="col-md-8 text-center ftco-animate">
             <h1 class="mb-4">Building Bright Minds <span>Rooted in Faith</span></h1>
-            <p><a href="#" class="btn btn-secondary px-4 py-3 mt-3">Read More</a></p>
+            <p><a href="{{ url('/registeration-form') }}" class="btn btn-secondary px-4 py-3 mt-3">Register Now!</a></p>
           </div>
         </div>
         </div>
@@ -98,7 +98,7 @@
           <div class="row no-gutters slider-text align-items-center justify-content-center" data-scrollax-parent="true">
           <div class="col-md-8 text-center ftco-animate">
 			<h1 class="mb-4">A Safe Haven <span>For Every Child</span></h1>
-            <p><a href="#" class="btn btn-secondary px-4 py-3 mt-3">Read More</a></p>
+            <p><a href="{{ url('/registeration-form') }}" class="btn btn-secondary px-4 py-3 mt-3">Register Now!</a></p>
           </div>
         </div>
         </div>
@@ -243,11 +243,11 @@
 					<p class="mb-0">At Edmol Baptist School, we instill strong moral values, discipline, and academic excellence to prepare students for responsible leadership and lifelong success.</p>
 					</div>
 					<div class="col-md-3 d-flex align-items-center">
-						<p class="mb-0"><a href="#" class="btn btn-secondary px-4 py-3">Enroll Your Child</a></p>
+						<p class="mb-0"><a  href="{{ url('/registeration-form') }}" class="btn btn-secondary px-4 py-3">Enroll Your Child</a></p>
 					</div>
-				</div>
+				</div>   
 			</div>
-		</section>
+		</section> 
 
 		<!-- teachers images section -->
 <section class="ftco-section ftco-no-pb">
@@ -869,7 +869,7 @@ data-stellar-background-ratio="0.5">
 	        		<div class="px-4">
 	        			<p>Our fees cover registration, tuition, and computer studies, ensuring quality education, skilled instruction, and essential learning resources..</p>
         			</div>
-        			<p class="button text-center"><a href="#" class="btn btn-primary px-4 py-3">read more..</a></p>
+        			<p class="button text-center"><a  href="{{ url('/fees-structure') }}" class="btn btn-primary px-4 py-3">read more..</a></p>
         		</div>
         	</div>
         	<div class="col-md-6 col-lg-3 ftco-animate">
@@ -882,7 +882,7 @@ data-stellar-background-ratio="0.5">
         			<div class="px-4">
 	        	     <p>Our fees cover registration, tuition, and computer studies, ensuring quality education, skilled instruction, and essential learning resources..</p>
         			</div>
-        			<p class="button text-center"><a href="#" class="btn btn-secondary px-4 py-3">read more..</a></p>
+        			<p class="button text-center"><a  href="{{ url('/fees-structure') }}" class="btn btn-secondary px-4 py-3">read more..</a></p>
         		</div>
         	</div>
         	<div class="col-md-6 col-lg-3 ftco-animate">
@@ -909,7 +909,7 @@ data-stellar-background-ratio="0.5">
         			<div class="px-4">
 	        			<p>Our fees cover registration, tuition, and computer studies, ensuring quality education, skilled instruction, and essential learning resources..</p>
         			</div>
-        			<p class="button text-center"><a href="#" class="btn btn-quarternary px-4 py-3">read more..</a></p>
+        			<p class="button text-center"><a  href="{{ url('/fees-structure') }}" class="btn btn-quarternary px-4 py-3">read more..</a></p>
         		</div>
         	</div>
         </div>
@@ -941,7 +941,7 @@ style="background-image: url('{{ asset('kiddos-school-master/images/blog_post1.j
                 <h3 class="heading"><a href="#">Inter-School Sports Competition Success</a></h3>
                 <p> Our students proudly represented the school in friendly sports competitions, demonstrating teamwork, discipline, and sportsmanship.</p>
                 <div class="d-flex align-items-center mt-4">
-	                <p class="mb-0"><a href="#" class="btn btn-secondary">Read More <span class="ion-ios-arrow-round-forward"></span></a></p>
+	                <p class="mb-0"><a href="{{ url('/blog') }}" class="btn btn-secondary">Read More <span class="ion-ios-arrow-round-forward"></span></a></p>
 	                <p class="ml-auto mb-0">
 	                	<a href="#" class="mr-2">Admin</a>
 	                	<a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a>
@@ -965,7 +965,7 @@ style="background-image: url('{{ asset('kiddos-school-master/images/blog_post2.j
                 <h3 class="heading"><a href="#">Academic Excellence and Student Awards</a></h3>
                 <p>Outstanding students were recognized for academic performance, leadership, and commitment to excellence during the academic year..</p>
                 <div class="d-flex align-items-center mt-4">
-	                <p class="mb-0"><a href="#" class="btn btn-secondary">Read More <span class="ion-ios-arrow-round-forward"></span></a></p>
+	                <p class="mb-0"><a href="{{ url('/blog') }}"  class="btn btn-secondary">Read More <span class="ion-ios-arrow-round-forward"></span></a></p>
 	                <p class="ml-auto mb-0">
 	                	<a href="#" class="mr-2">Admin</a>
 	                	<a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a>
@@ -989,7 +989,7 @@ style="background-image: url('{{ asset('kiddos-school-master/images/blog_post3.j
                 <h3 class="heading"><a href="#">Creative Arts and Science Activities Day</a></h3>
                 <p>Students showcased creativity and innovation through art displays and practical science activities that encourage critical thinking..</p>
                 <div class="d-flex align-items-center mt-4">
-	                <p class="mb-0"><a href="#" class="btn btn-secondary">Read More <span class="ion-ios-arrow-round-forward"></span></a></p>
+	                <p class="mb-0"><a href="{{ url('/blog') }}"  class="btn btn-secondary">Read More <span class="ion-ios-arrow-round-forward"></span></a></p>
 	                <p class="ml-auto mb-0">
 	                	<a href="#" class="mr-2">Admin</a>
 	                	<a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a>
@@ -1069,8 +1069,7 @@ style="background-image: url('{{ asset('kiddos-school-master/images/blog_post1.j
             <div class="ftco-footer-widget mb-5">
               <h2 class="ftco-heading-2">Recent Blog</h2>
               <div class="block-21 mb-4 d-flex">
-                <a class="blog-img mr-4"
-style="background-image: url('{{ asset('kiddos-school-master/images/blog_post2.jpg') }}');"></a>
+                <a class="blog-img mr-4" style="background-image: url('{{ asset('kiddos-school-master/images/blog_post2.jpg') }}');"></a>
 
                 <div class="text">
                   <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about</a></h3>
@@ -1082,8 +1081,7 @@ style="background-image: url('{{ asset('kiddos-school-master/images/blog_post2.j
                 </div>
               </div>
               <div class="block-21 mb-5 d-flex">
-                <a class="blog-img mr-4"
-style="background-image: url('{{ asset('kiddos-school-master/images/blog_post3.jpg') }}');"></a>
+                <a class="blog-img mr-4" style="background-image: url('{{ asset('kiddos-school-master/images/blog_post3.jpg') }}');"></a>
 
                 <div class="text">
                   <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about</a></h3>
@@ -1100,11 +1098,11 @@ style="background-image: url('{{ asset('kiddos-school-master/images/blog_post3.j
             <div class="ftco-footer-widget mb-5 ml-md-4">
               <h2 class="ftco-heading-2">Links</h2>
               <ul class="list-unstyled">
-                <li><a href="#"><span class="ion-ios-arrow-round-forward mr-2"></span>Home</a></li>
-                <li><a href="#"><span class="ion-ios-arrow-round-forward mr-2"></span>About</a></li>
-                <li><a href="#"><span class="ion-ios-arrow-round-forward mr-2"></span>Services</a></li>
-                <li><a href="#"><span class="ion-ios-arrow-round-forward mr-2"></span>Deparments</a></li>
-                <li><a href="#"><span class="ion-ios-arrow-round-forward mr-2"></span>Contact</a></li>
+                <li><a  href="{{ url('/') }}"><span class="ion-ios-arrow-round-forward mr-2"></span>Home</a></li>
+                <li><a  href="{{ url('/about-us') }}" ><span class="ion-ios-arrow-round-forward mr-2"></span>About</a></li>
+                <li><a  href="{{ url('/courses') }}"><span class="ion-ios-arrow-round-forward mr-2"></span>Special-Courses</a></li>
+                <li><a  href="{{ url('/fees-structure') }}"><span class="ion-ios-arrow-round-forward mr-2"></span>Fees-Structure</a></li>
+                <li><a  href="{{ url('/contact') }}"><span class="ion-ios-arrow-round-forward mr-2"></span>Contact</a></li>
               </ul>
             </div>
           </div>
@@ -1129,12 +1127,15 @@ style="background-image: url('{{ asset('kiddos-school-master/images/blog_post3.j
           </div>
         </div>
         <div class="row">
-          <div class="col-md-12 text-center">
-
-            <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="potiphar" target="_blank">Colorlib</a>
-  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
-          </div>
+    <div class="col-md-12 text-center">
+  <p style="color:#bec8d1;"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+    Copyright &copy;<script>document.write(new Date().getFullYear());</script> 
+    All rights reserved | Edmol-Baptish-School 
+    <span style="margin:0 5px;">🎓</span> 
+    Developed by:<a href="potiphar" target="_blank" style="color:#001f3f; text-decoration:none;">
+    Potiphar G Vaye
+    </a></p>
+</div>
         </div>
       </div>
     </footer>

@@ -35,7 +35,7 @@ class StudentController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'age' => 'required|integer|min:5|max:25',
+            'age' => 'required|integer|min:5|max:45',
             'gender' => 'required|in:Male,Female,Other',
             'parent_phone' => 'required|string|max:15',
             'class_applying_for' => 'required|string|max:100',
@@ -125,7 +125,7 @@ class StudentController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'age' => 'required|integer|min:5|max:25',
+            'age' => 'required|integer|min:5|max:45',
             'gender' => 'required|in:Male,Female,Other',
             'parent_phone' => 'required|string|max:15',
             'class_applying_for' => 'required|string|max:100',

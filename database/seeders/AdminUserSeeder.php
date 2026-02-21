@@ -13,10 +13,10 @@ class AdminUserSeeder extends Seeder
     {
         DB::table('users')->insert([
             'name' => 'Admin User',
-            'registration_id' => 'EDMOL/1964',
-            'email' => 'edmolschoolportal@gmail.com', // Fixed: removed duplicate email field
+            'registration_id' => 'EDMOL/1994',
+            'email' => 'emmmbhs@gmail.com', // Fixed: removed duplicate email field
             'email_verified_at' => now(),
-            'password' => Hash::make('edmol123'), // Added missing password field
+            'password' => Hash::make('edmol1994'), // Added missing password field
             'remember_token' => Str::random(10),
             'role' => 'admin',
             'image' => null,

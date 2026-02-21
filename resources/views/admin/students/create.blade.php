@@ -1,9 +1,8 @@
 @extends('public.layouts.public')
 
-@section('title', 'Edmol-Register')
+@section('title', 'Contact-us')
 
 @section('content')
-<meta name="csrf-token" content="{{ csrf_token() }}">
 
 <body> 
 	  <div class="py-2 bg-primary" style="background-color:#0a2a66 !important;">
@@ -30,7 +29,7 @@
     </div>
      <nav class="navbar navbar-expand-lg navbar-light bg-white ftco_navbar ftco-navbar-light" id="ftco-navbar">
 	    <div class="container d-flex align-items-center">
-	    	<a class="navbar-brand"  href="{{ url('/') }}" >Edmol Baptist School</a>
+	    	<a class="navbar-brand" href="index.html">Edmol Baptist School</a>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 	        <span class="oi oi-menu"></span> Menu
 	      </button>
@@ -44,13 +43,6 @@
             <li class="nav-item"><a href="{{ url('/fees-structure') }}" class="nav-link">Fees-structure</a></li>
             <li class="nav-item"><a href="{{ url('/blog') }}" class="nav-link">Blog</a></li>
             <li class="nav-item"><a href="{{ url('/contact-us') }}" class="nav-link">Contact-Us</a></li>
-             <li class="nav-item ml-lg-4">
-  <a href="{{ route('login') }}" class="nav-link login-ghost" id="loginBtn">
-    <span class="login-text">Login to Portal</span>
-    <span class="login-arrow">→</span>
-    <span class="login-spinner" style="display:none;"></span> <!-- CSS spinner -->
-  </a>
-</li>
 	        </ul>
 	      </div>
 	    </div>
@@ -64,21 +56,28 @@
       <div class="container">
         <div class="row no-gutters slider-text align-items-center justify-content-center">
           <div class="col-md-9 ftco-animate text-center">
-            <h1 class="mb-2 bread">Registeration</h1>
-            <p class="breadcrumbs"><span class="mr-2"><a  href="{{ url('/') }}" >Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Contact <i class="ion-ios-arrow-forward"></i></span></p>
+            <h1 class="mb-2 bread">Contact Us</h1>
+            <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Contact <i class="ion-ios-arrow-forward"></i></span></p>
           </div>
         </div>
       </div>
     </section>
-	<h1 class="registration-title">Registration <span>Form</span></h1>
+
+
+		<h1>Registeratinon form come here!</h1>
+
+
+
+
+
 
         <!-- ================= STUDENT REGISTRATION FORM ================= -->
 <section class="container my-5">
     <div class="card shadow-lg p-4">
 
-        <h3 class="text-center mb-2">
+        <h2 class="text-center mb-2">
             ED MOL MEMORIAL MATADI BAPTIST HIGH SCHOOL
-        </h3>
+        </h2>
 
         <p class="text-center text-muted mb-4">
             Student Registration Form – Academic Year 2025 / 2026
@@ -89,13 +88,16 @@
             <div id="progressBar" class="progress-bar bg-primary" style="width: 20%; transition: width 0.4s;"></div>
         </div>
 
-    <form 
-    action="{{ route('public.students.store') }}" 
+       <form 
+    action="{{ route('admin.students.store') }}" 
     method="POST" 
     enctype="multipart/form-data"
     id="registrationForm"
 >
     @csrf
+
+
+
             <!-- ================= STEP 1: Personal Info ================= -->
             <div class="form-step active">
                 <h4 class="mb-3">
@@ -258,19 +260,6 @@
     </div>
 </section>
 
-
-<div id="successCard">
-    <div class="icon">✅</div>
-    <h2>Congratulations!</h2>
-    <p>
-        Your registration has been submitted successfully.<br>
-        Please visit the Registrar’s Office for document verification
-        and to confirm your entrance date.
-    </p>
-</div>
-
-
-
 <!-- ================= CSS ================= -->
 <style>
     .form-step {
@@ -330,80 +319,15 @@
     #reviewSummary p {
         margin: 0.25rem 0;
     }
-
-    
-    .registration-title {
-    font-family: Arial, sans-serif; /* Brand font */
-    text-align: center;             /* Center the heading */
-    font-size: 2.5rem;              /* Adjust size as needed */
-    font-weight: bold;
-    margin-bottom: 30px;            /* Space below heading */
-}
-
-.registration-title span {
-    color: orange;                  /* Brand accent color */
-}
-
-.registration-title {
-    color: navy;                    /* Main text color */
-}
-
-
-
-
-
-
-/* Success Card Styles */
-#successCard {
-    display: none; /* hidden by default */
-    max-width: 500px;
-    margin: 30px auto 0 auto;
-    padding: 30px;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
-    text-align: center;
-    font-family: Arial, sans-serif;
-    animation: fadeInScale 0.6s ease forwards;
-}
-
-#successCard .icon {
-    font-size: 60px;
-    color: #28a745; /* green checkmark */
-    margin-bottom: 15px;
-    animation: bounce 1s ease;
-}
-
-#successCard h2 {
-    font-size: 28px;
-    color: #001f4d; /* navy blue for heading */
-    margin-bottom: 15px;
-}
-
-#successCard p {
-    font-size: 16px;
-    color: #ff6600; /* orange for body text */
-    line-height: 1.5;
-}
-
-/* Animations */
-@keyframes fadeInScale {
-    0% { opacity: 0; transform: scale(0.8); }
-    100% { opacity: 1; transform: scale(1); }
-}
-
-@keyframes bounce {
-    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-    40% { transform: translateY(-10px); }
-    60% { transform: translateY(-5px); }
-}
-
-
 </style>
+
 
 
 <!-- Font Awesome for Icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+
+		
     <footer class="ftco-footer ftco-bg-dark ftco-section">
       <div class="container">
         <div class="row mb-5">
@@ -479,19 +403,19 @@
           </div>
         </div>
         <div class="row">
-         <div class="col-md-12 text-center">
-  <p style="color:#bec8d1;"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-    Copyright &copy;<script>document.write(new Date().getFullYear());</script> 
-    All rights reserved | Edmol-Baptish-School 
-    <span style="margin:0 5px;">🎓</span> 
-    Developed by:<a href="potiphar" target="_blank" style="color:#001f3f; text-decoration:none;">
-    Potiphar G Vaye
-    </a></p>
-</div>
+          <div class="col-md-12 text-center">
+
+            <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+          </div>
         </div>
       </div>
 	</div>
     </footer>
+    
+  
+
   <!-- loader -->
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
 <!-- WhatsApp Floating Button -->
@@ -502,6 +426,7 @@
   <i class="fab fa-whatsapp"></i>
   <span class="whatsapp-tooltip">Message us on WhatsApp</span>
 </a>
+
   <script src="js/jquery.min.js"></script>
   <script src="js/jquery-migrate-3.0.1.min.js"></script>
   <script src="js/popper.min.js"></script>
@@ -517,174 +442,78 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script> <!-- Map script -->
   <script src="js/main.js"></script>
     
+
 <!-- ================= JAVASCRIPT ================= -->
 <script>
-/* ----------------------------------------------------
-   MULTI-STEP FORM LOGIC (UNCHANGED)
----------------------------------------------------- */
+    const steps = document.querySelectorAll('.form-step');
+    const progressBar = document.getElementById('progressBar');
+    const form = document.getElementById('registrationForm');
+    const reviewSummary = document.getElementById('reviewSummary');
+    let currentStep = 0;
 
-const steps = document.querySelectorAll('.form-step');
-const progressBar = document.getElementById('progressBar');
-const form = document.getElementById('registrationForm');
-const reviewSummary = document.getElementById('reviewSummary');
-const successCard = document.getElementById('successCard');
-let currentStep = 0;
+    function updateStep() {
+        steps.forEach((step, index) => {
+            step.classList.toggle('active', index === currentStep);
+        });
+        progressBar.style.width = ((currentStep + 1) / steps.length) * 100 + '%';
 
-// Hide success card initially
-successCard.style.display = 'none';
-
-function updateStep() {
-    steps.forEach((step, index) => {
-        step.classList.toggle('active', index === currentStep);
-    });
-
-    progressBar.style.width = ((currentStep + 1) / steps.length) * 100 + '%';
-
-    if (currentStep === steps.length - 1) {
-        populateSummary();
-    }
-}
-
-function populateSummary() {
-    const data = new FormData(form);
-    reviewSummary.innerHTML = '';
-    for (let [key, value] of data.entries()) {
-        if (value) {
-            reviewSummary.innerHTML += `<p><strong>${key.replace(/_/g,' ')}:</strong> ${value}</p>`;
+        // Populate review summary if final step
+        if (currentStep === steps.length -1) {
+            populateSummary();
         }
     }
-}
 
-document.querySelectorAll('.next-btn').forEach(button => {
-    button.addEventListener('click', () => {
-        const requiredInputs = steps[currentStep].querySelectorAll('.required');
-        let valid = true;
+    function populateSummary() {
+        const data = new FormData(form);
+        reviewSummary.innerHTML = '';
+        for (let [key, value] of data.entries()) {
+            if(value) {
+                reviewSummary.innerHTML += `<p><strong>${key.replace(/_/g,' ')}:</strong> ${value}</p>`;
+            }
+        }
+    }
 
-        requiredInputs.forEach(input => {
-            if (
-                (input.type === 'radio' && !steps[currentStep].querySelector(`input[name="${input.name}"]:checked`)) ||
-                (!['radio','file'].includes(input.type) && !input.value.trim())
-            ) {
-                input.classList.add('is-invalid');
-                valid = false;
-            } else {
-                input.classList.remove('is-invalid');
+    document.querySelectorAll('.next-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            const requiredInputs = steps[currentStep].querySelectorAll('.required');
+            let valid = true;
+
+            requiredInputs.forEach(input => {
+                if ((input.type === 'radio' && !steps[currentStep].querySelector(`input[name="${input.name}"]:checked`)) ||
+                    (!['radio','file'].includes(input.type) && !input.value.trim())) {
+                    input.classList.add('is-invalid');
+                    valid = false;
+                } else {
+                    input.classList.remove('is-invalid');
+                }
+            });
+
+            if (valid && currentStep < steps.length - 1) {
+                currentStep++;
+                updateStep();
             }
         });
-
-        if (valid && currentStep < steps.length - 1) {
-            currentStep++;
-            updateStep();
-        }
     });
-});
 
-document.querySelectorAll('.prev-btn').forEach(button => {
-    button.addEventListener('click', () => {
-        if (currentStep > 0) {
-            currentStep--;
-            updateStep();
-        }
+    document.querySelectorAll('.prev-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            if (currentStep > 0) {
+                currentStep--;
+                updateStep();
+            }
+        });
     });
-});
 
-/* ----------------------------------------------------
-   AJAX FORM SUBMISSION WITH SPINNER & SUCCESS CARD
----------------------------------------------------- */
-form.addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    const submitButton = form.querySelector('button[type="submit"]');
-    const originalText = submitButton.innerHTML;
-
-    // Add spinner and disable button
-    submitButton.innerHTML = `
-        <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>
-        Submitting...
-    `;
-    submitButton.disabled = true;
-
-    const formData = new FormData(form);
-
-    fetch(form.action, {
-        method: 'POST',
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        },
-        body: formData
-    })
-    .then(async response => {
-        const data = await response.json();
-
-        if (!response.ok) throw data;
-
-        // ✅ SUCCESS: hide form, show card
-        form.style.display = 'none';
-        successCard.style.display = 'block'; // reveal the card
-
-        // Optional: smooth scroll to success card
-        successCard.scrollIntoView({ behavior: 'smooth' });
-
-    })
-    .catch(error => {
-        console.error(error);
-
-        // Restore button state on error
-        submitButton.innerHTML = originalText;
-        submitButton.disabled = false;
-
-        alert(
-            error.message ||
-            'Something went wrong. Please try again.'
-        );
+    // Submit Feedback
+    form.addEventListener('submit', e => {
+        const submitButton = form.querySelector('button[type="submit"]');
+        submitButton.innerText = 'Submitting...';
+        submitButton.disabled = true;
     });
-});
 
-//==== Redirecting  state script ====
-document.addEventListener("DOMContentLoaded", function() {
-  const loginBtn = document.getElementById("loginBtn");
-  const loginText = loginBtn.querySelector(".login-text");
-  const loginArrow = loginBtn.querySelector(".login-arrow");
-  const loginSpinner = loginBtn.querySelector(".login-spinner");
+    updateStep();
 
-  // Reset button state on page load
-  function resetLoginButton() {
-    loginText.textContent = "Login to Portal";
-    loginArrow.style.display = "inline-block";
-    loginSpinner.style.display = "none";
-    loginBtn.style.pointerEvents = "auto";
-  }
-
-  resetLoginButton(); // run immediately on load
-
-  loginBtn.addEventListener("click", function(e) {
-    e.preventDefault(); // prevent immediate redirect
-
-    // Disable button so user can't click again
-    loginBtn.style.pointerEvents = "none";
-
-    // Change text and show spinner
-    loginText.textContent = "Redirecting...";
-    loginSpinner.style.display = "inline-block";
-    loginArrow.style.display = "none";
-
-    // Optional: Add spinning animation with CSS
-    loginSpinner.style.animation = "spin 1s linear infinite";
-
-    // Wait 8 seconds then redirect
-    setTimeout(function() {
-      window.location.href = loginBtn.href; // go to login page
-    }, 3000);
-  });
-
-  // Optional: reset if user navigates back via browser history
-  window.addEventListener("pageshow", function(event) {
-    if (event.persisted) {
-      resetLoginButton();
-    }
-  });
-});
+    
 </script>
 
   </body>  
