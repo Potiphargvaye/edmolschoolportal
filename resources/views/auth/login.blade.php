@@ -56,7 +56,7 @@
     <div class="floating-icons" id="floatingIcons"></div>
 
     <div class="login-card glass-card">
-        <div class="login-header text-center">
+        <div class="login-header text-center">  
             <img 
                 src="{{ asset('storage/logo/edmol-school-logo.jpg') }}"
                 alt="School Logo"

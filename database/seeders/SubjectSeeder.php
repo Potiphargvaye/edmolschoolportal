@@ -21,7 +21,7 @@ public function run()
         ['name' => 'Chemistry', 'code' => 'CHEM'],
         ['name' => 'History', 'code' => 'HIST'],
         ['name' => 'Geography', 'code' => 'GEO'],
-        ['name' => 'Web Development', 'code' => 'WEBDEV'],
+        ['name' => 'Science', 'code' => 'SCNC'],
     ];
 
     foreach ($subjects as $subject) {

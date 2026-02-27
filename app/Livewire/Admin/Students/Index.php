@@ -413,4 +413,54 @@ public function exportExcel()
     ), 'students.xlsx');
 }
 
+
+
+public $showSmsModal = false;
+public $message = '';
+public $selectedParents = [];
+
+// Open modal
+public function openSmsModal()
+{
+    if (empty($this->selectedParents)) {
+        $this->dispatch('alert', message: 'Please select at least one parent to message!');
+        return;
+    }
+
+    $this->showSmsModal = true;
+}
+
+// Send WhatsApp (Livewire 4)
+public function sendWhatsapp()
+{
+    $numbers = Student::whereIn('id', $this->selectedParents)
+        ->pluck('parent_phone')
+        ->filter()
+        ->toArray();
+
+    if (empty($numbers)) {
+        $this->dispatch('alert', message: 'No parent phone numbers found');
+        return;
+    }
+
+    // Professional Header & Footer
+$header = "📢 ED MOL MEMORIAL MATADI BAPTIST HIGH SCHOOL\n"
+        . "New Matadi Estate Drive, Opposite Don Bosco Youth Center\n"
+        . "P.O. Box: 4330 Monrovia, Liberia\n\n";
+
+$footer = "\n\nRegards,\nSchool Administration\n"
+        . "ED MOL Memorial Matadi Baptist High School";
+
+    $fullMessage = urlencode($header . $this->message . $footer);
+
+    $this->dispatch('open-whatsapp',
+        numbers: $numbers,
+        message: $fullMessage
+    );
+
+    // Reset
+    $this->message = '';
+    $this->showSmsModal = false;
+}
+
 }

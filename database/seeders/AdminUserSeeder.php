@@ -24,4 +24,4 @@ class AdminUserSeeder extends Seeder
             'updated_at' => now(),
         ]);
     }
-}
+} 

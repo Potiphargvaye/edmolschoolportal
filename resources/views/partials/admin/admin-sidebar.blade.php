@@ -130,17 +130,85 @@
                 </a>
             </li>
 
-            <li class="mb-1 group">
-    <form method="POST" action="{{ route('logout') }}">
-        @csrf
-        <button type="submit" 
-                class="flex font-bold items-center py-2 px-4 w-full text-[#f84525] hover:text-white hover:bg-[#002966] rounded-md">
+            <div x-data="{ showLogoutModal: false }">
+
+    <!-- Logout List Item -->
+    <li class="mb-1 group">
+        <button
+            type="button"
+            @click="showLogoutModal = true"
+            class="flex font-bold items-center py-2 px-4 w-full text-[#f84525] hover:text-white hover:bg-[#002966] rounded-md"
+        >
             <i class="ri-shut-down-line mr-3 text-lg text-[#f84525]"></i>
             <span class="text-sm">Logout</span>
         </button>
-    </form>
-</li>
+    </li>
 
+    <!-- Logout Confirm Modal -->
+    <div
+        x-show="showLogoutModal"
+        x-cloak
+        class="fixed inset-0 z-50 flex items-center justify-center
+               bg-black/60 backdrop-blur-sm px-2"
+    >
+        <div
+            x-show="showLogoutModal"
+            x-transition
+            class="bg-white w-full max-w-xs rounded-lg shadow-xl overflow-hidden"
+        >
+            <!-- Header -->
+            <div class="flex items-center justify-between px-3 py-2 bg-red-600 text-white">
+                <h3 class="text-xs font-semibold">Confirm Logout</h3>
+                <button
+                    @click="showLogoutModal = false"
+                    class="p-1 rounded-full hover:bg-red-500 transition"
+                >
+                    <i class="ri-close-line text-sm"></i>
+                </button>
+            </div>
+
+            <!-- Body -->
+            <div class="p-3 space-y-2 text-xs">
+                <p class="text-gray-700">
+                    Are you sure you want to logout from the system?
+                </p>
+
+                <p class="text-red-600 flex items-center gap-1 text-[11px]">
+                    <i class="ri-alert-line"></i>
+                    You will need to login again to access the system.
+                </p>
+            </div>
+
+            <!-- Footer -->
+     <div class="px-3 py-2 bg-gray-50 border-t flex justify-end gap-1">
+    <button
+        @click="showLogoutModal = false"
+        class="px-2 py-1 text-xs rounded border hover:bg-gray-100"
+    >
+        Cancel
+    </button>
+
+    <form method="POST" action="{{ route('logout') }}" x-data="{ submitting: false }" @submit="submitting = true">
+        @csrf
+        <button
+            type="submit"
+            class="px-2 py-1 text-xs font-semibold bg-red-600 text-white rounded
+                   hover:bg-red-700 flex items-center gap-2"
+            :disabled="submitting"
+        >
+            <!-- Spinner -->
+            <svg x-show="submitting" class="animate-spin h-3 w-3 border-2 border-white border-t-transparent rounded-full" viewBox="0 0 24 24"></svg>
+
+            <!-- Button text -->
+            <span x-show="!submitting">Logout</span>
+            <span x-show="submitting">Logging out…</span>
+        </button>
+    </form>
+     </div>
+    </div>
+    </div>
+
+</div>
 
         </ul>
 

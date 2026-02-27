@@ -6,12 +6,23 @@
     <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
         <h1 class="text-2xl font-bold">Students</h1>
         <div class="flex flex-wrap gap-2">
-            <button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 flex items-center gap-1">
-                SMS
-            </button>
+          <button wire:click="openSmsModal"
+        class="px-3 py-2 bg-green-600 text-white rounded
+               hover:bg-green-700 flex items-center gap-1 text-sm">
+
+    <!-- WhatsApp SVG Icon -->
+    <svg xmlns="http://www.w3.org/2000/svg"
+         class="h-4 w-4"
+         fill="currentColor"
+         viewBox="0 0 24 24">
+        <path d="M20.52 3.48A11.82 11.82 0 0012.01 0C5.38 0 .02 5.36.02 12c0 2.11.55 4.17 1.6 5.98L0 24l6.2-1.62A11.93 11.93 0 0012 24c6.63 0 11.99-5.36 11.99-12 0-3.2-1.25-6.21-3.47-8.52zM12 21.8c-1.84 0-3.63-.5-5.2-1.44l-.37-.22-3.68.96.98-3.59-.24-.37A9.77 9.77 0 012.2 12c0-5.4 4.4-9.8 9.8-9.8 2.62 0 5.08 1.02 6.93 2.87A9.73 9.73 0 0121.8 12c0 5.4-4.4 9.8-9.8 9.8zm5.4-7.36c-.3-.15-1.78-.88-2.05-.98-.27-.1-.47-.15-.67.15-.2.3-.77.98-.95 1.18-.17.2-.35.22-.65.07-.3-.15-1.28-.47-2.44-1.5-.9-.8-1.5-1.78-1.68-2.08-.17-.3-.02-.46.13-.61.14-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.48-.5-.67-.51h-.57c-.2 0-.52.07-.8.37s-1.05 1.02-1.05 2.48c0 1.45 1.08 2.85 1.23 3.05.15.2 2.13 3.25 5.16 4.56.72.31 1.28.5 1.72.64.72.23 1.37.2 1.88.12.57-.08 1.78-.73 2.03-1.44.25-.72.25-1.33.17-1.45-.07-.12-.27-.2-.57-.35z"/>
+    </svg>
+
+    <span>WhatsApp</span>
+</button>
             <button wire:click="exportExcel"
     class="px-4 py-2 bg-purple-500 text-white rounded hover:bg-purple-600 flex items-center gap-1">
-    <i class="ri-file-excel-line"></i> Export Excel
+    <i class="ri-file-excel-line"></i> Export
 </button>
 
             <button class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 flex items-center gap-1">
@@ -223,9 +234,15 @@
 >
     <i class="fas fa-trash text-xs"></i>
 </button>
-
-
-                    </td>
+<!-- Checkbox moved slightly to the right -->
+<div class="flex justify-end items-center">
+    <input type="checkbox"
+           wire:model="selectedParents"
+           value="{{ $student->id }}"
+           class="form-checkbox ml-4 cursor-pointer"
+           title="Message this parent">
+</div> 
+                </td>
                 </tr>
                 @empty
                 <tr>
@@ -1149,8 +1166,68 @@
     </div>
 </div>
 
+ <!-- WhatApp Sending model body -->
+@if($showSmsModal)
+<div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-2">
+    <div class="bg-white p-4 rounded-lg shadow-lg w-full max-w-sm">
 
+        <h2 class="text-sm font-semibold mb-2 text-center">
+            Send WhatsApp Message
+        </h2>
 
+        <textarea wire:model="message"
+                  class="w-full border p-2 rounded text-sm"
+                  rows="3"
+                  placeholder="Type your message..."></textarea>
+
+        <div class="flex justify-end gap-2 mt-3">
+
+            <!-- Cancel -->
+            <button
+                wire:click="$set('showSmsModal', false)"
+                class="px-3 py-1 bg-gray-400 text-white rounded text-xs"
+            >
+                Cancel
+            </button>
+
+            <!-- Send with Spinner -->
+            <button
+                wire:click="sendWhatsapp"
+                wire:loading.attr="disabled"
+                class="px-3 py-1 bg-green-600 text-white rounded
+                       text-xs flex items-center gap-1"
+            >
+                <span
+                    wire:loading
+                    class="animate-spin h-3 w-3 border-2
+                           border-white border-t-transparent rounded-full"
+                ></span>
+
+                <span wire:loading.remove>Send</span>
+                <span wire:loading>Sending…</span>
+            </button>
+
+        </div>
+
+    </div>
+</div>
+@endif
+<script>
+window.addEventListener('open-whatsapp', event => {
+    const numbers = event.detail.numbers;
+    const message = event.detail.message;
+
+    numbers.forEach(phone => {
+        const clean = phone.replace(/\D/g, '');
+        const url = `https://wa.me/${clean}?text=${message}`;
+        window.open(url, '_blank');
+    });
+});
+
+window.addEventListener('alert', event => {
+    alert(event.detail.message);
+});
+</script>
 </div>
 
 
