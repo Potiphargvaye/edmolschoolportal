@@ -9,6 +9,7 @@
     <!-- Header + Assign Button -->
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-3">
         <h2 class="text-base sm:text-lg font-bold text-gray-800">Fees Management</h2>
+         @can('manage fees')
          <button
     onclick="openModal('assignFeeModal')"
     class="bg-[#0a1f44] text-white px-2.5 py-1 sm:px-3 sm:py-1.5
@@ -20,6 +21,7 @@
     <span class="hidden xs:inline"></span>
     Assign Fees
 </button>
+@endcan
 
     </div>
 
@@ -167,11 +169,13 @@
     </div>
 
     <!-- Record Button -->
+    @can('manage fees')
     <button type="submit"
             class="bg-[#0a1f44] text-white px-3 py-1.5 rounded-md hover:opacity-90 transition flex items-center gap-1 text-xs font-semibold shadow-sm">
         <i class="fas fa-money-bill-wave text-xs"></i>
         Record
     </button>
+    @endcan
 </div>
 
     </form>
@@ -189,6 +193,7 @@
             <input 
                 type="text" 
                 id="feeSearchInput" 
+                onkeyup="filterFeesTable()"
                 placeholder="Search fees by student, fee type, status, amount..." 
                 class="pl-10 pr-10 py-2 sm:py-2.5 border border-gray-300 rounded-md w-full text-xs sm:text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 truncate transition-colors duration-300"
             >
@@ -198,26 +203,38 @@
                 </button>
             </div>
         </div>
+        
+<select id="gradeFilter" onchange="filterFeesTable()"
+    class="py-1.5 px-2 sm:py-2 sm:px-3 border border-gray-300 rounded-md text-xs sm:text-sm bg-white min-w-[120px] max-w-full truncate focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
 
+    <option value="">All Grades</option>
+
+    @foreach($grades as $grade)
+        <option value="{{ $grade }}">{{ $grade }}</option>
+    @endforeach
+
+</select>
         <!-- Filters -->
         <div class="flex flex-wrap gap-2 sm:gap-3 mt-2 md:mt-0">
-            <select id="statusFilter" 
-                    class="py-1.5 px-2 sm:py-2 sm:px-3 border border-gray-300 rounded-md text-xs sm:text-sm bg-white min-w-[120px] max-w-full truncate focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+            <select id="statusFilter" onchange="filterFeesTable()"
+             class="py-1.5 px-2 sm:py-2 sm:px-3 border border-gray-300 rounded-md text-xs sm:text-sm bg-white min-w-[120px] max-w-full truncate focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                 <option value="">All Statuses</option>
                 <option value="pending">Pending</option>
-                <option value="partial">Partial</option>
-                <option value="paid">Paid</option>
-                <option value="overdue">Overdue</option>
+<option value="partial">Partial</option>
+<option value="paid">Paid</option>
+<option value="overdue">Overdue</option>
             </select>
 
-            <select id="feeTypeFilter" 
-                    class="py-1.5 px-2 sm:py-2 sm:px-3 border border-gray-300 rounded-md text-xs sm:text-sm bg-white min-w-[120px] max-w-full truncate focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                <option value="">All Fee Types</option>
-                <option value="Tuition Fee">Tuition Fee</option>
-                <option value="Registration Fee">Registration Fees</option>
-                <option value="Activity Fee">Activity Fee</option>
-                <option value="Technology Fee">Technology Fee</option>
-                <option value="Library Fee">Library Fee</option>
+           <select id="feeTypeFilter" onchange="filterFeesTable()"
+            class="py-1.5 px-2 sm:py-2 sm:px-3 border border-gray-300 rounded-md text-xs sm:text-sm bg-white min-w-[120px] max-w-full truncate focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+              
+<option value="">All Fee Types</option>
+<option value="tuition fee">Tuition Fee</option>
+<option value="Registration">Registration</option>
+<option value="activity fee">Activity Fee</option>
+<option value="technology fee">Technology Fee</option>
+<option value="library fee">Library Fee</option>
+</select>
             </select>
         </div>
     </div>
@@ -270,26 +287,54 @@
     </tr>
 
             </thead>
-            <tbody class="bg-white divide-y divide-gray-200" id="feesTableBody">
-               @foreach($fees as $index => $fee)
+           <tbody class="bg-white divide-y divide-gray-200" id="feesTableBody">
+
+@foreach($fees as $index => $fee)
 <tr class="hover:bg-gray-50 transition-colors duration-200 fee-row">
-    <td class="px-3 py-2 whitespace-nowrap text-gray-900">{{ $loop->iteration }}</td> <!-- No. -->
-    <td class="px-3 py-2 whitespace-nowrap text-gray-900">{{ $fee->student->name }}</td>
-    <td
-    class="px-3 py-2 whitespace-nowrap text-xs font-black"
-    style="font-family: Arial Black; color: #0a1f44;"
->
-    {{ $fee->student->class_applying_for ?? 'N/A' }}
-</td>
-    <td class="px-3 py-2 whitespace-nowrap text-gray-900">{{ $fee->fee_type }}</td>
-    <td class="px-3 py-2 whitespace-nowrap text-gray-900">{{ $fee->installment_number }}</td>
-    <td class="px-3 py-2 whitespace-nowrap text-green-600 font-semibold">${{ number_format($fee->amount, 2) }}</td>
-    <td class="px-3 py-2 whitespace-nowrap text-gray-900">${{ number_format($fee->paid_amount, 2) }}</td>
+
+    <td class="px-3 py-2 whitespace-nowrap text-gray-900">
+        {{ $loop->iteration }}
+    </td>
+
+    <!-- Student Name -->
+    <td class="px-3 py-2 whitespace-nowrap text-gray-900 student-name">
+        {{ $fee->student->name }}
+    </td>
+
+    <!-- Grade -->
+    <td class="px-3 py-2 whitespace-nowrap text-xs font-black grade"
+        style="font-family: Arial Black; color: #0a1f44;">
+        {{ $fee->student->class_applying_for ?? 'N/A' }}
+    </td>
+
+    <!-- Fee Type -->
+    <td class="px-3 py-2 whitespace-nowrap text-gray-900 fee-type">
+        {{ $fee->fee_type }}
+    </td>
+
+    <td class="px-3 py-2 whitespace-nowrap text-gray-900">
+        {{ $fee->installment_number }}
+    </td>
+
+    <td class="px-3 py-2 whitespace-nowrap text-green-600 font-semibold">
+        ${{ number_format($fee->amount, 2) }}
+    </td>
+
+    <td class="px-3 py-2 whitespace-nowrap text-gray-900">
+        ${{ number_format($fee->paid_amount, 2) }}
+    </td>
+
     <td class="px-3 py-2 whitespace-nowrap text-red-600 font-semibold">
         ${{ number_format($fee->amount - $fee->paid_amount, 2) }}
-    </td> <!-- Balance -->
-    <td class="px-3 py-2 whitespace-nowrap text-gray-900">{{ $fee->due_date->format('M j, Y') }}</td>
-    <td class="px-3 py-2 whitespace-nowrap">
+    </td>
+
+    <td class="px-3 py-2 whitespace-nowrap text-gray-900">
+        {{ $fee->due_date->format('M j, Y') }}
+    </td>
+
+    <!-- Status -->
+    <td class="px-3 py-2 whitespace-nowrap status">
+
         @php
             $statusClasses = [
                 'pending' => 'bg-yellow-100 text-yellow-800 border-yellow-200',
@@ -299,22 +344,33 @@
             ];
             $statusClass = $statusClasses[$fee->status] ?? 'bg-gray-100 text-gray-800 border-gray-200';
         @endphp
+
         <span class="px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-medium border {{ $statusClass }}">
             {{ ucfirst($fee->status) }}
         </span>
+
     </td>
+
     <td class="px-3 py-2 whitespace-nowrap text-sm font-medium">
-        <div class="flex space-x-1">
-            <button onclick="viewFee({{ $fee->fee_id }})" class="bg-blue-600 hover:bg-blue-700 text-white p-1 rounded-md flex items-center justify-center">
-                <i class="fas fa-eye text-xs"></i>
-            </button>
-            <button onclick="editFee({{ $fee->fee_id }})" class="bg-yellow-600 hover:bg-yellow-700 text-white p-1 rounded-md flex items-center justify-center">
-                <i class="fas fa-edit text-xs"></i>
-            </button>
-            <button onclick="confirmDelete({{ $fee->fee_id }}, '{{ addslashes($fee->student->name . ' - ' . $fee->fee_type) }}')" class="bg-red-600 hover:bg-red-700 text-white p-1 rounded-md flex items-center justify-center">
-                <i class="fas fa-trash text-xs"></i>
-            </button>
-        </div>
+      <div class="flex space-x-1">
+    @can('view fee details')
+    <button onclick="viewFee({{ $fee->fee_id }})" class="bg-blue-600 hover:bg-blue-700 text-white p-1 rounded-md flex items-center justify-center">
+        <i class="fas fa-eye text-xs"></i>
+    </button>
+    @endcan
+
+    @can('edit fees')
+    <button onclick="editFee({{ $fee->fee_id }})" class="bg-yellow-600 hover:bg-yellow-700 text-white p-1 rounded-md flex items-center justify-center">
+        <i class="fas fa-edit text-xs"></i>
+    </button>
+    @endcan
+
+    @can('delete fees')
+    <button onclick="confirmDelete({{ $fee->fee_id }}, '{{ addslashes($fee->student->name . ' - ' . $fee->fee_type) }}')" class="bg-red-600 hover:bg-red-700 text-white p-1 rounded-md flex items-center justify-center">
+        <i class="fas fa-trash text-xs"></i>
+    </button>
+    @endcan
+</div>
     </td>
 </tr>
 @endforeach
@@ -1364,12 +1420,12 @@ function getOrdinalSuffix(number) {
     const value = number % 100;
     return suffixes[(value - 20) % 10] || suffixes[value] || suffixes[0];
 }
-
 // ========== SEARCH AND FILTER FUNCTIONALITY ==========
 document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('feeSearchInput');
     const statusFilter = document.getElementById('statusFilter');
     const feeTypeFilter = document.getElementById('feeTypeFilter');
+    const gradeFilter = document.getElementById('gradeFilter');
     const clearSearchBtn = document.getElementById('clearSearch');
     const resetFiltersBtn = document.getElementById('resetFilters');
     const searchResultsCount = document.getElementById('searchResultsCount');
@@ -1377,10 +1433,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
     const tableRows = document.querySelectorAll('.fee-row');
     let searchTimeout;
+
     let activeFilters = {
         search: '',
         status: '',
-        feeType: ''
+        feeType: '',
+        grade: ''
     };
     
     // Initial count
@@ -1447,6 +1505,16 @@ document.addEventListener('DOMContentLoaded', function() {
             hideLoadingSpinner();
         }, 300);
     });
+
+    // Grade filter event
+    gradeFilter.addEventListener('change', function(e) {
+        activeFilters.grade = e.target.value.toLowerCase();
+        showLoadingSpinner();
+        setTimeout(() => {
+            filterTable();
+            hideLoadingSpinner();
+        }, 300);
+    });
     
     // Clear search button
     clearSearchBtn.addEventListener('click', function() {
@@ -1465,11 +1533,15 @@ document.addEventListener('DOMContentLoaded', function() {
         searchInput.value = '';
         statusFilter.value = '';
         feeTypeFilter.value = '';
+        gradeFilter.value = '';
+
         activeFilters = {
             search: '',
             status: '',
-            feeType: ''
+            feeType: '',
+            grade: ''
         };
+
         clearSearchBtn.classList.add('hidden');
         showLoadingSpinner();
         setTimeout(() => {
@@ -1479,59 +1551,72 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Filter table function
-    function filterTable() {
-        let visibleCount = 0;
-        
-        tableRows.forEach(row => {
-            const studentName = row.cells[0].textContent.toLowerCase();
-            const feeType = row.cells[1].textContent.toLowerCase();
-            const installment = row.cells[2].textContent.toLowerCase();
-            const amount = row.cells[3].textContent.toLowerCase();
-            const paidAmount = row.cells[4].textContent.toLowerCase();
-            const dueDate = row.cells[5].textContent.toLowerCase();
-            const status = row.cells[6].textContent.toLowerCase();
-            
-            // Check search term
-            const matchesSearch = !activeFilters.search || 
-                studentName.includes(activeFilters.search) ||
-                feeType.includes(activeFilters.search) ||
-                installment.includes(activeFilters.search) ||
-                amount.includes(activeFilters.search) ||
-                paidAmount.includes(activeFilters.search) ||
-                dueDate.includes(activeFilters.search) ||
-                status.includes(activeFilters.search);
-            
-            // Check status filter
-            const matchesStatus = !activeFilters.status || 
-                status.includes(activeFilters.status.toLowerCase());
-            
-            // Check fee type filter
-            const matchesFeeType = !activeFilters.feeType || 
-                feeType.includes(activeFilters.feeType.toLowerCase());
-            
-            // Show/hide row based on filters
-            if (matchesSearch && matchesStatus && matchesFeeType) {
-                row.classList.remove('hidden');
-                visibleCount++;
-            } else {
-                row.classList.add('hidden');
-            }
-        });
-        
-        updateResultsCount(visibleCount);
-    }
-    
+function filterTable() {
+
+    let visibleCount = 0;
+
+    tableRows.forEach(row => {
+
+        const studentName = row.cells[1].textContent.trim().toLowerCase();
+        const grade = row.cells[2].textContent.trim().toLowerCase();
+        const feeType = row.cells[3].textContent.trim().toLowerCase();
+        const installment = row.cells[4].textContent.trim().toLowerCase();
+        const amount = row.cells[5].textContent.trim().toLowerCase();
+        const paidAmount = row.cells[6].textContent.trim().toLowerCase();
+        const balance = row.cells[7].textContent.trim().toLowerCase();
+        const dueDate = row.cells[8].textContent.trim().toLowerCase();
+        const status = row.cells[9].textContent.trim().toLowerCase();
+
+        const search = activeFilters.search.trim().toLowerCase();
+        const statusFilter = activeFilters.status.trim().toLowerCase();
+        const feeTypeFilter = activeFilters.feeType.trim().toLowerCase();
+        const gradeFilter = activeFilters.grade.trim().toLowerCase();
+
+        // Search match
+        const matchesSearch =
+            !search ||
+            studentName.includes(search) ||
+            feeType.includes(search) ||
+            installment.includes(search) ||
+            amount.includes(search) ||
+            paidAmount.includes(search) ||
+            balance.includes(search) ||
+            dueDate.includes(search) ||
+            status.includes(search);
+
+        // Status match
+        const matchesStatus =
+            !statusFilter || status.includes(statusFilter);
+
+        // Fee type match
+        const matchesFeeType =
+            !feeTypeFilter || feeType.includes(feeTypeFilter);
+
+        // Grade match
+        const matchesGrade =
+            !gradeFilter || grade.includes(gradeFilter);
+
+        if (matchesSearch && matchesStatus && matchesFeeType && matchesGrade) {
+            row.classList.remove('hidden');
+            visibleCount++;
+        } else {
+            row.classList.add('hidden');
+        }
+
+    });
+
+    updateResultsCount(visibleCount);
+}
     function updateResultsCount(count) {
         searchResultsCount.textContent = `Showing ${count} record${count !== 1 ? 's' : ''}`;
         
-        // Add highlight animation when count changes
         searchResultsCount.classList.add('text-blue-600', 'scale-105');
         setTimeout(() => {
             searchResultsCount.classList.remove('text-blue-600', 'scale-105');
         }, 500);
     }
     
-    // Add keyboard shortcut for search (Ctrl/Cmd + F)
+    // Keyboard shortcut for search
     document.addEventListener('keydown', function(e) {
         if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
             e.preventDefault();
@@ -1539,7 +1624,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
-
 // ========== MODAL CLOSE HANDLERS ==========
 document.addEventListener('click', function(event) {
     if (event.target.classList.contains('fixed') && event.target.id.includes('Modal')) {
@@ -1550,6 +1634,7 @@ document.addEventListener('click', function(event) {
 
 // ========== ENHANCED PRINT FUNCTION (PRO DOCUMENT) ==========
 function enhancedPrintFeeDetails() {
+
     const printableContent = document
         .getElementById('printable-fee-details')
         .cloneNode(true);
@@ -1563,166 +1648,249 @@ function enhancedPrintFeeDetails() {
         document.querySelector('.school-name')?.textContent ||
         'EDMOL Baptist School';
 
+    // FULL LOGO PATH (fixes watermark issue)
+    const logoPath = window.location.origin + "/kiddos-school-master/images/School_logo_reciept.jpeg";  
+
     const printWindow = window.open('', '_blank', 'width=900,height=650');
 
     printWindow.document.write(`
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Fee Receipt - ${schoolName}</title>
-    <style>
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            margin: 25px;
-            color: #000;
-            font-size: 14px;
-        }
+<title>Fee Receipt - ${schoolName}</title>
 
-        .header {
-            text-align: center;
-            margin-bottom: 25px;
-        }
+<style>
 
-        .school-name {
-            font-size: 26px;
-            font-weight: bold;
-            letter-spacing: 0.5px;
-        }
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    margin:15px;
+    font-size:13px;
+    color:#000;
+    position:relative;
+}
 
-        .receipt-title {
-            font-size: 18px;
-            margin-top: 8px;
-            color: #2c5282;
-            font-weight: bold;
-        }
+/* WATERMARK LOGO */
+body::before{
+    content:"";
+    position:fixed;
+    top:50%;
+    left:50%;
+    width:380px;
+    height:380px;
+    background-image:url('${logoPath}');
+    background-repeat:no-repeat;
+    background-position:center;
+    background-size:contain;
+    opacity:0.05;
+    transform:translate(-50%, -50%);
+    z-index:0;
+}
 
-        .divider {
-            border-bottom: 2px solid #333;
-            margin: 15px 0;
-        }
+/* CONTENT ABOVE WATERMARK */
 
-        .section {
-            border: 1px solid #ccc;
-            padding: 15px;
-            margin-bottom: 18px;
-            border-radius: 6px;
-            page-break-inside: avoid;
-        }
+.header,
+.section,
+.footer{
+    position:relative;
+    z-index:2;
+}
 
-        .section-title {
-            font-weight: bold;
-            font-size: 15px;
-            margin-bottom: 10px;
-            color: #2c5282;
-            border-bottom: 1px solid #ddd;
-            padding-bottom: 5px;
-        }
+/* HEADER */
 
-        .detail-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px 20px;
-        }
+.header{
+    text-align:center;
+    margin-bottom:12px;
+}
 
-        .detail-group {
-            margin-bottom: 6px;
-        }
+.school-name{
+    font-size:22px;
+    font-weight:bold;
+    color:#0a1f44;
+}
 
-        .detail-label {
-            font-weight: bold;
-        }
+.school-address{
+    font-size:12px;
+    margin-top:2px;
+}
 
-        .amount {
-            font-weight: bold;
-        }
+.receipt-title{
+    font-size:16px;
+    font-weight:bold;
+    margin-top:8px;
+    color:#0a1f44;
+}
 
-        .amount-total {
-            color: #166534;
-        }
+.receipt-date{
+    font-size:12px;
+    margin-top:3px;
+}
 
-        .amount-paid {
-            color: #065f46;
-        }
+.divider{
+    border-bottom:2px solid #0a1f44;
+    margin-top:8px;
+}
 
-        .amount-balance {
-            color: #b91c1c;
-        }
+/* SECTIONS */
 
-        .status-badge {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: bold;
-            border: 1px solid #999;
-        }
+.section{
+    border:1px solid #ccc;
+    padding:10px;
+    margin-bottom:10px;
+    border-radius:5px;
+    page-break-inside:avoid;
+}
 
-        .footer {
-            margin-top: 35px;
-            font-size: 12px;
-            color: #555;
-            text-align: center;
-        }
+.section-title{
+    font-weight:bold;
+    font-size:14px;
+    margin-bottom:6px;
+    color:#0a1f44;
+    border-bottom:1px solid #ddd;
+    padding-bottom:3px;
+}
 
-        .signature-section {
-            margin-top: 40px;
-            display: flex;
-            justify-content: space-between;
-        }
+.detail-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px 16px;
+}
 
-        .signature-box {
-            width: 45%;
-            text-align: center;
-        }
+.detail-group{
+    margin-bottom:4px;
+}
 
-        .signature-line {
-            border-top: 1px solid #000;
-            margin-top: 40px;
-        }
+.detail-label{
+    font-weight:bold;
+}
 
-        @media print {
-            body {
-                margin: 15mm;
-            }
-        }
-    </style>
+.amount-total{color:#166534;font-weight:bold;}
+.amount-paid{color:#065f46;font-weight:bold;}
+.amount-balance{color:#b91c1c;font-weight:bold;}
+
+.status-badge{
+    display:inline-block;
+    padding:3px 8px;
+    border-radius:10px;
+    font-size:11px;
+    font-weight:bold;
+    border:1px solid #999;
+}
+
+/* SIGNATURE */
+
+.signature-section{
+    margin-top:20px;
+    display:flex;
+    justify-content:space-between;
+}
+
+.signature-box{
+    width:45%;
+    text-align:center;
+}
+
+.signature-line{
+    border-top:1px solid #000;
+    margin-top:25px;
+}
+
+/* FOOTER */
+
+.footer{
+    margin-top:12px;
+    font-size:11px;
+    text-align:center;
+    color:#444;
+}
+
+/* PRINT SETTINGS */
+
+@media print{
+    body{
+        margin:10mm;
+    }
+
+    .section{
+        page-break-inside:avoid;
+    }
+}
+
+</style>
 </head>
+
 <body>
 
-    <div class="header">
-        <div class="school-name">${schoolName}</div>
-        <div class="receipt-title">Student Fee Receipt</div>
-        <div class="divider"></div>
-    </div>
+<div class="header">
 
-    ${printableContent.innerHTML}
+<div class="school-name">
+EDMOL MEMORIAL MATADI BAPTIST HIGH SCHOOL
+</div>
 
-    <div class="section">
-        <div class="section-title">Authorization</div>
-        <div class="signature-section">
-            <div class="signature-box">
-                <div class="signature-line"></div>
-                <div>School Bursar / Accountant</div>
-            </div>
-            <div class="signature-box">
-                <div class="signature-line"></div>
-                <div>Authorized Signature</div>
-            </div>
-        </div>
-    </div>
+<div class="school-address">
+New Matadi Estate Drive, Opposite Don Bosco Youth Center
+</div>
 
-    <div class="footer">
-        <div>
-            Printed on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}
-        </div>
-        <div>
-            This document is system-generated and valid without a stamp.
-        </div>
-    </div>
+<div class="school-address">
+P.O. Box: 4330 Monrovia, Liberia
+</div>
+
+<div class="school-address">
+Email: emmmbhs@gmail.com
+</div>
+
+<div class="school-address">
+0777-151-394 | 0771-761-098 | 0555-472-972
+</div>
+
+<div class="receipt-title">
+OFFICIAL STUDENT FEE RECEIPT
+</div>
+
+<div class="receipt-date">
+Date: ${new Date().toLocaleDateString()}
+</div>
+
+<div class="divider"></div>
+
+</div>
+
+${printableContent.innerHTML}
+
+<div class="section">
+
+<div class="section-title">Authorization</div>
+
+<div class="signature-section">
+
+<div class="signature-box">
+<div class="signature-line"></div>
+School Bursar / Accountant
+</div>
+
+<div class="signature-box">
+<div class="signature-line"></div>
+Authorized Signature
+</div>
+
+</div>
+
+</div>
+
+<div class="footer">
+
+<div>
+Printed on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}
+</div>
+
+<div>
+This document is system-generated and valid without a stamp.
+</div>
+
+</div>
 
 </body>
 </html>
-    `);
+`);
 
     printWindow.document.close();
 
@@ -1732,6 +1900,7 @@ function enhancedPrintFeeDetails() {
             printWindow.print();
         }, 300);
     };
+
 }
 
 </script>

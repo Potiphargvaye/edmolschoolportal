@@ -14,15 +14,18 @@
         <ul>
             <span class="text-gray-400 font-bold">ADMIN</span>
 
-            <li class="mb-1 group">
+@can('view dashboard')
+<li class="mb-1 group">
     <a href="{{ route('admin.dashboard') }}"
        class="flex font-semibold items-center py-2 px-4 text-white hover:bg-[#002966] hover:text-white rounded-md">
         <i class="ri-home-2-line mr-3 text-lg"></i>
         <span class="text-sm">Dashboard</span>
     </a>
 </li>
+@endcan
 
-           <li class="mb-1 group">
+           @can('manage users')
+<li class="mb-1 group"> 
     <!-- Main Users Link -->
     <a href="{{ route('admin.users.index') }}" 
        class="flex font-semibold items-center py-2 px-4 text-white hover:bg-[#002966] hover:text-white rounded-md
@@ -34,6 +37,7 @@
 
     <!-- Sub-links Dropdown -->
     <ul class="pl-7 mt-2 hidden group-[.selected]:block">
+        
         <li class="mb-4">
             <a href="{{ route('admin.users.index') }}"  
                class="text-[#f84525] text-sm flex items-center
@@ -51,7 +55,7 @@
         </li> 
 
         <li class="mb-4">
-            <a href=""
+            <a href="{{ route('admin.users.permissions.edit', auth()->id()) }}"
                class="text-[#f84525] text-sm flex items-center
                       hover:text-[#f84525]
                       hover:bg-[#f84525]/10
@@ -62,29 +66,35 @@
                       before:rounded-full
                       before:bg-[#f84525]
                       before:mr-3">
-                Add User
+                User Permission
             </a>
         </li> 
+
     </ul>
 </li>
+@endcan
 
-            <li class="mb-1 group">
-                <a href="{{ route('admin.students.index') }}"
-   class="flex font-semibold items-center py-2 px-4 text-white rounded-md
-          hover:bg-[#002966] hover:text-white
-          {{ request()->is('admin/students*') ? 'bg-[#002966]' : '' }}">
-    <i class="ri-graduation-cap-line mr-3 text-lg"></i>
-    <span class="text-sm">Students</span>
-</a>
+@can('view students')
+<li class="mb-1 group">
+    <a href="{{ route('admin.students.index') }}"
+       class="flex font-semibold items-center py-2 px-4 text-white rounded-md
+              hover:bg-[#002966] hover:text-white
+              {{ request()->is('admin/students*') ? 'bg-[#002966]' : '' }}">
+        <i class="ri-graduation-cap-line mr-3 text-lg"></i>
+        <span class="text-sm">Students</span>
+    </a>
+</li>
+@endcan
 
-            </li>
-
-            <li class="mb-1 group">
-                <a href="{{ route('admin.grade-assignments') }}" class="flex font-semibold items-center py-2 px-4 text-white hover:bg-[#002966] hover:text-white rounded-md">
-                    <i class="ri-file-list-3-line mr-3 text-lg"></i>
-                    <span class="text-sm">Grade-Assignment</span> 
-                </a>
-            </li>
+            @can('manage grade assignments')
+<li class="mb-1 group">
+    <a href="{{ route('admin.grade-assignments') }}" 
+       class="flex font-semibold items-center py-2 px-4 text-white hover:bg-[#002966] hover:text-white rounded-md">
+        <i class="ri-file-list-3-line mr-3 text-lg"></i>
+        <span class="text-sm">Grade-Assignment</span> 
+    </a>
+</li>
+@endcan
 
             <li class="mb-1 group">
     <a href="{{ route('admin.announcements.index') }}"
@@ -98,12 +108,14 @@
 
           <span class="text-gray-400 font-bold">Finance</span>
 
-            <li class="mb-1 group">
-                <a href="{{ route('admin.fees.index') }}" class="flex font-semibold items-center py-2 px-4 text-white hover:bg-[#002966] hover:text-white rounded-md">
-                    <i class="ri-wallet-3-line mr-3 text-lg"></i>
-                    <span class="text-sm">Fess-Management</span>
-                </a>
-            </li>
+          @can('manage fees')
+<li class="mb-1 group">
+    <a href="{{ route('admin.fees.index') }}" class="flex font-semibold items-center py-2 px-4 text-white hover:bg-[#002966] hover:text-white rounded-md">
+        <i class="ri-wallet-3-line mr-3 text-lg"></i>
+        <span class="text-sm">Fees-Management</span>
+    </a>
+</li>
+@endcan
 
             <span class="text-gray-400 font-bold">BLOG</span>
 

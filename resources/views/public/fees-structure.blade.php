@@ -26,7 +26,7 @@
 					    </div>
 					    <div class="col-md pr-4 d-flex topper align-items-center">
 					    	<div class="icon bg-tertiary mr-2 d-flex justify-content-center align-items-center"><span class="icon-phone2"></span></div>
-						    <span class="text">+250794241623</span>
+						    <span class="text">+231777-151-394</span>
 					    </div>
 				    </div>
 			    </div>
@@ -731,7 +731,7 @@
             	<div class="block-23 mb-3">
 	              <ul>
 	                <li><span class="icon icon-map-marker"></span><span class="text">New Matadi, Opposite Don-Bossco Youth-Center Monrovia, Liberia </span></li>
-	                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+250794241623</span></a></li>
+	                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+231777-151-394</span></a></li>
 	                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">emmmbhs@gmail.com</span></a></li>
 	              </ul>
 	            </div>
@@ -911,13 +911,15 @@ function downloadSheet() {
   const fee = document.getElementById("modalFee").textContent;
   const details = document.getElementById("modalDetails").innerHTML;
 
-  // Add loading spinner
-   button.style.opacity = "0.9";
+  // Loading effect
+  button.style.opacity = "0.9";
   button.classList.add("loading");
   button.innerHTML = `⬇️ Generating PDF <span class="spinner">⏳</span>`;
 
   setTimeout(() => {
+
     const { jsPDF } = window.jspdf;
+
     const doc = new jsPDF({
       orientation: "portrait",
       unit: "pt",
@@ -925,43 +927,179 @@ function downloadSheet() {
     });
 
     const margin = 40;
-    let yPos = 50;
+    let yPos = 60;
 
-    // PDF header
+    const pageWidth = doc.internal.pageSize.getWidth();
+
+    // ================================
+    // WATERMARK LOGO
+    // ================================
+  // Watermark
+const logo = new Image();
+logo.src = "/kiddos-school-master/images/school_logo1.jpg";
+
+// apply transparency
+doc.setGState(new doc.GState({ opacity: 0.08 }));
+
+doc.addImage(logo, "JPEG", 140, 200, 300, 300);
+
+// reset transparency
+doc.setGState(new doc.GState({ opacity: 1 }));
+    // ================================
+    // SCHOOL HEADER
+    // ================================
+
+    doc.setFont("helvetica", "bold");
     doc.setFontSize(18);
-    doc.setTextColor("#0b1c3f");
-    doc.text("Edmol-Baptist-School", margin, yPos);
+    doc.setTextColor("#0a1f44");
+
+    doc.text(
+      "EDMOL MEMORIAL MATADI BAPTIST HIGH SCHOOL",
+      pageWidth/2,
+      yPos,
+      { align: "center" }
+    );
+
+    yPos += 18;
+
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(11);
+    doc.setTextColor("#000");
+
+    doc.text(
+      "New Matadi Estate Drive, Opposite Don Bosco Youth Center",
+      pageWidth/2,
+      yPos,
+      { align: "center" }
+    );
+
+    yPos += 14;
+
+    doc.text(
+      "P.O. Box: 4330 Monrovia, Liberia",
+      pageWidth/2,
+      yPos,
+      { align: "center" }
+    );
+
+    yPos += 14;
+
+    doc.text(
+      "Email: emmmbhs@gmail.com | 0777-151-394 | 0771-761-098 | 0555-472-972",
+      pageWidth/2,
+      yPos,
+      { align: "center" }
+    );
+
     yPos += 25;
-    doc.setFontSize(14);
-    doc.text("Official Fees Structure", margin, yPos);
+
+    // Divider
+    doc.setDrawColor("#0a1f44");
+    doc.setLineWidth(1);
+    doc.line(margin, yPos, pageWidth - margin, yPos);
+
     yPos += 30;
 
-    // Grade & Fee
-    doc.setFontSize(16);
-    doc.text(`${grade} - ${fee}`, margin, yPos);
-    yPos += 20;
+    // ================================
+    // DOCUMENT TITLE
+    // ================================
 
-    // Convert table HTML to plain text
+    doc.setFontSize(16);
+    doc.setTextColor("#0a1f44");
+    doc.setFont("helvetica", "bold");
+
+    doc.text("OFFICIAL SCHOOL FEES STRUCTURE", pageWidth/2, yPos, { align: "center" });
+
+    yPos += 30;
+
+    // Grade title
+    doc.setFontSize(14);
+    doc.setTextColor("#000");
+
+    doc.text(`${grade} - ${fee}`, margin, yPos);
+
+    yPos += 25;
+
+    // ================================
+    // CONVERT TABLE
+    // ================================
+
     const tempDiv = document.createElement("div");
     tempDiv.innerHTML = details;
-    const tableText = Array.from(tempDiv.querySelectorAll("tr"))
-      .map(tr => Array.from(tr.children).map(td => td.textContent.trim()).join(" | "))
-      .join("\n");
 
-    doc.setFontSize(12);
-    doc.setTextColor("#222");
-    doc.text(tableText, margin, yPos);
+    const tableRows = Array.from(tempDiv.querySelectorAll("tr")).map(tr =>
+      Array.from(tr.children).map(td => td.textContent.trim())
+    );
+
+    doc.setFontSize(11);
+
+    tableRows.forEach(row => {
+      const line = row.join("   |   ");
+      doc.text(line, margin, yPos);
+      yPos += 18;
+    });
+
+    // ================================
+    // FOOTER
+    // ================================
+
+    yPos += 40;
+
+doc.setFontSize(10);
+doc.setTextColor("#444");
+
+doc.text(
+  `Generated on: ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`,
+  margin,
+  yPos
+);
+
+yPos += 15;
+
+doc.text(
+  "This document is system-generated and valid without a stamp.",
+  margin,
+  yPos
+);
+    
+
+    // ================================
+    // DIGITAL SIGNATURE AREA
+    // ================================
+
+    yPos += 40;
+
+    doc.line(pageWidth - 220, yPos, pageWidth - 60, yPos);
+
+    yPos += 12;
+
+    doc.setFontSize(10);
+
+    doc.text(
+      "School Administration",
+      pageWidth - 140,
+      yPos,
+      { align: "center" }
+    );
+
+    yPos += 14;
+
+    doc.text(
+      "Authorized Digital Signature",
+      pageWidth - 140,
+      yPos,
+      { align: "center" }
+    );
 
     // Save PDF
-    doc.save(`${grade.replace(/\s+/g,'_')}_Fees.pdf`);
+    doc.save(`${grade.replace(/\s+/g,'_')}_Fees_Structure.pdf`);
 
     // Reset button
     button.classList.remove("loading");
     button.innerHTML = "⬇️ Download PDF";
 
-  }, 600); // subtle delay for visual effect
+  }, 600);
 }
-
 //==== Redirecting stste script =======
 
 document.addEventListener("DOMContentLoaded", function() {

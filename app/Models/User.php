@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
+
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasRoles;
 
     protected $fillable = [
         'name',
@@ -28,9 +30,9 @@ class User extends Authenticatable
     ];
 
     public function hasRole($role)
-{
-    return $this->role === $role; // Adjust based on your role field
-}
+    {
+        return $this->role === $role; // Your existing role logic remains
+    }
 
     // Student grade relationship (unchanged)
     public function grade()
@@ -45,7 +47,7 @@ class User extends Authenticatable
     }
 
     // Helper method to assign subjects
-    public function assignSubjects(array $subjects)
+    public function assignSubjects(array $subjects) 
     {
         $this->update(['subjects' => $subjects]);
     }

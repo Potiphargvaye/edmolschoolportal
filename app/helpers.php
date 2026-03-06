@@ -12,7 +12,7 @@ if (!function_exists('user_avatar')) {
             $words = preg_split('/\s+/', $name);
             foreach ($words as $word) {
                 $initials .= strtoupper(substr($word, 0, 1));
-                if (strlen($initials) >= 2) break;
+                if (strlen($initials) >= 2) break;  
             }
         }
 
@@ -31,5 +31,18 @@ if (!function_exists('user_avatar')) {
         return '<div class="'.$size.' rounded-full bg-gray-200 flex items-center justify-center">
             <span class="text-gray-500 text-xs">'.($initials ?: '?').'</span>
         </div>';
+    }
+}
+
+// NEly added 
+if (!function_exists('array_all')) {
+    function array_all(array $array, callable $callback): bool
+    {
+        foreach ($array as $key => $value) {
+            if (!$callback($value, $key)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

@@ -13,6 +13,8 @@ class FeeController extends Controller
 {
    public function index(Request $request)
 {
+    $grades = \App\Models\Student::distinct()->pluck('class_applying_for'); // for flitering 
+    
     $selected_year = $request->get('academic_year', '');
     // 🔹 Save selected year for dashboard sync
 session(['dashboard_academic_year' => $selected_year]);
@@ -61,7 +63,8 @@ session(['dashboard_academic_year' => $selected_year]);
         'academic_years',
         'selected_year',
         'fees',
-        'students'
+        'students',
+        'grades'
     ));
 }
 

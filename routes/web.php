@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\GradeAssignmentController;
 use App\Http\Controllers\TeacherMaterialController; // Correct import for the teacher controller 
 use App\Http\Controllers\Admin\StudentController;
+use App\Http\Controllers\Admin\UserPermissionController;
 
 
 use App\Http\Controllers\Admin\FeeController; // Add this import
@@ -99,7 +100,8 @@ Route::middleware('auth')->group(function () {
 Route::prefix('admin')->middleware(['auth', 'can:is-admin'])->group(function () {
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])
-        ->name('admin.dashboard');
+    ->middleware('permission:view dashboard')
+    ->name('admin.dashboard');
     
     // Users Management for edit delete and destroy
     Route::prefix('users')->group(function () {
@@ -136,6 +138,14 @@ Route::prefix('admin')->middleware(['auth', 'can:is-admin'])->group(function () 
         Route::put('/grades/{grade}/subjects', [GradeAssignmentController::class, 'updateSubjects'])
             ->name('admin.update-grade-subjects');
     });
+
+    //  ROUTE BASE FOR THE PERMISSION AND ACCESS )
+   Route::middleware(['auth', 'permission:manage users'])
+    ->prefix('admin')->name('admin.')
+    ->group(function () {
+        Route::get('/users/{user}/permissions', [UserPermissionController::class, 'edit'])->name('users.permissions.edit');
+        Route::post('/users/{user}/permissions', [UserPermissionController::class, 'update'])->name('users.permissions.update');
+});
 });
 
 // Modified auth routes (replace the require line with these exact routes)
@@ -199,13 +209,26 @@ Route::prefix('teacher')->middleware(['auth', 'role:teacher'])->group(function (
 
 Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
     // Student Management Routes
-    Route::get('/students', [StudentController::class, 'index'])->name('students.index');
+     // ✅ Students page — route-level permission protection
+    Route::get('/students', [StudentController::class, 'index'])
+        ->name('students.index')
+        ->middleware('permission:view students'); // <- safe permission check
     Route::get('/students/create', [StudentController::class, 'create'])->name('students.create');
     Route::post('/students', [StudentController::class, 'store'])->name('students.store');
-    Route::get('/students/{student}', [StudentController::class, 'show'])->name('students.show');
-    Route::get('/students/{student}/edit', [StudentController::class, 'edit'])->name('students.edit');
+
+    Route::get('/students/{student}', [StudentController::class, 'show'])
+    ->middleware('permission:view student details')
+    ->name('students.show');
+
+   Route::get('/students/{student}/edit', [StudentController::class, 'edit'])
+    ->middleware('permission:edit students')
+    ->name('students.edit');
+
     Route::put('/students/{student}', [StudentController::class, 'update'])->name('students.update');
-    Route::delete('/students/{student}', [StudentController::class, 'destroy'])->name('students.destroy');
+
+   Route::delete('/students/{student}', [StudentController::class, 'destroy'])
+    ->middleware('permission:delete students')
+    ->name('students.destroy');
     
     // Alternative: You can use resource route instead (generates all above routes)
     // Route::resource('students', StudentController::class);
@@ -216,17 +239,36 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
 
 Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
     // Fees management routes
-    Route::get('/fees', [App\Http\Controllers\Admin\FeeController::class, 'index'])->name('fees.index');
-    Route::post('/fees', [App\Http\Controllers\Admin\FeeController::class, 'store'])->name('fees.store');
-    Route::post('/fees/{id}/payment', [App\Http\Controllers\Admin\FeeController::class, 'updatePayment'])->name('fees.payment');
-    Route::delete('/fees/{id}', [App\Http\Controllers\Admin\FeeController::class, 'destroy'])->name('fees.destroy');
+  Route::get('/fees', [App\Http\Controllers\Admin\FeeController::class, 'index'])
+    ->middleware('permission:manage fees')
+    ->name('fees.index');
+
+    Route::post('/fees', [App\Http\Controllers\Admin\FeeController::class, 'store'])
+    ->middleware('permission:manage fees')
+    ->name('fees.store');
+
+Route::post('/fees/{id}/payment', [App\Http\Controllers\Admin\FeeController::class, 'updatePayment'])
+    ->middleware('permission:manage fees')
+    ->name('fees.payment');
+    
+Route::delete('/fees/{id}', [App\Http\Controllers\Admin\FeeController::class, 'destroy'])
+    ->middleware('permission:delete fees')
+    ->name('fees.destroy');
 });
 
 
 // Fee API routes for view/edit functionality
-Route::get('/admin/fees/{fee}/details', [FeeController::class, 'getFeeDetails'])->name('admin.fees.details');
-Route::get('/admin/fees/{fee}/edit', [FeeController::class, 'getFeeEditData'])->name('admin.fees.edit.data');
-Route::put('/admin/fees/{fee}', [FeeController::class, 'update'])->name('admin.fees.update');
+Route::get('/admin/fees/{fee}/details', [FeeController::class, 'getFeeDetails'])
+    ->middleware('permission:view fee details')
+    ->name('admin.fees.details');
+
+Route::get('/admin/fees/{fee}/edit', [FeeController::class, 'getFeeEditData'])
+    ->middleware('permission:edit fees')
+    ->name('admin.fees.edit.data');
+
+  Route::put('/admin/fees/{fee}', [FeeController::class, 'update'])
+    ->middleware('permission:edit fees')
+    ->name('admin.fees.update');
 
 
 

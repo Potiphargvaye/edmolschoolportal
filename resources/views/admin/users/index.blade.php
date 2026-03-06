@@ -347,6 +347,12 @@ use Illuminate\Support\Facades\Storage;
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5-4h4m-4 0V3a1 1 0 00-1-1h-2a1 1 0 00-1 1v1m10 0h-4" />
             </svg>
         </button>
+        @can('manage users')
+<a href="{{ route('admin.users.permissions.edit', $user->id) }}" 
+   class="bg-blue-500 text-white px-2 py-1 rounded">
+    Access
+</a>
+@endcan
     </div>
 </td>
                     </tr>

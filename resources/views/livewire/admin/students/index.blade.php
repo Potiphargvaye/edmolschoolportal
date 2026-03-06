@@ -28,10 +28,12 @@
             <button class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 flex items-center gap-1">
                 Email
             </button>
-            <button wire:click="$set('showAddModal', true)"
-                class="px-4 py-2 bg-[#f84525] text-white rounded hover:bg-red-600 flex items-center gap-1">
-                <i class="ri-add-line"></i> Register New
-            </button>
+           @if($canManage)
+<button wire:click="$set('showAddModal', true)"
+        class="px-4 py-2 bg-[#f84525] text-white rounded hover:bg-red-600 flex items-center gap-1">
+    <i class="ri-add-line"></i> Register New
+</button>
+@endif 
         </div>
     </div>
 
@@ -94,13 +96,25 @@
 
     <input
         type="text"
-        wire:model.debounce.300ms="search"
+        wire:model.live="search"
         placeholder="Search name or ID..."
         class="w-full sm:w-1/3 px-3 py-2 border rounded text-sm"
     >
 
     <select
-        wire:model="intake"
+    wire:model.live="grade"
+    class="w-full sm:w-1/4 px-3 py-2 border rounded text-sm"
+>
+    <option value="">All Grades</option>
+
+    @foreach ($grades as $item)
+        <option value="{{ $item }}">{{ $item }}</option>
+    @endforeach
+
+</select>
+
+    <select
+        wire:model.live="intake"
         class="w-full sm:w-1/4 px-3 py-2 border rounded text-sm"
     >
         <option value="">All Intakes</option>
@@ -110,7 +124,7 @@
     </select>
 
     <select
-        wire:model="shift"
+        wire:model.live="shift"
         class="w-full sm:w-1/4 px-3 py-2 border rounded text-sm"
     >
         <option value="">All Shifts</option>
@@ -121,24 +135,18 @@
 
 </div>
 
-<div class="text-sm font-bold text-blue-600 mt-2">
-    🔍 To search for a student, type their Name or ID in the search box above, or select an Intake or Shift. <br>
-    ⚠️ Note: The table will only update after you click one of the Status buttons (Candidate, Admitted, etc.). <br>
-    💡 Example: 
-    <ol class="list-decimal list-inside ml-4">
-        <li>Type "John" in the search box.</li>
-        <li>Select an Intake or Shift if needed.</li>
-        <li>Click the "Candidate" status button to see the results.</li>
-    </ol>
-</div>
-
 <div class="text-xs text-red-600 mb-2">
     🔴 Searching for: {{ $search }} |
     Name: {{ $name }} |
     Intake: {{ $intake }} |
     Shift: {{ $shift }}
      
-</div>
+    <button
+wire:click="$set('search',''); $set('intake',''); $set('shift',''); $set('grade','');"
+class="bg-[#25D366] text-white px-3 py-2 hover:bg-[#1ebe5d] rounded text-xs">
+Clear Search
+</button>
+</div> 
 
     {{-- Table --}}
     <div class="overflow-x-auto mt-4">
@@ -167,73 +175,73 @@
                     <td class="px-2 py-1 border flex flex-wrap justify-center gap-1">
 
                         {{-- Dynamic Status Buttons --}}
-@if($student->status === 'candidate')
-  <button
-    wire:click="confirmStatusChange({{ $student->id }}, 'admitted')"
-    @click="$dispatch('open-admit')"
-    class="px-2 py-1 bg-green-500 text-white rounded text-xs"
->
-    Admit
-</button>
+@if($canManage)
 
-@elseif($student->status === 'admitted')
-    <button
-    wire:click="confirmStatusChange({{ $student->id }}, 'registered')"
-    @click="$dispatch('open-register')"
-    class="px-2 py-1 bg-blue-500 text-white rounded text-xs"
->
-    Register
-</button>
+    @if($student->status === 'candidate')
+        <button
+            wire:click="confirmStatusChange({{ $student->id }}, 'admitted')"
+            @click="$dispatch('open-admit')"
+            class="px-2 py-1 bg-green-500 text-white rounded text-xs">
+            Admit
+        </button>
 
+    @elseif($student->status === 'admitted')
+        <button
+            wire:click="confirmStatusChange({{ $student->id }}, 'registered')"
+            @click="$dispatch('open-register')"
+            class="px-2 py-1 bg-blue-500 text-white rounded text-xs">
+            Register
+        </button>
 
-@elseif($student->status === 'registered')
-    @if($student->status === 'registered')
-    <button
-        wire:click="confirmStatusChange({{ $student->id }}, 'active')"
-        class="px-2 py-1 bg-indigo-500 text-white rounded text-xs"
-    >
-        Activate
-    </button>
+    @elseif($student->status === 'registered')
+        <button
+            wire:click="confirmStatusChange({{ $student->id }}, 'active')"
+            class="px-2 py-1 bg-indigo-500 text-white rounded text-xs">
+            Activate
+        </button>
+
+    @elseif($student->status === 'active')
+        <div class="flex gap-1">
+            <button
+                wire:click="confirmStatusChange({{ $student->id }}, 'completed')"
+                class="px-2 py-1 bg-gray-700 text-white rounded text-xs hover:bg-gray-800">
+                Complete
+            </button>
+
+            <button
+                wire:click="confirmStatusChange({{ $student->id }}, 'dropout')"
+                class="px-2 py-1 bg-red-500 text-white rounded text-xs hover:bg-red-600">
+                Dropout
+            </button>
+        </div>
+    @endif
+
 @endif
 
-
-@elseif($student->status === 'active')
-    <div class="flex gap-1">
-        <button
-    wire:click="confirmStatusChange({{ $student->id }}, 'completed')"
-    class="px-2 py-1 bg-gray-700 text-white rounded text-xs hover:bg-gray-800"
->
-    Complete
-</button>
-
-
-        <button
-    wire:click="confirmStatusChange({{ $student->id }}, 'dropout')"
-    class="px-2 py-1 bg-red-500 text-white rounded text-xs hover:bg-red-600"
->
-    Dropout
-</button>
-
-    </div>
-@endif
                         {{-- View / Edit / Delete Icons --}}
+                        @if($canView)
                         <button wire:click="viewStudent({{ $student->id }})"
                             class="text-blue-500 hover:text-blue-700" title="View">
                              <i class="fas fa-eye text-xs"></i>
                         </button>
-
+                        @endif
+                        
+                        @if($canEdit)
                         <button wire:click="editStudent({{ $student->id }})"
                             class="text-yellow-500 hover:text-yellow-700" title="Edit">
                            <i class="fas fa-edit text-xs"></i>
                         </button>
-
+                        @endif
+                         
+                        @if($canDelete)
                         <button
-    wire:click="confirmDelete({{ $student->id }})"
-    class="text-red-500 hover:text-red-700"
-    title="Delete"
->
-    <i class="fas fa-trash text-xs"></i>
-</button>
+                      wire:click="confirmDelete({{ $student->id }})"
+                    class="text-red-500 hover:text-red-700"
+                    title="Delete"
+                    >
+                    <i class="fas fa-trash text-xs"></i>
+                    </button>
+                    @endif
 <!-- Checkbox moved slightly to the right -->
 <div class="flex justify-end items-center">
     <input type="checkbox"
@@ -681,6 +689,8 @@
                     <p><span class="font-semibold">Gender:</span> {{ $view_gender ?? '—' }}</p>
                     <p><span class="font-semibold">Class:</span> {{ $view_class ?? '—' }}</p>
                     <p><span class="font-semibold">Admission Date:</span> {{ $view_date ?? '—' }}</p>
+                     <p><span class="font-semibold">Previous-School Attended:</span> {{ $view_last_school_attended ?? '—' }}</p>
+                      <p><span class="font-semibold">Student-Type:</span> {{ $view_student_type ?? '—' }}</p>
                 </div>
             </div>
 
@@ -956,8 +966,8 @@
                 class="w-full border rounded px-2 py-1 text-xs focus:outline-none"
             >
                 <option value="">Intake</option>
-                <option value="January 2026–2027">Sept 2026–2027</option>
-                <option value="August 2026–2027">Sept 2027–2028</option>
+                <option value="September 2026–2027">September 2026–2027"</option>
+                <option value="September 2027–2028">September 2027–2028</option>
             </select>
         </div>
 
@@ -1229,5 +1239,3 @@ window.addEventListener('alert', event => {
 });
 </script>
 </div>
-
-

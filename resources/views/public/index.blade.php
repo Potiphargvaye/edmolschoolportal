@@ -22,7 +22,7 @@
 					    </div>
 					    <div class="col-md pr-4 d-flex topper align-items-center">
 					    	<div class="icon bg-tertiary mr-2 d-flex justify-content-center align-items-center"><span class="icon-phone2"></span></div>
-						    <span class="text">+ 1235 2355 98</span>
+						    <span class="text">+231777-151-394</span>
 					    </div>
 				    </div>
 			    </div>
@@ -743,7 +743,7 @@ data-stellar-background-ratio="0.5">
                   <i class="icon-quote-left"></i>
                 </span> 
                 <p>The teachers are dedicated, and my son’s confidence and skills have improved tremendously since joining the school.</p>
-                <p class="name">Mr. Emmanuel Kollie</p>
+                <p class="name">Bro Potiphar G Vaye</p>
                 <span class="position">Father</span>
               </div>
             </div>
@@ -1059,7 +1059,7 @@ style="background-image: url('{{ asset('kiddos-school-master/images/blog_post1.j
             	<div class="block-23 mb-3">
 	              <ul>
 	                <li><span class="icon icon-map-marker"></span><span class="text">New Matadi, Opposite Don-Bossco Youth-Center Monrovia, Liberia </span></li>
-	                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+250794241623</span></a></li>
+	                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+231777-151-394</span></a></li>
 	                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">emmmbhs@gmail.com</span></a></li>
 	              </ul>
 	            </div>

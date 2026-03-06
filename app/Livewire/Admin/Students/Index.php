@@ -26,6 +26,7 @@ class Index extends Component
     public $search = '';
     public $intake = '';
     public $shift = '';
+    public $grade = '';
     public $showAddModal = false;
     public $loadingStudentId = null; // for my loading when switching among the status
 
@@ -57,6 +58,9 @@ class Index extends Component
     --------------------------*/
     public function storeStudent()
     {
+        if (!auth()->user()->can('manage students')) {
+    abort(403);
+}
         $this->validate([
             'name' => 'required|string|max:255',
             'age' => 'required|integer|min:5|max:25',
@@ -140,6 +144,10 @@ public function mount()
 --------------------------*/
 public function confirmStatusChange($studentId, $newStatus)
 {
+    if (!auth()->user()->can('manage students')) {
+        abort(403);
+    }
+
     $this->confirmingStatusId = $studentId;
     $this->pendingStatus = $newStatus;
 
@@ -243,6 +251,10 @@ public $deleteStudentName;
 
 public function confirmDelete($id)
 {
+     if (!auth()->user()->can('delete students')) {
+        abort(403);
+    }
+
     $student = Student::findOrFail($id);
 
     $this->deleteStudentId = $student->id;
@@ -256,44 +268,49 @@ public function confirmDelete($id)
 
     protected $queryString = [];
 
-    public function updatingSearch()
-    {
-        $this->resetPage();
-    }
-
-    public function updatingIntake()
-    {
-        $this->resetPage();
-    }
-
-    public function updatingShift()
-    {
-        $this->resetPage();
-    }
-
-    public function updatingStatus()
-    {
-        $this->resetPage();
-    }
+   public function updating($property)
+{
+    $this->resetPage();
+}
     
-    public function render()
-    {
-        $students = Student::query()
-            ->where('status', $this->status)
-            ->when($this->search, fn($q) => $q->where(function($q){
-                $q->where('name', 'like', "%{$this->search}%")
-                  ->orWhere('student_id', 'like', "%{$this->search}%");
-            }))
-            ->when($this->intake, fn($q) => $q->where('intake', $this->intake))
-            ->when($this->shift, fn($q) => $q->where('shift', $this->shift))
-            ->latest()
-            ->paginate(10);
+    
+ public function render()
+{
+   $students = Student::query()
+    ->where('status', $this->status)
 
-        $intakes = Student::whereNotNull('intake')->distinct()->pluck('intake');
-        $shifts = Student::whereNotNull('shift')->distinct()->pluck('shift');
+    ->when($this->search, function ($q) {
+        $q->where(function ($q) {
+            $q->where('name', 'like', "%{$this->search}%")
+              ->orWhere('student_id', 'like', "%{$this->search}%");
+        });
+    })
 
-        return view('livewire.admin.students.index', compact('students','intakes','shifts'));
-    }
+    ->when($this->intake, fn($q) => $q->where('intake', $this->intake))
+
+    ->when($this->shift, fn($q) => $q->where('shift', $this->shift))
+
+    ->when($this->grade, fn($q) => $q->where('class_applying_for', $this->grade))
+
+    ->latest()
+    ->paginate(10);
+
+    $grades  = Student::whereNotNull('class_applying_for')->distinct()->pluck('class_applying_for');
+    $intakes = Student::whereNotNull('intake')->distinct()->pluck('intake');
+    $shifts  = Student::whereNotNull('shift')->distinct()->pluck('shift');
+
+    return view('livewire.admin.students.index', [
+        'students'   => $students,
+        'grades'     => $grades,
+        'intakes'    => $intakes,
+        'shifts'     => $shifts,
+
+        'canManage'  => auth()->user()->can('manage students'),
+        'canView'    => auth()->user()->can('view student details'),
+        'canEdit'    => auth()->user()->can('edit students'),
+        'canDelete'  => auth()->user()->can('delete students'),
+    ]);
+}
 
 
 
@@ -315,6 +332,9 @@ public function confirmDelete($id)
 
     public function editStudent($id)
     {
+         if (!auth()->user()->can('edit students')) {
+        abort(403);
+    }
         $student = Student::findOrFail($id);
 
         $this->edit_student_id = $student->id;
@@ -377,9 +397,15 @@ public $view_image;
 public $view_transcript;
 public $view_recommendation_letter;
 public $view_status;
+public $view_last_school_attended;
+public $view_student_type;
 
 public function viewStudent($id)
 {
+      if (!auth()->user()->can('view student details')) {
+        abort(403);
+    }
+
     $student = Student::findOrFail($id);
 
     $this->view_student_id   = $student->id;
@@ -388,6 +414,8 @@ public function viewStudent($id)
     $this->view_gender       = $student->gender;
     $this->view_parent_phone = $student->parent_phone;
     $this->view_class        = $student->class_applying_for;
+     $this->view_last_school_attended        = $student->last_school_attended;
+    $this->view_student_type       = $student->student_type;
     $this->view_date         = optional($student->date_of_admission)->format('Y-m-d');
 
       $this->view_image = $student->image;

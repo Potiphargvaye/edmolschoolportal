@@ -181,7 +181,7 @@
 
                 <div class="mb-3">
                     <label class="form-label">Parent / Guardian Phone *</label>
-                    <input type="tel" class="form-control form-control-lg required" name="parent_phone" placeholder="e.g. 0777-151-394">
+                    <input type="tel" class="form-control form-control-lg required" name="parent_phone" placeholder="e.g. +231xxxxxx">
                 </div>
 
                 <button type="button" class="btn btn-secondary prev-btn mt-3">
