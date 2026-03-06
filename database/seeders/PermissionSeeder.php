@@ -8,42 +8,46 @@ use Spatie\Permission\Models\Permission;
 class PermissionSeeder extends Seeder
 {
     public function run(): void
-{
-    $permissions = [
+    {
+        $permissions = [
+            // Students
+            'view students',
+            'manage students',
+            'view student details',
+            'edit students',
+            'delete students',
+            'manage grade assignments',
 
-        // Students
-        'view students',
-        'view student details',
-        'edit students',
-        'delete students',
-        'manage students', // status changes, lifecycle control
+            // Fees
+            'view fees',
+            'view fee details',
+            'manage fees',
+            'edit fees',
+            'delete fees',
+            'generate receipts',
 
-        // Fees
-        'view fees',
-        'manage fees',
-        'generate receipts',
+            // Academic
+            'assign grades',
 
-        // Academic
-        'assign grades',
+            // Users
+            'manage users',
 
-        // Users
-        'manage users',
+            // Announcements
+            'manage announcements',
 
-        // Announcements
-        'manage announcements',
+            // Reports (future)
+            'view academic reports',
+            'manage attendance',
 
-        // Reports (future)
-        'view academic reports',
-        'manage attendance',
+            // System
+            
+            'view dashboard',
+        ];
 
-        // System
-        'access admin dashboard',
-    ];
-
-    foreach ($permissions as $permission) {
-        \Spatie\Permission\Models\Permission::firstOrCreate([
-            'name' => $permission
-        ]);
+        foreach ($permissions as $permission) {
+            Permission::firstOrCreate([
+                'name' => $permission
+            ]);
+        }
     }
-}
 }
