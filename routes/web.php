@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\GradeAssignmentController;
 use App\Http\Controllers\TeacherMaterialController; // Correct import for the teacher controller 
 use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\UserPermissionController;
+use App\Http\Controllers\StudentGradeController;
 
 
 use App\Http\Controllers\Admin\FeeController; // Add this import
@@ -289,3 +290,24 @@ Route::put('/subjects/{subject}', [GradeAssignmentController::class, 'updateSubj
 // Add this route for fetching single subject
 Route::get('/subjects/{subject}', [GradeAssignmentController::class, 'getSubject'])->name('subjects.show');
 
+
+
+// routes for grade and grade entry 
+Route::get('/grades/entry', [StudentGradeController::class, 'create'])
+    ->name('grades.entry');
+    Route::get('/grades/load', [StudentGradeController::class, 'load'])->name('grades.load');
+
+    Route::post('/grades/store',[StudentGradeController::class,'store'])->name('grades.store');
+// routes for locking semester 
+    Route::post('/admin/grades/lock', [StudentGradeController::class, 'lockSemester'])
+->name('grades.lock');
+
+
+// routes for report card printing   
+use App\Http\Controllers\ReportCardController;
+
+Route::get('/report-card/senior/{student}', 
+    [ReportCardController::class, 'printSenior']
+)->name('report.card.senior');
+Route::get('/admin/report-cards/{level?}', [ReportCardController::class, 'index'])
+    ->name('report.cards.index');

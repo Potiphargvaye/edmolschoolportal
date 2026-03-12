@@ -353,10 +353,8 @@ Clear Search
                     <select wire:model.defer="class_applying_for"
                             class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors mb-2">
                         <option value="">Select Class</option>
-                        <optgroup label="Nursery">
-                            <option value="Nursery 1">Nursery 1</option>
-                            <option value="Nursery 2">Nursery 2</option>
-                            <option value="Nursery 3">Nursery 3</option>
+                        <optgroup label="KG">
+                            <option value="KG">KG</option>
                         </optgroup>
                         <optgroup label="Primary">
                             <option value="Grade 1">Grade 1</option>
@@ -529,10 +527,8 @@ Clear Search
                             <select wire:model.defer="edit_class_applying_for"
                                     class="w-full px-3 py-2 border rounded text-sm">
                                 <option value="">Select Class</option>
-                                <optgroup label="Nursery">
-                                    <option>Nursery 1</option>
-                                    <option>Nursery 2</option>
-                                    <option>Nursery 3</option>
+                                <optgroup label="KG">
+                                    <option value="KG">KG</option>
                                 </optgroup>
                                 <optgroup label="Primary">
                                     <option>Grade 1</option>
@@ -966,6 +962,7 @@ Clear Search
                 class="w-full border rounded px-2 py-1 text-xs focus:outline-none"
             >
                 <option value="">Intake</option>
+                  <option value="September 2025–2026">September 2025–2026"</option>
                 <option value="September 2026–2027">September 2026–2027"</option>
                 <option value="September 2027–2028">September 2027–2028</option>
             </select>

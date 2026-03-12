@@ -16,8 +16,7 @@ class PermissionSeeder extends Seeder
             'view student details',
             'edit students',
             'delete students',
-            'manage grade assignments',
-
+            'manage grade assignments',  
             // Fees
             'view fees',
             'view fee details',
@@ -42,6 +41,11 @@ class PermissionSeeder extends Seeder
             // System
             
             'view dashboard',
+            // <-- CHANGE: Added permission to allow editing grades
+             'enter student grades',
+              'edit student grades', 
+              'lock & unlock grade submission',
+
         ];
 
         foreach ($permissions as $permission) {
@@ -49,5 +53,5 @@ class PermissionSeeder extends Seeder
                 'name' => $permission
             ]);
         }
-    }
+    }  
 }

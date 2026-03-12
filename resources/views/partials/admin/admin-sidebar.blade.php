@@ -12,7 +12,7 @@
     <div class="flex-1 overflow-y-auto px-4 mt-4">
 
         <ul>
-            <span class="text-gray-400 font-bold">ADMIN</span>
+            <span class="text-teal-500 font-bold">ADMIN</span>
 
 @can('view dashboard')
 <li class="mb-1 group">
@@ -106,7 +106,8 @@
 </a>
 </li>
 
-          <span class="text-gray-400 font-bold">Finance</span>
+
+<span class="text-gray-400 font-bold">Finance</span>
 
           @can('manage fees')
 <li class="mb-1 group">
@@ -116,6 +117,85 @@
     </a>
 </li>
 @endcan
+
+           <span class="text-orange-500 hover:text-orange-700 font-bold">Report-Card</span>
+
+           @can('enter student grades')
+<li class="mb-1 group">
+    <a href="{{ route('grades.entry') }}" 
+       class="flex font-semibold items-center py-2 px-4 text-white hover:bg-[#002966] hover:text-white rounded-md">
+      <i class="ri-book-line mr-3 text-lg"></i>
+        <span class="text-sm">Grade Entry</span> 
+    </a>
+</li>
+@endcan
+
+           <li class="mb-1 group">
+    <!-- Main Report Card Link -->
+    <a href="#"
+       class="flex font-semibold items-center py-2 px-4 text-white hover:bg-[#002966] hover:text-white rounded-md
+              group-[.active]:bg-[#002966] group-[.active]:text-white sidebar-dropdown-toggle">
+        <i class="ri-folder-4-line mr-3 text-lg"></i>                
+        <span class="text-sm">Report Cards</span>
+        <i class="ri-arrow-right-s-line ml-auto group-[.selected]:rotate-90"></i>
+    </a>
+
+    <!-- Sub-links Dropdown -->
+    <ul class="pl-7 mt-2 hidden group-[.selected]:block">
+
+        <!-- Junior -->
+        <li class="mb-4">
+            <a href="{{ route('report.cards.index', 'junior') }}"  
+               class="text-[#f84525] text-sm flex items-center
+                      hover:text-[#f84525]
+                      hover:bg-[#f84525]/10
+                      px-2 py-1 rounded-md  
+                      transition-colors
+                      before:contents-['']
+                      before:w-1 before:h-1
+                      before:rounded-full
+                      before:bg-[#f84525]
+                      before:mr-3">
+                Junior Report Card
+            </a>
+        </li> 
+
+        <!-- Elementary -->
+        <li class="mb-4">
+            <a href="{{ route('report.cards.index', 'elementary') }}"
+               class="text-[#f84525] text-sm flex items-center
+                      hover:text-[#f84525]
+                      hover:bg-[#f84525]/10
+                      px-2 py-1 rounded-md
+                      transition-colors
+                      before:contents-['']
+                      before:w-1 before:h-1
+                      before:rounded-full
+                      before:bg-[#f84525]
+                      before:mr-3">
+                Elementary Report Card
+            </a>
+        </li> 
+
+        <!-- Senior -->
+        <li class="mb-4">
+            <a href="{{ route('report.cards.index', 'senior') }}"
+               class="text-[#f84525] text-sm flex items-center
+                      hover:text-[#f84525]
+                      hover:bg-[#f84525]/10
+                      px-2 py-1 rounded-md
+                      transition-colors
+                      before:contents-['']
+                      before:w-1 before:h-1
+                      before:rounded-full
+                      before:bg-[#f84525]
+                      before:mr-3">
+                Senior Report Card
+            </a>
+        </li> 
+
+    </ul>
+</li>
 
             <span class="text-gray-400 font-bold">BLOG</span>
 
@@ -133,7 +213,8 @@
                 </a>
             </li>
 
-            <span class="text-gray-400 font-bold">PERSONAL</span>
+            
+            <span class="text-teal-500 font-bold">PERSONAL</span>
 
             <li class="mb-1 group">
                 <a href="" class="flex font-semibold items-center py-2 px-4 text-white hover:bg-[#002966] hover:text-white rounded-md">
