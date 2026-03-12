@@ -10,9 +10,14 @@ class AcademicSubjectSeeder extends Seeder
 {
     public function run(): void
     {
+        // Disable foreign key checks
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 
         // Reset table before seeding
         DB::table('academic_subjects')->truncate();
+
+        // Enable foreign key checks again
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
 
         // ELEMENTARY SUBJECTS
@@ -88,6 +93,5 @@ class AcademicSubjectSeeder extends Seeder
                 'level' => 'senior'
             ]);
         }
-
     }
 }
