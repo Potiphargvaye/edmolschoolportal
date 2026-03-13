@@ -1,61 +1,220 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# EDMOL – Matadi Baptist High School Management System Monrovia, Liberia 
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Project Overview
 
-## About Laravel
+The **EDMOL School Management System** is a private, custom-built web application designed to support the academic and administrative operations of **EDMOL – Matadi Baptist High School Monrovia, Liberia**.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+The platform provides a centralized digital system for managing students, academic records, grading, and administrative activities within the school. It is designed to improve efficiency, accuracy, and organization in school data management.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+⚠️ **Note:** This project is a **private internal system** developed specifically for EDMOL – Matadi Baptist High School and is not intended for public distribution.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## Student Management Admin Interface
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+The system includes a fully interactive **Student Management Dashboard** that allows administrators to manage and monitor student records efficiently.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Dynamic Status Tabs
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Students are categorized by the following statuses:
 
-## Laravel Sponsors
+* Candidate
+* Admitted
+* Registered
+* Active
+* Dropout
+* Completed
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Each status tab is:
 
-### Premium Partners
+* **Interactive:** Updates the student table dynamically without reloading the page.
+* **Responsive:** Works seamlessly across desktop and mobile devices.
+* **Enhanced with icons:** Each status includes visual icons for quick identification.
+* **Student count badges:** Displays the total number of students per category.
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+---
 
-## Contributing
+### Search and Filter Functionality
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Administrators can quickly filter student records using reactive filters.
 
-## Code of Conduct
+Available filters include:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+* Student name or Student ID
+* Intake
+* Shift
 
-## Security Vulnerabilities
+Filtering works instantly using **Livewire reactive components**, allowing the table to update automatically whenever a filter or status tab is selected.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
+
+### Excel Export Functionality
+
+The system allows administrators to export student data into Excel format for reporting or offline analysis.
+
+Features include:
+
+* Export filtered student lists
+* Export based on status, search results, intake, or shift
+* Flexible export structure allowing additional columns or formatting
+
+Export implementation is handled by:
+
+```
+app/Exports/StudentsExport.php
+```
+
+The system uses **Laravel Excel (Maatwebsite package)** for generating downloadable Excel files.
+
+---
+
+## Academic Grading System
+
+The platform includes a structured grading module used for recording and calculating student academic performance.
+
+Features include:
+
+* Teacher grade entry interface
+* Semester-based academic assessments
+* Automatic subject average calculations
+* Automatic overall academic average calculation
+* Student ranking based on performance
+
+### Overall Academic Average Calculation
+
+The overall yearly academic average is calculated using the following formula:
+
+Overall Average =
+(Sum of all semester averages across all subjects) ÷ (Number of subjects × 2 semesters)
+
+Example:
+
+| Subject | Semester 1 | Semester 2 |
+| ------- | ---------- | ---------- |
+| Math    | 78         | 82         |
+| English | 75         | 80         |
+| Biology | 70         | 74         |
+
+Overall Average = **76.5**
+
+---
+
+### Student Ranking Logic
+
+Student ranking is determined by comparing the overall academic averages of students within the same grade level.
+
+Steps involved:
+
+1. Calculate each subject's semester averages.
+2. Calculate the yearly subject average.
+3. Compute the student's overall academic average.
+4. Sort students from highest to lowest average to determine class ranking.
+
+Example:
+
+| Student   | Average | Rank |
+| --------- | ------- | ---- |
+| Student A | 88      | 1st  |
+| Student B | 84      | 2nd  |
+| Student C | 79      | 3rd  |
+
+---
+
+## Role and Permission Management
+
+The system implements **role-based access control** using the **Spatie Laravel Permission package**.
+
+This allows administrators to manage user permissions based on their responsibilities within the school.
+
+Capabilities include:
+
+* Creating multiple administrator accounts
+* Assigning specific permissions to each administrator
+* Restricting system modules based on roles
+* Tailoring system access to match daily administrative tasks
+
+This permission system ensures that each user only has access to the features required for their role.
+
+Example roles include:
+
+* Administrator
+* Teacher
+* Student
+
+Permissions can be assigned dynamically to control access to different system modules such as:
+
+* Student management
+* Grade entry
+* Report generation
+* System administration
+
+---
+
+## Livewire Reactive Interface
+
+The system uses **Livewire** to create a reactive user interface without requiring heavy JavaScript frameworks.
+
+Benefits include:
+
+* Real-time updates to tables and dashboards
+* Instant search and filtering
+* Reduced page reloads
+* Simplified frontend and backend integration
+* Cleaner and more maintainable codebase
+
+Livewire components handle most of the dynamic interactions within the admin dashboard.
+
+---
+
+## Technologies Used
+
+| Technology                  | Description                    |
+| --------------------------- | ------------------------------ |
+| Laravel 12.21               | Backend application framework  |
+| Livewire 4.1                | Reactive frontend components   |
+| Tailwind CSS                | User interface styling         |
+| Spatie Laravel Permission   | Role and permission management |
+| Laravel Excel (Maatwebsite) | Excel export functionality     |
+| PHP 8.3                     | Server-side programming        |
+| MySQL                       | Database management            |
+| Laragon                     | Local development environment  |
+
+---
+
+## System Architecture
+
+The system follows a modern Laravel architecture including:
+
+* MVC (Model–View–Controller) design pattern
+* Livewire component-based UI interactions
+* Role-based access control
+* Structured relational database schema for academic data
+
+---
+
+## Future Enhancements
+
+Planned improvements include:
+
+* WhatsApp parent notification system using Twilio
+* Student dashboard portal
+* Teacher academic dashboard
+* Printable report card generation
+* Online payment integration
+
+---
+
+## Developer
+
+**Potiphar Vaye**
+Software Developer & System Designer
+
+This system was designed and developed as a **custom digital solution** to support the academic and administrative operations of **EDMOL – Matadi Baptist High School**.
+
+---
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This software is a **private proprietary system** developed exclusively for **EDMOL – Matadi Baptist High School Monrovia, Liberia**.
+
+Unauthorized copying, modification, distribution, or use of this software without permission from the developer or the institution is strictly prohibited.
