@@ -68,7 +68,7 @@
                             {{ $student->name }}
                         </td>
 
-                        <!-- Registration ID -->
+                        <!-- Registration ID. -->
                         <td class="px-6 py-3 text-gray-700">
                             {{ $student->student_id ?? 'N/A' }}
                         </td>

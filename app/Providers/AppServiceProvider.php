@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Models\User;
 use App\Models\TeacherMaterial;
 use App\Policies\TeacherMaterialPolicy;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -28,11 +29,11 @@ class AppServiceProvider extends ServiceProvider
  * Bootstrap any application services.
  */
 public function boot(): void
-{
-    // Force HTTPS in production (important for Railway)
-    if ($this->app->environment('production')) {
-        \Illuminate\Support\Facades\URL::forceScheme('https');
-    }
+    {
+        // Force HTTPS in production
+        if ($this->app->environment('production')) {
+            URL::forceScheme('https');
+        }
 
     // Register policies
     $this->registerPolicies();
