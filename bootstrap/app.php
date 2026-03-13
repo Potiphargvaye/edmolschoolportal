@@ -15,17 +15,19 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
-    ->withMiddleware(function (Middleware $middleware): void {
+   ->withMiddleware(function (Middleware $middleware): void {
 
-        $middleware->alias([
-            // Spatie middleware
-            'role' => SpatieRoleMiddleware::class,
-            'permission' => PermissionMiddleware::class,
-            'role_or_permission' => RoleOrPermissionMiddleware::class,
+    // Trust proxy headers (required for HTTPS behind Nginx / load balancers)
+    $middleware->trustProxies(at: '*');
 
-            // Keep your custom one under a different name (safe)
-            'custom_role' => \App\Http\Middleware\RoleMiddleware::class,
-        ]);
+    $middleware->alias([
+        'role' => SpatieRoleMiddleware::class,
+        'permission' => PermissionMiddleware::class,
+        'role_or_permission' => RoleOrPermissionMiddleware::class,
+
+        'custom_role' => \App\Http\Middleware\RoleMiddleware::class,
+    ]);
+
 
     })
     ->withExceptions(function (Exceptions $exceptions): void {
