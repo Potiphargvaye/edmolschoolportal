@@ -143,7 +143,7 @@
     <!-- Sub-links Dropdown -->
     <ul class="pl-7 mt-2 hidden group-[.selected]:block">
 
-        <!-- Junior -->
+        <!-- Junior .-->
         <li class="mb-4">
             <a href="{{ route('report.cards.index', 'junior') }}"  
                class="text-[#f84525] text-sm flex items-center
@@ -191,6 +191,22 @@
                       before:bg-[#f84525]
                       before:mr-3">
                 Senior Report Card
+            </a>
+        </li> 
+
+        <li class="mb-4">
+            <a href="{{ route('report.cards.index', 'kindergarten') }}"  
+               class="text-[#f84525] text-sm flex items-center
+                      hover:text-[#f84525]
+                      hover:bg-[#f84525]/10
+                      px-2 py-1 rounded-md  
+                      transition-colors
+                      before:contents-['']
+                      before:w-1 before:h-1
+                      before:rounded-full
+                      before:bg-[#f84525]
+                      before:mr-3">
+                Kindergarten Report Card
             </a>
         </li> 
 

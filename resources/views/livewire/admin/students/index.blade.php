@@ -353,8 +353,10 @@ Clear Search
                     <select wire:model.defer="class_applying_for"
                             class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors mb-2">
                         <option value="">Select Class</option>
-                        <optgroup label="KG">
-                            <option value="KG">KG</option>
+                        <optgroup label="kindergarten">
+                            <option value="K-3">K-3</option>
+                            <option value="K-4">K-4</option>
+                            <option value="K-3">K-5</option>
                         </optgroup>
                         <optgroup label="Primary">
                             <option value="Grade 1">Grade 1</option>
@@ -527,9 +529,11 @@ Clear Search
                             <select wire:model.defer="edit_class_applying_for"
                                     class="w-full px-3 py-2 border rounded text-sm">
                                 <option value="">Select Class</option>
-                                <optgroup label="KG">
-                                    <option value="KG">KG</option>
-                                </optgroup>
+                                <optgroup label="kindergarten">
+                                 <option value="K-3">K-3</option> 
+                                <option value="K-4">K-4</option>
+                                <option value="K-3">K-5</option>
+                                 </optgroup>
                                 <optgroup label="Primary">
                                     <option>Grade 1</option>
                                     <option>Grade 2</option>

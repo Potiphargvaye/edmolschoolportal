@@ -279,40 +279,41 @@
 
 
 <script>
-
 document.querySelectorAll("input[type='number']").forEach(input => {
 
-input.addEventListener("input", function(){
+    input.addEventListener("input", function(){
 
-let row = this.closest("tr");
-let cells = row.querySelectorAll("td");
+        let row = this.closest("tr");
+        let cells = row.querySelectorAll("td");
 
-for(let i=1;i<cells.length;i+=11){
+        for(let i=1; i<cells.length; i+=11){
 
-let p1 = parseFloat(cells[i].querySelector("input").value) || 0;
-let p2 = parseFloat(cells[i+1].querySelector("input").value) || 0;
-let p3 = parseFloat(cells[i+2].querySelector("input").value) || 0;
-let exam1 = parseFloat(cells[i+3].querySelector("input").value) || 0;
+            let p1 = parseFloat(cells[i].querySelector("input").value) || 0;
+            let p2 = parseFloat(cells[i+1].querySelector("input").value) || 0;
+            let p3 = parseFloat(cells[i+2].querySelector("input").value) || 0;
+            let exam1 = parseFloat(cells[i+3].querySelector("input").value) || 0;
 
-let p4 = parseFloat(cells[i+5].querySelector("input").value) || 0;
-let p5 = parseFloat(cells[i+6].querySelector("input").value) || 0;
-let p6 = parseFloat(cells[i+7].querySelector("input").value) || 0;
-let exam2 = parseFloat(cells[i+8].querySelector("input").value) || 0;
+            let p4 = parseFloat(cells[i+5].querySelector("input").value) || 0;
+            let p5 = parseFloat(cells[i+6].querySelector("input").value) || 0;
+            let p6 = parseFloat(cells[i+7].querySelector("input").value) || 0;
+            let exam2 = parseFloat(cells[i+8].querySelector("input").value) || 0;
 
-let sem1 = (((p1+p2+p3)/3) + exam1) / 2;
-let sem2 = (((p4+p5+p6)/3) + exam2) / 2;
-let yearly = (sem1 + sem2) / 2;
+            // Semester averages → round to nearest whole number
+            let sem1 = Math.round((((p1 + p2 + p3) / 3) + exam1) / 2);
+            let sem2 = Math.round((((p4 + p5 + p6) / 3) + exam2) / 2);
 
-cells[i+4].querySelector("input").value = sem1.toFixed(2);
-cells[i+9].querySelector("input").value = sem2.toFixed(2);
-cells[i+10].querySelector("input").value = yearly.toFixed(2);
+            // Yearly average → keep decimal
+            let yearly = (sem1 + sem2) / 2;
 
-}
+            cells[i+4].querySelector("input").value = sem1;
+            cells[i+9].querySelector("input").value = sem2;
+            cells[i+10].querySelector("input").value = yearly.toFixed(2);
+
+        }
+
+    });
 
 });
-
-});
-
 </script>
 
 <script>

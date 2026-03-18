@@ -306,8 +306,15 @@ Route::get('/grades/entry', [StudentGradeController::class, 'create'])
 // routes for report card printing   
 use App\Http\Controllers\ReportCardController;
 
-Route::get('/report-card/senior/{student}', 
-    [ReportCardController::class, 'printSenior']
-)->name('report.card.senior');
+
 Route::get('/admin/report-cards/{level?}', [ReportCardController::class, 'index'])
     ->name('report.cards.index');
+
+
+// ✅ NEW (main one)
+Route::get('/report-card/{level}/{student}', 
+    [ReportCardController::class, 'printSenior']
+)->name('report.card.dynamic');
+
+    Route::get('/report-cards/print-multiple', [ReportCardController::class, 'printMultiple']);
+    

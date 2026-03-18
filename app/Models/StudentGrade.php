@@ -14,7 +14,7 @@ class StudentGrade extends Model
     'academic_year',
     'grade_level',
     'period1',
-    'period2',
+    'period2',  
     'period3',
     'exam1',
     'period4',

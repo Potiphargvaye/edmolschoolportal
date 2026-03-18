@@ -20,7 +20,32 @@ class AcademicSubjectSeeder extends Seeder
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
 
-        // ELEMENTARY SUBJECTS
+
+
+        // KINDERGARTEN SUBJECTS
+$kindergartenSubjects = [
+    'Bible',
+    'English',
+    'Reciting Rhymes',
+    'Reciting/Identifying Numb.',
+    'Reciting/Identifying Letters',
+    'Math/Tracing Numbers',
+    'General Science',
+    'Social Studies',
+    'Drawing/Arts',
+    'Writing/Tracing Letters',
+    'Identifying Objects',
+    'P. E.'
+];
+
+foreach ($kindergartenSubjects as $subject) {
+    AcademicSubject::create([
+        'name' => $subject,
+        'level' => 'kindergarten'
+    ]);
+}
+     
+// ELEMENTARY SUBJECTS
         $elementarySubjects = [
             'Bible',
             'Mathematics',
@@ -69,7 +94,7 @@ class AcademicSubjectSeeder extends Seeder
         }
 
 
-        // SENIOR HIGH SUBJECTS
+        // SENIOR HIGH SUBJECTS  
         $seniorSubjects = [
             'Bible',
             'Mathematics',

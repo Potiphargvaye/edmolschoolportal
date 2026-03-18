@@ -42,13 +42,15 @@ $sem2Locked = \App\Models\GradeLock::where([
 ])->where('is_locked', true)->exists();
 
     // Determine level
-    if (in_array($gradeLevel, ['KG','Grade 1','Grade 2','Grade 3','Grade 4','Grade 5','Grade 6'])) {
-        $level = 'elementary';
-    } elseif (in_array($gradeLevel, ['Grade 7','Grade 8','Grade 9'])) {
-        $level = 'junior';
-    } else {
-        $level = 'senior';
-    }
+   if (in_array($gradeLevel, ['K-3','K-4','K-5'])) {
+    $level = 'kindergarten';
+} elseif (in_array($gradeLevel, ['Grade 1','Grade 2','Grade 3','Grade 4','Grade 5','Grade 6'])) {
+    $level = 'elementary';
+} elseif (in_array($gradeLevel, ['Grade 7','Grade 8','Grade 9'])) {
+    $level = 'junior';
+} else {
+    $level = 'senior';
+}
 
     // Get subjects
     $subjects = AcademicSubject::where('level', $level)->get();
@@ -178,7 +180,7 @@ public function store(Request $request)
                     'exam2' => $data['exam2'] ?? null,
                 ]
             );
-        }
+        }  
     }
 
     return redirect()->route('grades.load', [

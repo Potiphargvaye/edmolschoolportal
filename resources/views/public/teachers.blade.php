@@ -74,7 +74,7 @@
   <div class="container">
     <div class="row justify-content-center mb-5 pb-2">
       <div class="col-md-8 text-center heading-section ftco-animate">
-        <h2 class="mb-4"><span>Certified</span> Leaderss</h2>
+        <h2 class="mb-4"><span>Certified</span> Leaders</h2>
         <p>Meet our passionate and highly qualified teachers at Edmol Baptist School—educators who lead with faith, inspire with vision, and are dedicated to nurturing both academic excellence and strong character in every student..</p>
       </div>
     </div>	

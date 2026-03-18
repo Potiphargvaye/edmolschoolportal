@@ -256,7 +256,7 @@ if(!isset($grades)){
     <p><a href="mailto:emmmbhs@gmail.com">emmmbhs@gmail.com</a> - 0778127778 / 0886566869</p>
 </div>
 
-<h3 class="report-title">SENIOR HIGH REPORT CARD</h3>
+<h3 class="report-title">JUNIOR HIGH REPORT CARD</h3>
 
 <!-- Student information -->
 <div class="student-info">
@@ -355,6 +355,7 @@ elseif($period === 'yearly') {
     $firstSemTotal += $yearAvg; // Yearly average = (Semester1 + Semester2) / 2
 }
             @endphp
+            
 
             <tr>
                 <td>{{ $grade->subject->name }}</td>

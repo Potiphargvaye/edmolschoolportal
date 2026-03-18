@@ -17,9 +17,13 @@
             <select name="grade_level" class="form-control" required>
 
                 <option value="">Select Grade</option>
-
+                <optgroup label="Kindergarten">
+                <option>K-3</option>
+                <option>K-4</option>
+                <option>K-5</option>
+                 </optgroup>
+               
                 <optgroup label="Elementary">
-                    <option value="KG">KG</option>
                     <option value="Grade 1">Grade 1</option>
                     <option value="Grade 2">Grade 2</option>
                     <option value="Grade 3">Grade 3</option>
