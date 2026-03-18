@@ -318,3 +318,5 @@ Route::get('/report-card/{level}/{student}',
 
     Route::get('/report-cards/print-multiple', [ReportCardController::class, 'printMultiple']);
     
+    Route::delete('/report-card/student-grades/{student}', [ReportCardController::class, 'deleteStudentGrades'])
+    ->name('student.grades.delete');

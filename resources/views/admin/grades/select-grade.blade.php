@@ -12,7 +12,7 @@
     <select name="academic_year" class="form-control" required>
         <option value="">-- Select Academic Year --</option>
         <option value="2026/2027">2026/2027</option>
-        <option value="2027/2028">2027/2028</option>
+        <option value="2027/2028">2027/2028</option>   
     </select>
 </div>
 

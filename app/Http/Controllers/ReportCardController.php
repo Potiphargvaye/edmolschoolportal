@@ -391,4 +391,13 @@ foreach ($rankableColumns as $col) {
     ]);
 }
 
+
+
+public function deleteStudentGrades($studentId)
+{
+    // Delete all grades for the student
+    StudentGrade::where('student_id', $studentId)->delete();
+
+    return redirect()->back()->with('success', 'Student grades deleted successfully.');
+}
 }   

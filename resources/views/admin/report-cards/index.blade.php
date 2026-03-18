@@ -1,4 +1,8 @@
+
+
+
 @extends('layouts.admin')
+@include('partials.notifications')
 
 @section('content')
 
@@ -127,7 +131,7 @@ class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm f
     </td>
 
     <!-- Print Button + Header/Footer Checkboxes -->
-    <td class="px-6 py-3 text-center flex flex-col items-center gap-2">
+ <td class="px-6 py-3 text-center flex items-center justify-center gap-2">
 
         <!-- Print Button -->
      <a href="#"
@@ -138,6 +142,62 @@ class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm f
    Print-Card
 </a>
 
+<!-- Delete Button -->
+<div x-data="{ showDeleteModal: false }" class="flex flex-col items-center gap-2">
+
+    <button 
+        @click="showDeleteModal = true"
+        class="inline-flex items-center gap-2 bg-red-600 text-white text-sm font-semibold px-4 py-2 rounded-md hover:bg-red-700 transition"
+        title="Delete Grades"
+    >
+        <i class="fas fa-trash text-xs"></i>
+    </button>
+
+    <!-- Confirm Modal -->
+    <div
+        x-show="showDeleteModal"
+        x-cloak
+        class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm px-2"
+    >
+        <div x-show="showDeleteModal" x-transition class="bg-white w-full max-w-xs rounded-lg shadow-xl overflow-hidden">
+            <!-- Header -->
+            <div class="flex items-center justify-between px-3 py-2 bg-red-600 text-white">
+                <h3 class="text-xs font-semibold">Confirm Delete</h3>
+                <button @click="showDeleteModal = false" class="p-1 rounded-full hover:bg-red-500 transition">
+                    <i class="ri-close-line text-sm"></i>
+                </button>
+            </div>
+
+            <!-- Body -->
+            <div class="p-3 space-y-2 text-xs">
+                <p class="text-gray-700">
+                    Are you sure you want to delete all grades for <strong>{{ $student->name }}</strong>?
+                </p>
+            </div>
+
+            <!-- Footer -->
+            <div class="px-3 py-2 bg-gray-50 border-t flex justify-end gap-1">
+                <button @click="showDeleteModal = false" class="px-2 py-1 text-xs rounded border hover:bg-gray-100">
+                    Cancel
+                </button>
+</button>
+
+                    <form method="POST" action="{{ route('student.grades.delete', $student->id) }}" x-data="{ submitting: false }" @submit="submitting = true">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="px-2 py-1 text-xs font-semibold bg-red-600 text-white rounded hover:bg-red-700 flex items-center gap-2 !bg-red-600 !text-white" :disabled="submitting">
+                            <!-- Spinner -->
+                            <svg x-show="submitting" class="animate-spin h-3 w-3 border-2 border-white border-t-transparent rounded-full" viewBox="0 0 24 24"></svg>
+
+                            <!-- Button text -->
+                            <span x-show="!submitting">Delete</span>
+                            <span x-show="submitting">Deleting…</span>
+                        </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
         <!-- Header/Footer Checkboxes -->
         <div class="flex gap-2 mt-1 text-sm">
@@ -206,6 +266,9 @@ document.querySelectorAll('.print-btn').forEach(btn => {
 
 
 </div>
+
+
+
 
 
 
