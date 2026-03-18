@@ -8,9 +8,13 @@
     <form action="{{ route('grades.load') }}" method="GET">
 
         <div class="mb-3">
-            <label>Academic Year</label>
-            <input type="text" name="academic_year" class="form-control" placeholder="2025/2026" required>
-        </div>
+    <label>Academic Year</label>
+    <select name="academic_year" class="form-control" required>
+        <option value="">-- Select Academic Year --</option>
+        <option value="2026/2027">2026/2027</option>
+        <option value="2027/2028">2027/2028</option>
+    </select>
+</div>
 
         <div class="mb-3">
             <label>Select Grade</label>

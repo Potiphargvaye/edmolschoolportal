@@ -14,7 +14,7 @@ return new class extends Migration
     Schema::create('academic_subjects', function (Blueprint $table) {
         $table->id();
         $table->string('name');
-        $table->enum('level', ['kindergarten','elementary','junior','senior']);
+        $table->enum('level', ['kindergarten','elementary','junior','senior']); 
         $table->timestamps();
     });
 }
