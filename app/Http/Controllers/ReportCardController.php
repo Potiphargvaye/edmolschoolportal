@@ -331,7 +331,7 @@ $periodAverages['exam2'][$cs->student_id] = ($periodAverages['exam2'][$cs->stude
         }
     }
 
-    // ✅ FINALIZE averages AFTER loop (FIXED)
+    // ✅ FINALIZE averages AFTER loop (FIXED).
     foreach ($periodAverages as $key => $students) {
         foreach ($students as $sid => $total) {
             $count = StudentGrade::where('student_id', $sid)

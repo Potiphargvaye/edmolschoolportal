@@ -2,234 +2,293 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Senior High Report Card</title>
+    <title>Elemetary Report Card</title>
     <style>
-        body {
-            font-family: 'Times New Roman', Times, serif;
-            font-size: 12px;
-            margin: 20px;
-        }
+   body {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 20px;
+    margin: 20px;
+}
 
-        .school-header {
-            text-align: center;
-        }
+/* HEADER */
+.school-header {
+    text-align: center;
+}
 
-        .school-header h2 {
-            margin: 0;
-            font-weight: bold;
-        }
-
-        .school-header p {
-            margin: 2px 0;
-        }
-
-        .school-header a {
-            color: blue;
-            text-decoration: underline;
-        }
-
-        h3.report-title {
-            text-align: center;
-            color: navy;
-            font-weight: bold;
-            margin: 10px 0;
-        }
-
-        .student-info {
-            margin: 15px 0;
-            font-weight: bold;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-
-        table, th, td {
-            border: 2px solid black;
-        }
-
-        th, td {
-            padding: 4px;
-            text-align: center;
-        }
-
-        th {
-            font-weight: bold;
-        }
-
-        .signature {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 40px;
-        }
-
-        .signature div {
-            text-align: center;
-            width: 200px;
-        }
-
-        .print-button {
-            margin-bottom: 20px;
-            padding: 8px 16px;
-            background-color: #002966;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .print-button:hover {
-            background-color: #001a4d;
-        }
-
-        @media print {
-            .print-button {
-                display: none;
-            }
-        }
-
-        .red-grade {
-            color: rgb(236, 3, 3); 
-            font-weight: bold;
-        }
-        .blue-grade {
-    color: #0267fd;
+.school-header h2 {
+    margin: 0;
     font-weight: bold;
 }
-        
-table {
-    width: 100%;
-    border-collapse: collapse;
+
+.school-header p {
+    margin: 2px 0;
 }
 
-td, th {
+.school-header a {
+    color: blue;
+    text-decoration: underline;
+}
+
+h3.report-title {
     text-align: center;
+    color: navy;
+    font-weight: bold;
+    margin: 10px 0;
 }
 
+.student-info {
+    margin: 15px 0;
+    font-weight: bold;
+}
+
+/* ================= TABLE (MAIN FIX) ================= */
+
+/* Default = compact (fixes spacing issue) */
 table {
-    width: 100%;
+    width: auto;                 /* 🔥 prevents stretching */
+    margin: 0 auto;              /* center table */
     border-collapse: collapse;
+    table-layout: auto;
 }
 
+/* Full width only for large tables */
+.full-width-table {
+    width: 100%;
+}
+
+/* Borders */
+table, th, td {
+    border: 2px solid black;
+}
+
+/* Cell spacing */
 th, td {
     padding: 6px 8px;
-}
-
-th:first-child,
-td:first-child {
-    width: 40%;
-}
-
-th:not(:first-child),
-td:not(:first-child) {
-    width: auto;
     text-align: center;
 }
 
-/* Fix spacing when only 2 columns exist (P1-P6) */
-.period-view th:first-child,
-.period-view td:first-child{
-    width:70%;
-    text-align:left;
-}
-
-.period-view th:last-child,
-.period-view td:last-child{
-    width:30%;
-}
-      
-
-@media print {
-
-body{
-    margin:0;
-    font-size:11px;
-    color:#000;
-}
-
-/* Prevent page breaking inside report card */
-.report-card{
-    page-break-inside:avoid;
-}
-
-/* Hide print button */
-.print-button{
-    display:none;
-}
-
-/* Table formatting for print */
-table{
-    width:100%;
-    border-collapse:collapse;
-    font-size:10px;
-}
-
-th, td{
-    padding:4px;
-    text-align:center;
-}
-
-/* Subject column */
-th:first-child,
-td:first-child{
-    width:35%;
-    text-align:left;
-}
-
-/* Prevent table row splitting */
-tr{
-    page-break-inside:avoid;
-}
-
-/* Header spacing */
-.school-header{
-    margin-bottom:5px;
-}
-
-.school-header h2{
-    font-size:16px;
-}
-
-/* Student info spacing */
-.student-info{
-    margin:8px 0;
-}
-
-/* Footer alignment */
-.signature{
-    margin-top:25px;
-}
-
-/* Avoid footer breaking */
-.signature div{
-    page-break-inside:avoid;
-}
-
-}
-
-
-table {
-    width: 100%;
-    table-layout: auto; /* Allows columns to shrink to their content */
-    border-collapse: collapse;
-}
-
-/* Target the first column specifically */
+/* First column (Subject) */
 table tr th:first-child,
 table tr td:first-child {
-    width: 220px;       /* Adjust this number until it looks right */
+    min-width: 220px;
     max-width: 220px;
-    white-space: normal; /* Allows long names like 'English Language' to wrap */
+    white-space: normal;
     word-wrap: break-word;
+    text-align: left;
     padding-left: 10px;
 }
 
-/* Ensure numeric columns don't stretch too much */
+/* Other columns (grades) */
+table tr th:not(:first-child), 
 table tr td:not(:first-child) {
-    width: 60px; 
+    min-width: 50px;
+    white-space: nowrap;
+}
+
+/* Period view (few columns) */
+.period-view th:first-child,
+.period-view td:first-child {
+    width: 70%;
+}
+
+.period-view th:last-child,
+.period-view td:last-child {
+    width: 30%;
+}
+
+/* ================= COLORS ================= */
+
+.red-grade {
+    color: rgb(236, 3, 3);
+    font-weight: bold;
+}
+
+.blue-grade {
+    color: #0267fd;
+    font-weight: bold;
+}
+
+/* ================= BUTTON ================= */
+
+.print-button {
+    margin-bottom: 20px;
+    padding: 8px 16px;
+    background-color: #002966;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.print-button:hover {
+    background-color: #001a4d;
+}
+
+/* ================= SIGNATURE ================= */
+
+.signature {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+}
+
+.signature div {
     text-align: center;
+    width: 200px;
+}
+
+/* ================= PRINT ================= */
+
+@media print {
+
+    body {
+        margin: 0;
+        font-size: 11px;
+        color: #000;
+        
+    }
+
+    .print-button {
+        display: none;
+    }
+
+    /* 🔥 CRITICAL FIX FOR PRINT */
+    table {
+        width: auto !important;   /* prevents stretching */
+        margin: 0 auto;
+        font-size: 10px;
+    }
+
+    th, td {
+        padding: 4px;
+        text-align: center;
+        white-space: nowrap;
+    }
+
+    /* Allow subject wrapping */
+    th:first-child,
+    td:first-child {
+        white-space: normal;
+        width: 35%;
+        text-align: left;
+    }
+
+    /* Prevent row breaking */
+    tr {
+        page-break-inside: avoid;
+    }
+
+    .school-header {
+        margin-bottom: 5px;
+    }
+
+    .school-header h2 {
+        font-size: 20px;
+    }
+
+    .student-info {
+        margin: 8px 0;
+    }
+
+    .signature {
+        margin-top: 25px;
+    }
+
+    .signature div {
+        page-break-inside: avoid;
+    }
+}
+
+
+
+/* HEADER LAYOUT  for logo and image*/
+.school-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+/* LEFT LOGO */
+.header-left {
+    position: absolute;
+    left: 0;
+}
+
+/* RIGHT IMAGE (STUDENT PHOTO) */
+.header-right {
+    position: absolute;
+    right: 0;
+}
+
+/* CENTER TEXT */
+.header-center {
+    text-align: center;
+    width: 100%;
+}
+
+/* LOGO + STUDENT IMAGE STYLE */
+.school-logo {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 50%; /* makes both images circular */
+    border: 2px solid #090a18;
+}
+
+/* REPORT TITLE BOX */
+.report-title-box {
+    text-align: center;
+    
+    border: 5px solid #990000; /* 🔥 CHANGE COLOR HERE */
+    /* Example:
+       border: 3px solid red;   #990000
+       border: 3px solid #002966;
+       border: 3px solid green;
+    */
+
+    padding: 6px;
+    font-weight: bold;
+    font-size: 16px;
+    width: 70%;
+    margin: 10px auto;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+
+    .school-logo {
+        width: 50px;
+        height: 50px;
+    }
+
+    .report-title-box {
+        width: 90%;
+        font-size: 14px;
+    }
+}
+
+/* PRINT */
+@media print {
+
+    .school-logo {
+        width: 60px;
+        height: 60px;
+    }
+
+    .report-title-box {
+         /* 🔥 also change print color here if needed */
+           border: 5px solid #990000;
+    }
+}
+
+/* 🔥 School header colorl here */
+.school-header h2 {
+    margin: 0;
+    font-weight: bold;
+    color: navy; /* 🔥 CHANGE COLOR HERE */
+    
 }
     </style>
 </head>
@@ -250,13 +309,44 @@ if(!isset($grades)){
 
 @if(request()->query('showHeader', 1)) {{-- default to 1 if missing --}}
 <div class="school-header">
-    <h2>ED MOL MEMORIAL MATADI BAPTIST HIGH SCHOOL</h2>
-    <p>New Matadi Estate Drive, Opposite Don Bosco Youth Center</p>
-    <p>P.O. Box: 4330 - Monrovia, Liberia</p>
-    <p><a href="mailto:emmmbhs@gmail.com">emmmbhs@gmail.com</a> - 0778127778 / 0886566869</p>
+
+    <!-- LEFT: SCHOOL LOGO -->
+    <div class="header-left">
+        <img src="{{ asset('kiddos-school-master/images/School_logo_reciept.jpeg') }}" 
+             alt="School Logo" 
+             class="school-logo">
+    </div>  
+
+    <!-- CENTER: SCHOOL TEXT -->
+    <div class="header-center">
+        <h2>ED MOL MEMORIAL MATADI BAPTIST HIGH SCHOOL</h2>
+        <p>New Matadi Estate Drive, Opposite Don Bosco Youth Center</p>
+        <p>P.O. Box: 4330 - Monrovia, Liberia</p>
+        <p>
+            <a href="mailto:emmmbhs@gmail.com">emmmbhs@gmail.com</a> 
+            - 0778127778 / 0886566869
+        </p>
+    </div>
+   <!-- RIGHT: STUDENT IMAGE -->
+<div class="header-right">
+    <img 
+        src="{{ $student->image 
+                ? asset('storage/'.$student->image) 
+                : asset('kiddos-school-master/images/School_logo_reciept.jpeg') }}" 
+        
+        alt="Student Photo"
+        class="school-logo"
+        
+        onerror="this.onerror=null;this.src='{{ asset('kiddos-school-master/images/School_logo_reciept.jpeg') }}';"
+    >
+</div>
 </div>
 
-<h3 class="report-title">KNDERGARTEN RPORT CARD</h3> 
+<!-- REPORT TITLE -->
+<div class="report-title-box">
+    KINDERGARTEN GRADE SHEET
+</div>
+
 
 <!-- Student information -->
 <div class="student-info">
@@ -265,7 +355,9 @@ if(!isset($grades)){
 </div>
 
 <div class="student-info">
+     <span style="float: right;">ID: {{ $student->student_id }}</span>
     <span>ACADEMIC YEAR: {{ $grades->first()->academic_year ?? 'N/A' }}</span>
+    
 </div>
 @endif
 
@@ -355,7 +447,6 @@ elseif($period === 'yearly') {
     $firstSemTotal += $yearAvg; // Yearly average = (Semester1 + Semester2) / 2
 }
             @endphp
-            
 
             <tr>
                 <td>{{ $grade->subject->name }}</td>
@@ -431,7 +522,7 @@ elseif($period === 'yearly') {
     @endif
 
     @if(in_array($period, ['semester2','yearly']))
-        {{-- ✅ FIXED: exam2 average --}}
+        {{-- ✅ FIXED: exam2 average --}} 
         <td>{{ round($periodAverages['exam2'][$student->id] ?? 0,2) }}</td>
 
         <td>{{ round($periodAverages['semester2'][$student->id] ?? 0,2) }}</td>
@@ -497,12 +588,7 @@ elseif($period === 'yearly') {
     <td style="text-align: center;">{{ $conduct ?? '-' }}</td>
 </tr>
 
-
-
 {{-- Repeat same logic for Rank and Conduct --}}
-
-
-
 
     </tbody>
 </table>

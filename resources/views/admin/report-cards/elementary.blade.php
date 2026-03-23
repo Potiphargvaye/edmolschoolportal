@@ -2,239 +2,598 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Elementary-Report Card</title>
+    <title>Elemetary Report Card</title>
     <style>
-        body {
-            font-family: 'Times New Roman', Times, serif;
-            font-size: 12px;
-            margin: 20px;
-        }
+   body {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 20px;
+    margin: 20px;
+}
 
-        .school-header {
-            text-align: center;
-        }
+/* HEADER */
+.school-header {
+    text-align: center;
+}
 
-        .school-header h2 {
-            margin: 0;
-            font-weight: bold;
-        }
+.school-header h2 {
+    margin: 0;
+    font-weight: bold;
+}
 
-        .school-header p {
-            margin: 2px 0;
-        }
+.school-header p {
+    margin: 2px 0;
+}
 
-        .school-header a {
-            color: blue;
-            text-decoration: underline;
-        }
+.school-header a {
+    color: blue;
+    text-decoration: underline;
+}
 
-        h3.report-title {
-            text-align: center;
-            color: navy;
-            font-weight: bold;
-            margin: 10px 0;
-        }
+h3.report-title {
+    text-align: center;
+    color: navy;
+    font-weight: bold;
+    margin: 10px 0;
+}
 
-        .student-info {
-            margin: 15px 0;
-            font-weight: bold;
-        }
+.student-info {
+    margin: 15px 0;
+    font-weight: bold;
+}
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
+/* ================= TABLE (MAIN FIX) ================= */
 
-        table, th, td {
-            border: 2px solid black;
-        }
+/* Default = compact (fixes spacing issue) */
+table {
+    width: auto;                 /* 🔥 prevents stretching */
+    margin: 0 auto;              /* center table */
+    border-collapse: collapse;
+    table-layout: auto;
+}
 
-        th, td {
-            padding: 4px;
-            text-align: center;
-        }
+/* Full width only for large tables */
+.full-width-table {
+    width: 100%;
+}
 
-        th {
-            font-weight: bold;
-        }
+/* Borders */
+table, th, td {
+    border: 2px solid black;
+}
 
-        .signature {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 40px;
-        }
+/* Cell spacing */
+th, td {
+    padding: 6px 8px;
+    text-align: center;
+}
 
-        .signature div {
-            text-align: center;
-            width: 200px;
-        }
+/* First column (Subject) */
+table tr th:first-child,
+table tr td:first-child {
+    min-width: 220px;
+    max-width: 220px;
+    white-space: normal;
+    word-wrap: break-word;
+    text-align: left;
+    padding-left: 10px;
+}
 
-        .print-button {
-            margin-bottom: 20px;
-            padding: 8px 16px;
-            background-color: #002966;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
-        }
+/* Other columns (grades) */
+table tr th:not(:first-child), 
+table tr td:not(:first-child) {
+    min-width: 50px;
+    white-space: nowrap;
+}
 
-        .print-button:hover {
-            background-color: #001a4d;
-        }
+/* Period view (few columns) */
+.period-view th:first-child,
+.period-view td:first-child {
+    width: 70%;
+}
 
-        @media print {
-            .print-button {
-                display: none;
-            }
-        }
+.period-view th:last-child,
+.period-view td:last-child {
+    width: 30%;
+}
 
-        .red-grade {
-            color: rgb(236, 3, 3); 
-            font-weight: bold;
-        }
-        .blue-grade {
+/* ================= COLORS ================= */
+
+.red-grade {
+    color: rgb(236, 3, 3);
+    font-weight: bold;
+}
+
+.blue-grade {
     color: #0267fd;
     font-weight: bold;
 }
-        
-        
+
+/* ================= BUTTON ================= */
+
+.print-button {
+    margin-bottom: 20px;
+    padding: 8px 16px;
+    background-color: #002966;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.print-button:hover {
+    background-color: #001a4d;
+}
+
+/* ================= SIGNATURE ================= */
+
+.signature {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+}
+
+.signature div {
+    text-align: center;
+    width: 200px;
+}
+
+/* ================= PRINT ================= */
+
+@media print {
+
+    body {
+        margin: 0;
+        font-size: 11px;
+        color: #000;
+    }
+
+    .print-button {
+        display: none;
+    }
+
+    /* 🔥 CRITICAL FIX FOR PRINT */
+    table {
+        width: auto !important;   /* prevents stretching */
+        margin: 0 auto;
+        font-size: 10px;
+    }
+
+    th, td {
+        padding: 4px;
+        text-align: center;
+        white-space: nowrap;
+    }
+
+    /* Allow subject wrapping */
+    th:first-child,
+    td:first-child {
+        white-space: normal;
+        width: 35%;
+        text-align: left;
+    }
+
+    /* Prevent row breaking */
+    tr {
+        page-break-inside: avoid;
+    }
+
+    .school-header {
+        margin-bottom: 5px;
+    }
+
+    .school-header h2 {
+        font-size: 20px;
+    }
+
+    .student-info {
+        margin: 8px 0;
+    }
+
+    .signature {
+        margin-top: 25px;
+    }
+
+    .signature div {
+        page-break-inside: avoid;
+    }
+}
+
+
+
+/* HEADER LAYOUT  for logo and image*/
+.school-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+/* LEFT LOGO */
+.header-left {
+    position: absolute;
+    left: 0;
+}
+
+/* RIGHT IMAGE (STUDENT PHOTO) */
+.header-right {
+    position: absolute;
+    right: 0;
+}
+
+/* CENTER TEXT */
+.header-center {
+    text-align: center;
+    width: 100%;
+}
+
+/* LOGO + STUDENT IMAGE STYLE */
+.school-logo {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 50%; /* makes both images circular */
+    border: 2px solid #090a18;
+}
+
+/* REPORT TITLE BOX */
+.report-title-box {
+    text-align: center;
+    
+    border: 5px solid rgb(19, 40, 61); /* 🔥 CHANGE COLOR HERE */
+    /* Example:
+       border: 3px solid red;
+       border: 3px solid #002966;
+       border: 3px solid green;
+    */
+
+    padding: 6px;
+    font-weight: bold;
+    font-size: 16px;
+    width: 70%;
+    margin: 10px auto;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+
+    .school-logo {
+        width: 50px;
+        height: 50px;
+    }
+
+    .report-title-box {
+        width: 90%;
+        font-size: 14px;
+    }
+}
+
+/* PRINT */
+@media print {
+
+    .school-logo {
+        width: 60px;
+        height: 60px;
+    }
+
+    .report-title-box {
+         border: 5px solid rgb(19, 40, 61);/* 🔥 also change print color here if needed */
+    }
+}
+
+/* 🔥 School header colorl here */
+.school-header h2 {
+    margin: 0;
+    font-weight: bold;
+    color: navy; /* 🔥 CHANGE COLOR HERE */
+    
+}
     </style>
 </head>
 <body>
 
+<!-- Print button -->
 <button class="print-button" onclick="window.print()">🖨 Print Report Card</button>
 
+<!-- School header -->
+<!-- School header -->
+@php
+if(!isset($grades)){
+    $grades = \App\Models\StudentGrade::where('student_id', $student->id)->get();
+    // Default report period if not provided
+    $period = $period ?? 'yearly';
+}
+@endphp
+
+@if(request()->query('showHeader', 1)) {{-- default to 1 if missing --}}
 <div class="school-header">
-    <h2>ED MOL MEMORIAL MATADI BAPTIST HIGH SCHOOL</h2>
-    <p>New Matadi Estate Drive, Opposite Don Bosco Youth Center</p>
-    <p>P.O. Box: 4330 - Monrovia, Liberia</p>
-    <p><a href="mailto:emmmbhs@gmail.com">emmmbhs@gmail.com</a> - 0778127778 / 0886566869</p>
+
+    <!-- LEFT: SCHOOL LOGO -->
+    <div class="header-left">
+        <img src="{{ asset('kiddos-school-master/images/School_logo_reciept.jpeg') }}" 
+             alt="School Logo" 
+             class="school-logo">
+    </div>  
+
+    <!-- CENTER: SCHOOL TEXT -->
+    <div class="header-center">
+        <h2>ED MOL MEMORIAL MATADI BAPTIST HIGH SCHOOL</h2>
+        <p>New Matadi Estate Drive, Opposite Don Bosco Youth Center</p>
+        <p>P.O. Box: 4330 - Monrovia, Liberia</p>
+        <p>
+            <a href="mailto:emmmbhs@gmail.com">emmmbhs@gmail.com</a> 
+            - 0778127778 / 0886566869
+        </p>
+    </div>
+   <!-- RIGHT: STUDENT IMAGE -->
+<div class="header-right">
+    <img 
+        src="{{ $student->image 
+                ? asset('storage/'.$student->image) 
+                : asset('kiddos-school-master/images/School_logo_reciept.jpeg') }}" 
+        
+        alt="Student Photo"
+        class="school-logo"
+        
+        onerror="this.onerror=null;this.src='{{ asset('kiddos-school-master/images/School_logo_reciept.jpeg') }}';"
+    >
+</div>
 </div>
 
-<h3 class="report-title">ELEMENTARY REPORT CARD</h3>
+<!-- REPORT TITLE -->
+<div class="report-title-box">
+    ELEMENTARY GRADE SHEET
+</div>
 
+
+<!-- Student information -->
 <div class="student-info">
     <span>STUDENT'S NAME: {{ $student->name }}</span>
     <span style="float: right;">GRADE: {{ $student->class_applying_for }}</span>
 </div>
 
 <div class="student-info">
+     <span style="float: right;">ID: {{ $student->student_id }}</span>
     <span>ACADEMIC YEAR: {{ $grades->first()->academic_year ?? 'N/A' }}</span>
+    
 </div>
+@endif
 
-<table>
+<!-- Report card table -->
+<table class="{{ in_array($period,['p1','p2','p3','p4','p5','p6']) ? 'period-view' : '' }}">
     <thead>
         <tr>
             <th>Subject</th>
-            <th>1st Period</th>
-            <th>2nd Period</th>
-            <th>3rd Period</th>
-            <th>1st Sem. Exam</th>
-            <th>1st Sem. Average</th>
-            <th>4th Period</th>
-            <th>5th Period</th>
-            <th>6th Period</th>
-            <th>2nd Sem. Exam</th>
-            <th>2nd Sem. Average</th>
-            <th>Yearly Average</th>
+            <!-- Display columns dynamically based on selected period -->
+            @if(in_array($period, ['p1','semester1','yearly']))<th>1st Period</th>@endif
+            @if(in_array($period, ['p2','semester1','yearly']))<th>2nd Period</th>@endif
+            @if(in_array($period, ['p3','semester1','yearly']))<th>3rd Period</th>@endif
+            @if(in_array($period, ['semester1','yearly']))<th>1st Sem. Exam</th><th>1st Sem. Average</th>@endif
+            @if(in_array($period, ['p4','semester2','yearly']))<th>4th Period</th>@endif
+            @if(in_array($period, ['p5','semester2','yearly']))<th>5th Period</th>@endif
+            @if(in_array($period, ['p6','semester2','yearly']))<th>6th Period</th>@endif
+            @if(in_array($period, ['semester2','yearly']))<th>2nd Sem. Exam</th><th>2nd Sem. Average</th>@endif
+            @if($period === 'yearly')<th>Yearly Average</th>@endif
         </tr>
     </thead>
     <tbody>
         @php
+            // Initialize totals and subject count
             $firstSemTotal = 0;
             $secondSemTotal = 0;
             $subjectCount = $grades->count();
+
+            // Grade color logic: red if score <= 69
+            $color = fn($val) => ($val !== null && $val <= 69) ? 'red-grade' : 'blue-grade';
         @endphp
 
         @foreach($grades as $grade)
             @php
-                
-              $periodAvg1 = ($grade->period1 + $grade->period2 + $grade->period3) / 3;
-           $firstSemAvg = round(($periodAvg1 + $grade->exam1) / 2);
+                // Calculate semester and yearly averages
+                $periodAvg1 = ($grade->period1 + $grade->period2 + $grade->period3) / 3;
+                $firstSemAvg = round(($periodAvg1 + $grade->exam1) / 2);
 
-           $periodAvg2 = ($grade->period4 + $grade->period5 + $grade->period6) / 3;
-           $secondSemAvg = round(($periodAvg2 + $grade->exam2) / 2);
+                $periodAvg2 = ($grade->period4 + $grade->period5 + $grade->period6) / 3;
+                $secondSemAvg = round(($periodAvg2 + $grade->exam2) / 2);
 
-           $yearAvg = round(($firstSemAvg + $secondSemAvg) / 2, 2);
+                $yearAvg = round(($firstSemAvg + $secondSemAvg) / 2, 2);
 
-           $firstSemTotal += $firstSemAvg;
-            $secondSemTotal += $secondSemAvg;
+                // ---------------- PERIOD AVERAGE CALCULATION ----------------
 
-// Grade color logic
-$color = fn($val) => ($val !== null && $val <= 69) ? 'red-grade' : 'blue-grade';
-                    
+// If the report is P1 → add Period1 score
+if($period === 'p1') {
+    $firstSemTotal += $grade->period1; // P1 average = sum(period1 scores) / subject count
+}
+
+// If the report is P2 → add Period2 score
+elseif($period === 'p2') {
+    $firstSemTotal += $grade->period2; // P2 average = sum(period2 scores) / subject count
+}
+
+// If the report is P3 → add Period3 score
+elseif($period === 'p3') {
+    $firstSemTotal += $grade->period3; // P3 average = sum(period3 scores) / subject count
+}
+
+// Semester 1 → use calculated semester average
+elseif($period === 'semester1') {
+    $firstSemTotal += $firstSemAvg; // Semester1 average = ((P1+P2+P3)/3 + Exam1)/2
+}
+
+// If the report is P4
+elseif($period === 'p4') {
+    $firstSemTotal += $grade->period4;
+}
+
+// If the report is P5
+elseif($period === 'p5') {
+    $firstSemTotal += $grade->period5;
+}
+
+// If the report is P6
+elseif($period === 'p6') {
+    $firstSemTotal += $grade->period6;
+}
+
+// Semester 2
+elseif($period === 'semester2') {
+    $firstSemTotal += $secondSemAvg; // Semester2 average = ((P4+P5+P6)/3 + Exam2)/2
+}
+
+// Yearly report
+elseif($period === 'yearly') {
+    $firstSemTotal += $yearAvg; // Yearly average = (Semester1 + Semester2) / 2
+}
             @endphp
+
             <tr>
                 <td>{{ $grade->subject->name }}</td>
-<td class="{{ $color($grade->period1) }}"><strong>{{ $grade->period1 }}</strong></td>
-<td class="{{ $color($grade->period2) }}"><strong>{{ $grade->period2 }}</strong></td>
-<td class="{{ $color($grade->period3) }}"><strong>{{ $grade->period3 }}</strong></td>
-<td class="{{ $color($grade->exam1) }}"><strong>{{ $grade->exam1 }}</strong></td>
-<td class="{{ $color($firstSemAvg) }}"><strong>{{ $firstSemAvg }}</strong></td>
 
-<td class="{{ $color($grade->period4) }}"><strong>{{ $grade->period4 }}</strong></td>
-<td class="{{ $color($grade->period5) }}"><strong>{{ $grade->period5 }}</strong></td>
-<td class="{{ $color($grade->period6) }}"><strong>{{ $grade->period6 }}</strong></td>
-<td class="{{ $color($grade->exam2) }}"><strong>{{ $grade->exam2 }}</strong></td>
-<td class="{{ $color($secondSemAvg) }}"><strong>{{ $secondSemAvg }}</strong></td>
-
-<td class="{{ $color($yearAvg) }}"><strong>{{ $yearAvg }}</strong></td>
+                <!-- Dynamic period columns -->
+                @if(in_array($period, ['p1','semester1','yearly']))<td class="{{ $color($grade->period1) }}"><strong>{{ $grade->period1 }}</strong></td>@endif
+                @if(in_array($period, ['p2','semester1','yearly']))<td class="{{ $color($grade->period2) }}"><strong>{{ $grade->period2 }}</strong></td>@endif
+                @if(in_array($period, ['p3','semester1','yearly']))<td class="{{ $color($grade->period3) }}"><strong>{{ $grade->period3 }}</strong></td>@endif
+                @if(in_array($period, ['semester1','yearly']))
+                    <td class="{{ $color($grade->exam1) }}"><strong>{{ $grade->exam1 }}</strong></td>
+                    <td class="{{ $color($firstSemAvg) }}"><strong>{{ $firstSemAvg }}</strong></td>
+                @endif
+                @if(in_array($period, ['p4','semester2','yearly']))<td class="{{ $color($grade->period4) }}"><strong>{{ $grade->period4 }}</strong></td>@endif
+                @if(in_array($period, ['p5','semester2','yearly']))<td class="{{ $color($grade->period5) }}"><strong>{{ $grade->period5 }}</strong></td>@endif
+                @if(in_array($period, ['p6','semester2','yearly']))<td class="{{ $color($grade->period6) }}"><strong>{{ $grade->period6 }}</strong></td>@endif
+                @if(in_array($period, ['semester2','yearly']))
+                    <td class="{{ $color($grade->exam2) }}"><strong>{{ $grade->exam2 }}</strong></td>
+                    <td class="{{ $color($secondSemAvg) }}"><strong>{{ $secondSemAvg }}</strong></td>
+                @endif
+                @if($period === 'yearly')<td class="{{ $color($yearAvg) }}"><strong>{{ $yearAvg }}</strong></td>@endif
             </tr>
         @endforeach
 
-        @php
-            $overallAverage = round(($firstSemTotal + $secondSemTotal)/($subjectCount*2),2);
-        @endphp
+      @php
+    // 1. Calculate the values you want to show
+    $firstSemTotal = $firstSemTotal ?? 0;
+    $subjectCount = $subjectCount ?? 1; // Division by zero check
+    $overallAverage = round($firstSemTotal / $subjectCount, 2);
 
-        <tr>
-<td><strong>Average</strong></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td><strong>{{ $overallAverage }}</strong></td>
+    // 2. Calculate how many columns are actually displayed in the current view
+    $totalCols = 1; // The "Subject" column
+
+    if (in_array($period, ['p1', 'p2', 'p3', 'p4', 'p5', 'p6'])) {
+        $totalCols += 1; 
+    } elseif (in_array($period, ['semester1', 'semester2'])) {
+        $totalCols += 5; // 3 periods + 1 exam + 1 average
+    } elseif ($period === 'yearly') {
+        $totalCols += 11; // All columns
+    }
+@endphp
+<tr style="background:#f3f4f6; font-weight: bold;">
+    <td>Average</td>
+
+    @if(in_array($period, ['p1','semester1','yearly']))
+        <td>{{ round($periodAverages['p1'][$student->id] ?? 0,2) }}</td>
+    @endif
+
+    @if(in_array($period, ['p2','semester1','yearly']))
+        <td>{{ round($periodAverages['p2'][$student->id] ?? 0,2) }}</td>
+    @endif
+
+    @if(in_array($period, ['p3','semester1','yearly']))
+        <td>{{ round($periodAverages['p3'][$student->id] ?? 0,2) }}</td>
+    @endif
+
+    @if(in_array($period, ['semester1','yearly']))
+        {{-- ✅ FIXED: exam1 average --}}
+        <td>{{ round($periodAverages['exam1'][$student->id] ?? 0,2) }}</td>
+
+        <td>{{ round($periodAverages['semester1'][$student->id] ?? 0,2) }}</td>
+    @endif
+
+    @if(in_array($period, ['p4','semester2','yearly']))
+        <td>{{ round($periodAverages['p4'][$student->id] ?? 0,2) }}</td>
+    @endif
+
+    @if(in_array($period, ['p5','semester2','yearly']))
+        <td>{{ round($periodAverages['p5'][$student->id] ?? 0,2) }}</td>
+    @endif
+
+    @if(in_array($period, ['p6','semester2','yearly']))
+        <td>{{ round($periodAverages['p6'][$student->id] ?? 0,2) }}</td>
+    @endif
+
+    @if(in_array($period, ['semester2','yearly']))
+        {{-- ✅ FIXED: exam2 average --}} 
+        <td>{{ round($periodAverages['exam2'][$student->id] ?? 0,2) }}</td>
+
+        <td>{{ round($periodAverages['semester2'][$student->id] ?? 0,2) }}</td>
+    @endif
+
+    @if($period === 'yearly')
+        <td>{{ round($periodAverages['yearly'][$student->id] ?? 0,2) }}</td>
+    @endif
+</tr>
+ 
+
+<tr style="background:#f3f4f6; font-weight: bold;">
+    <td>Rank</td>
+
+    @if(in_array($period, ['p1','semester1','yearly']))
+        <td>{{ $periodRanks['p1'][$student->id] ?? '-' }} / {{ $totalStudents }}</td>
+    @endif
+
+    @if(in_array($period, ['p2','semester1','yearly']))
+        <td>{{ $periodRanks['p2'][$student->id] ?? '-' }} / {{ $totalStudents }}</td>
+    @endif
+
+    @if(in_array($period, ['p3','semester1','yearly']))
+        <td>{{ $periodRanks['p3'][$student->id] ?? '-' }} / {{ $totalStudents }}</td>
+    @endif
+
+    @if(in_array($period, ['semester1','yearly']))
+        {{-- ✅ FIXED: exam1 rank --}}
+        <td>{{ $periodRanks['exam1'][$student->id] ?? '-' }} / {{ $totalStudents }}</td>
+
+        <td>{{ $periodRanks['semester1'][$student->id] ?? '-' }} / {{ $totalStudents }}</td>
+    @endif
+
+    @if(in_array($period, ['p4','semester2','yearly']))
+        <td>{{ $periodRanks['p4'][$student->id] ?? '-' }} / {{ $totalStudents }}</td>
+    @endif
+
+    @if(in_array($period, ['p5','semester2','yearly']))
+        <td>{{ $periodRanks['p5'][$student->id] ?? '-' }} / {{ $totalStudents }}</td>
+    @endif
+
+    @if(in_array($period, ['p6','semester2','yearly']))
+        <td>{{ $periodRanks['p6'][$student->id] ?? '-' }} / {{ $totalStudents }}</td>
+    @endif
+
+    @if(in_array($period, ['semester2','yearly']))
+        {{-- ✅ FIXED: exam2 rank --}}
+        <td>{{ $periodRanks['exam2'][$student->id] ?? '-' }} / {{ $totalStudents }}</td>
+
+        <td>{{ $periodRanks['semester2'][$student->id] ?? '-' }} / {{ $totalStudents }}</td>
+    @endif
+
+    @if($period === 'yearly')
+        <td>{{ $periodRanks['yearly'][$student->id] ?? '-' }} / {{ $totalStudents }}</td>
+    @endif
 </tr>
 
-<tr>
-<td><strong>Rank</strong></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td><strong>{{ $rank }} / {{ $totalStudents }}</strong></td>
+<tr style="background:#f3f4f6; font-weight: bold;">
+    <td>Conduct</td>
+    @for($i = 0; $i < ($totalCols - 2); $i++)
+        <td></td>
+    @endfor
+    <td style="text-align: center;">{{ $conduct ?? '-' }}</td>
 </tr>
 
-<tr>
-<td><strong>Conduct</strong></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>   
-<td></td>
-<td></td>
-<td></td>
-</tr>
+{{-- Repeat same logic for Rank and Conduct --}}
+
     </tbody>
 </table>
 
+
+<!-- Signature / Footer -->
+@if(request()->query('showFooter', 1))
 <div class="signature">
     <div>
         Signed: ______________________<br>
@@ -245,6 +604,7 @@ $color = fn($val) => ($val !== null && $val <= 69) ? 'red-grade' : 'blue-grade';
         Principal
     </div>
 </div>
+@endif
 
 </body>
 </html>

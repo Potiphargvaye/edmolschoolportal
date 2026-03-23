@@ -386,10 +386,10 @@
 		<div class="col-md-6 col-lg-3 ftco-animate">
 		<div class="staff">
           <div class="img-wrap d-flex align-items-stretch">
-            <div class="img align-self-stretch" style="background-image: url('{{ asset('kiddos-school-master/images/school_logo_as_teacher.jpg') }}');"></div>
+            <div class="img align-self-stretch" style="background-image: url('{{ asset('kiddos-school-master/images/school_logo2.jpeg') }}');"></div>
           </div>
           <div class="text pt-3 text-center">
-            <h3>Pst. John K. Sackie</h3>
+            <h3>Pst. John K. Sackie</h3>  
             <span class="position mb-2">Board Member</span>
             <div class="faded">
 				<p>Pst. John K. Sackie, B.Sc, M.Sc, serves as Board Member, helping guide Edmol Baptist School in financial stewardship, leadership, and fostering a faith-based learning environment.</p>

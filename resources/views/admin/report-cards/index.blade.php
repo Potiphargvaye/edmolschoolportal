@@ -267,11 +267,6 @@ document.querySelectorAll('.print-btn').forEach(btn => {
 
 </div>
 
-
-
-
-
-
 <script>
 /// <!-- Search Script -->
 function filterTable() {
@@ -299,10 +294,6 @@ function filterTable() {
 // Events
 document.getElementById("studentSearch").addEventListener("keyup", filterTable);
 document.getElementById("gradeFilter")?.addEventListener("change", filterTable);
-
-
-
-
 
 //  Script to Attach Period to the URL
 document.querySelectorAll('.print-btn').forEach(button => {
@@ -348,7 +339,6 @@ if(periodSelect){
     });
 
 }
-
 // Set initial href on page load
 window.addEventListener('DOMContentLoaded', () => {
     const periodSelect = document.getElementById('periodSelect'); // ✅ ensure defined
@@ -365,7 +355,6 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
-
 
 // for multipl students printing
 document.getElementById('printSelected').addEventListener('click', function(){
