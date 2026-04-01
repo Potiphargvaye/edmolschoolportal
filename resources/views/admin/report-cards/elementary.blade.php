@@ -6,7 +6,7 @@
     <style>
    body {
     font-family: 'Times New Roman', Times, serif;
-    font-size: 20px;
+    font-size: 17px;
     margin: 20px;
 }
 
@@ -96,7 +96,7 @@ table tr td:not(:first-child) {
     width: 30%;
 }
 
-/* ================= COLORS ================= */
+/* ================= COLORS =================, */
 
 .red-grade {
     color: rgb(236, 3, 3);
@@ -121,7 +121,7 @@ table tr td:not(:first-child) {
 }
 
 .print-button:hover {
-    background-color: #001a4d;
+    background-color: #063dac;
 }
 
 /* ================= SIGNATURE ================= */
@@ -145,6 +145,7 @@ table tr td:not(:first-child) {
         margin: 0;
         font-size: 11px;
         color: #000;
+        
     }
 
     .print-button {
@@ -182,7 +183,7 @@ table tr td:not(:first-child) {
     }
 
     .school-header h2 {
-        font-size: 20px;
+        font-size: 18px;
     }
 
     .student-info {
@@ -209,16 +210,32 @@ table tr td:not(:first-child) {
     margin-bottom: 10px;
 }
 
+/* HEADER CONTAINER (FIXED HEIGHT ISSUE) */
+.school-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    min-height: 110px; /* 🔥 IMPORTANT: controls space for images */
+}
+
 /* LEFT LOGO */
 .header-left {
     position: absolute;
     left: 0;
+
+    top: 50%; /* 🔥 vertical center */
+    transform: translateY(-50%);
 }
 
 /* RIGHT IMAGE (STUDENT PHOTO) */
 .header-right {
     position: absolute;
     right: 0;
+
+    top: 50%; /* 🔥 vertical center */
+    transform: translateY(-50%);
 }
 
 /* CENTER TEXT */
@@ -229,20 +246,21 @@ table tr td:not(:first-child) {
 
 /* LOGO + STUDENT IMAGE STYLE */
 .school-logo {
-    width: 70px;
-    height: 70px;
+    width: 80px;
+    height: 80px;
     object-fit: cover;
-    border-radius: 50%; /* makes both images circular */
-    border: 2px solid #090a18;
+    object-position: center; /* 🔥 FIX 1: centers image properly */
+    border-radius: 45%;
+    border: 2px solid #0e0e14;
+    display: block; /* 🔥 FIX 2: prevents inline distortion */
 }
-
 /* REPORT TITLE BOX */
 .report-title-box {
     text-align: center;
     
-    border: 5px solid rgb(19, 40, 61); /* 🔥 CHANGE COLOR HERE */
+    border: 5px solid #990000; /* 🔥 CHANGE COLOR HERE */
     /* Example:
-       border: 3px solid red;
+       border: 3px solid red;   #990000
        border: 3px solid #002966;
        border: 3px solid green;
     */
@@ -258,8 +276,8 @@ table tr td:not(:first-child) {
 @media (max-width: 768px) {
 
     .school-logo {
-        width: 50px;
-        height: 50px;
+        width: 60px;
+        height: 60px;
     }
 
     .report-title-box {
@@ -268,16 +286,35 @@ table tr td:not(:first-child) {
     }
 }
 
-/* PRINT */
 @media print {
 
-    .school-logo {
-        width: 60px;
-        height: 60px;
+    .school-header {
+        min-height: 90px; /* 🔥 MUST match image size */
     }
 
+    .header-left,
+    .header-right {
+        top: 45%;
+        transform: translateY(-45%);
+    }
+
+    .school-logo {
+        width: 90px;   /* 🔥 adjust print size */
+        height: 90px;
+
+        object-fit: cover;
+        object-position: center;
+
+        border-radius: 45%;
+        display: block;
+         border: 2px solid #0e0e14;
+
+        overflow: hidden; /* 🔥 prevents cut-off */
+    }
+
+
     .report-title-box {
-         border: 5px solid rgb(19, 40, 61);/* 🔥 also change print color here if needed */
+        border: 5px solid #990000;
     }
 }
 
@@ -288,6 +325,34 @@ table tr td:not(:first-child) {
     color: navy; /* 🔥 CHANGE COLOR HERE */
     
 }
+
+/* FOOTER LEGAL NOTE */
+.footer-note {
+    text-align: center;
+    font-size: 16px;
+    margin-top: 15px;
+
+    font-style: italic;
+    color: #242323;
+
+    border-top: 1px solid #999;
+    padding-top: 6px;
+
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.footer-note {
+    font-size: 16px;
+    color: #000;
+
+    border-top: 1px solid #000;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+
+
     </style>
 </head>
 <body>
@@ -594,15 +659,23 @@ elseif($period === 'yearly') {
 
 <!-- Signature / Footer -->
 @if(request()->query('showFooter', 1))
+
 <div class="signature">
     <div>
         Signed: ______________________<br>
         Class Sponsor
     </div>
+
     <div>
         Approved: ______________________<br>
         Principal
     </div>
+</div>
+
+<!-- 🔒 LEGAL NOTICE -->
+<div class="footer-note">
+    Any alteration of this document renders it invalid. <br>
+    Invalid without school stamp.
 </div>
 @endif
 

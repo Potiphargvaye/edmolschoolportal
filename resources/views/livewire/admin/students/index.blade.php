@@ -1126,7 +1126,7 @@ Clear Search
     class="fixed inset-0 z-50 flex items-center justify-center
            bg-black/60 backdrop-blur-sm px-1"
 >
-    <div class="bg-white w-full max-w-[20rem] rounded-lg shadow-lg p-3">
+    <div class="bg-white w-full max-w-[20rem] rounded-lg shadow-lg p-3"> 
         <!-- Header -->
         <div class="flex items-center justify-between mb-1">
             <h2 class="text-[12px] font-semibold text-gray-700">
