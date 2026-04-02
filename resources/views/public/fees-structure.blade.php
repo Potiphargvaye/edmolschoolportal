@@ -802,7 +802,7 @@
     Copyright &copy;<script>document.write(new Date().getFullYear());</script> 
     All rights reserved | Edmol-Baptish-School 
     <span style="margin:0 5px;">🎓</span> 
-    Developed by:<a href="potiphar" target="_blank" style="color:#001f3f; text-decoration:none;">
+    Developed by:<a href="https://potiphargvaye.gt.tc" target="_blank" style="color:#001f3f; text-decoration:none;">
     Potiphar G Vaye
     </a></p>
 </div>

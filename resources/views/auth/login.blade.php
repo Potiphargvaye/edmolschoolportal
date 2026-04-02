@@ -289,7 +289,7 @@ document.getElementById('loginForm').addEventListener('submit', function (e) {
     Copyright &copy;<script>document.write(new Date().getFullYear());</script> 
     All rights reserved | Edmol-Baptish-School 
     <span style="margin:0 5px;">🎓</span> 
-    Developed by:<a href="potiphar" target="_blank" style="color:#001f3f; text-decoration:none;">
+    Developed by:<a href="https://potiphargvaye.gt.tc" target="_blank" style="color:#001f3f; text-decoration:none;">
     Potiphar G Vaye
     </a></p>
           </div>
@@ -299,7 +299,7 @@ document.getElementById('loginForm').addEventListener('submit', function (e) {
     
   
 
-  <!-- loader -->
+  <!-- loader --> 
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
 
 
