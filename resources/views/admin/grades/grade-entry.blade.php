@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
+ @include('partials.notifications')  {{-- ✅ CORRECT PLACE --}}
 
 <div class="container-fluid px-2 sm:px-4 md:px-6 lg:px-8">
 
@@ -22,12 +23,7 @@
 
             <div class="card-body p-0">
 
-                <!-- Success Message -->
-                @if(session('success'))
-                <div class="alert alert-success m-3">
-                    {{ session('success') }}
-                </div>
-                @endif
+               
 
                 <!-- Sticky Control Bar -->
                 <div class="sticky top-0 z-50 bg-white border-b shadow-sm px-3 py-2 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">

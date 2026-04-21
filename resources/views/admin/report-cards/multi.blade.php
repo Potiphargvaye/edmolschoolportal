@@ -31,25 +31,53 @@
 @endforeach
 <style>
 
-@media print{
+@media print {
 
-body{
-    margin:0;
+    body{
+        margin: 0;
+        
+    }
+
+    /* 🔥 Each card MUST behave like a full page */
+    .report-card{
+        page-break-after: always;
+
+        /* 🔥 IMPORTANT: force proper page sizing */
+        width: 100%;
+        height: 100vh;
+
+        /* keep spacing controlled */
+        padding: 5mm;
+
+        box-sizing: border-box;
+
+        /* 🔥 THIS prevents overflow breaking */
+        overflow: hidden;
+    }
+
+    /* last one no extra blank page */
+    .report-card:last-child{
+        page-break-after: auto;
+    }
+
+    /* 🔥 CRITICAL: prevent content splitting */
+    table, tr, td, th{
+        page-break-inside: avoid;
+    }
+
+    /* 🔥 Prevent browser auto shrinking */
+    html, body{
+        zoom: 1;
+    }
+
+    .school-address {
+    margin-top: 2px;     /* reduce top space */
+    margin-bottom: 2px;  /* reduce bottom space */
+    line-height: 1.1;    /* 🔥 tighter lines (KEY FIX) */
+    font-size: 16px;     /* optional: slightly smaller */
 }
 
-/* Each student report */
-.report-card{
-    page-break-after:always;
-    padding:5mm;
 }
-
-/* Last report should not add blank page */
-.report-card:last-child{
-    page-break-after:auto;
-}
-
-}
-
 </style>
 
 

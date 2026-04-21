@@ -150,7 +150,8 @@ Clear Search
 
     {{-- Table --}}
     <div class="overflow-x-auto mt-4">
-        <table class="w-full table-auto border-collapse border border-gray-200 text-sm">
+        <table class="w-full table-auto border-collapse border border-gray-200 text-base" 
+       style="font-family: Arial, sans-serif;">
             <thead class="bg-gray-100">
                 <tr class="text-center">
                     <th class="px-3 py-2 border">ID</th>
@@ -160,11 +161,13 @@ Clear Search
                     <th class="px-3 py-2 border">Class</th>
                     <th class="px-3 py-2 border">Status</th>
                     <th class="px-3 py-2 border">Actions</th>
+                    
                 </tr>
             </thead>
             <tbody>
                 @forelse($students as $student)
-              <tr wire:key="student-{{ $student->id }}" class="text-center border-b">
+              <tr wire:key="student-{{ $student->id }}" 
+    class="text-center border-b even:bg-[#e9f2ff] hover:bg-[#d0e2ff] transition duration-200">
 
                     <td class="px-2 py-1 border">{{ $student->student_id }}</td>
                     <td class="px-2 py-1 border">{{ $student->name }}</td>

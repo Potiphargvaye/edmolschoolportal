@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Elemetary Report Card </title>
+    <title>Kindergarten-edmol</title>
     <style>
    body {
     font-family: 'Times New Roman', Times, serif;
@@ -48,7 +48,8 @@ table {
     width: auto;                 /* 🔥 prevents stretching */
     margin: 0 auto;              /* center table */
     border-collapse: collapse;
-    table-layout: auto;
+    
+    table-layout: fixed;
 }
 
 /* Full width only for large tables */
@@ -70,19 +71,20 @@ th, td {
 /* First column (Subject) */
 table tr th:first-child,
 table tr td:first-child {
-    min-width: 220px;
-    max-width: 220px;
+    min-width: 120px;
+    max-width: 110px;
     white-space: normal;
     word-wrap: break-word;
     text-align: left;
     padding-left: 10px;
 }
-
+  
 /* Other columns (grades) */
 table tr th:not(:first-child), 
 table tr td:not(:first-child) {
-    min-width: 50px;
+    min-width: 45px;
     white-space: nowrap;
+    font-size: 17px;
 }
 
 /* Period view (few columns) */
@@ -137,15 +139,22 @@ table tr td:not(:first-child) {
     width: 200px;
 }
 
+
 /* ================= PRINT ================= */
 
 @media print {
 
     body {
         margin: 0;
-        font-size: 11px;
+        font-size: 18px;
         color: #000;
+         -webkit-print-color-adjust: exact;
         
+    }
+
+     /* 🔥 Prevent auto shrink */
+    html, body {
+        zoom: 1; 
     }
 
     .print-button {
@@ -156,13 +165,14 @@ table tr td:not(:first-child) {
     table {
         width: auto !important;   /* prevents stretching */
         margin: 0 auto;
-        font-size: 10px;
+        font-size: 20px;
     }
 
     th, td {
         padding: 4px;
         text-align: center;
         white-space: nowrap;
+        font-size: 17px;
     }
 
     /* Allow subject wrapping */
@@ -198,8 +208,6 @@ table tr td:not(:first-child) {
         page-break-inside: avoid;
     }
 }
-
-
 
 /* HEADER LAYOUT  for logo and image*/
 .school-header {
@@ -267,7 +275,7 @@ table tr td:not(:first-child) {
 
     padding: 6px;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 15px;
     width: 70%;
     margin: 10px auto;
 }
@@ -276,8 +284,8 @@ table tr td:not(:first-child) {
 @media (max-width: 768px) {
 
     .school-logo {
-        width: 60px;
-        height: 60px;
+        width: 50px;
+        height: 50px;
     }
 
     .report-title-box {
@@ -289,7 +297,7 @@ table tr td:not(:first-child) {
 @media print {
 
     .school-header {
-        min-height: 90px; /* 🔥 MUST match image size */
+        min-height: 80px; /* 🔥 MUST match image size */
     }
 
     .header-left,
@@ -299,8 +307,8 @@ table tr td:not(:first-child) {
     }
 
     .school-logo {
-        width: 90px;   /* 🔥 adjust print size */
-        height: 90px;
+        width: 75px;   /* 🔥 adjust print size */
+        height: 75px;
 
         object-fit: cover;
         object-position: center;
@@ -315,6 +323,10 @@ table tr td:not(:first-child) {
 
     .report-title-box {
         border: 5px solid #990000;
+    }
+
+    .school-header h2 {
+        font-size: 15px;
     }
 }
 
@@ -356,6 +368,7 @@ table tr td:not(:first-child) {
     </style>
 </head>
 <body>
+ <div class="report-card">  
 
 <!-- Print button -->
 <button class="print-button" onclick="window.print()">🖨 Print Report Card</button>
@@ -383,24 +396,24 @@ if(!isset($grades)){
     <!-- CENTER: SCHOOL TEXT -->
     <div class="header-center">
         <h2>ED MOL MEMORIAL MATADI BAPTIST HIGH SCHOOL</h2>
-        <p>New Matadi Estate Drive, Opposite Don Bosco Youth Center</p>
+           <p class="school-address">New Matadi Estate Drive, Opposite Don Bosco Youth Center</p>
         <p>P.O. Box: 4330 - Monrovia, Liberia</p>
         <p>
             <a href="mailto:emmmbhs@gmail.com">emmmbhs@gmail.com</a> 
             - 0778127778 / 0886566869
         </p>
     </div>
-   <!-- RIGHT: STUDENT IMAGE -->
+   <!-- RIGHT: STUDENT IMAGE -->  
 <div class="header-right">
     <img 
         src="{{ $student->image 
                 ? asset('storage/'.$student->image) 
-                : asset('kiddos-school-master/images/School_logo_reciept.jpeg') }}" 
+                : asset('kiddos-school-master/images/user-default-avatar.jpg') }}"   avatardefault_92824
         
-        alt="Student Photo"
+        alt="Student Photo"     
         class="school-logo"
         
-        onerror="this.onerror=null;this.src='{{ asset('kiddos-school-master/images/School_logo_reciept.jpeg') }}';"
+        onerror="this.onerror=null;this.src='{{ asset('kiddos-school-master/images/user-default-avatar.jpg') }}';"  
     >
 </div>
 </div>
@@ -678,6 +691,6 @@ elseif($period === 'yearly') {
     Invalid without school stamp.
 </div>
 @endif
-
+ </div>
 </body>
 </html>

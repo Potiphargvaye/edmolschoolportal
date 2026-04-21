@@ -33,7 +33,7 @@ public function load(Request $request)
     'grade_level' => $gradeLevel,
     'academic_year' => $academicYear,
     'semester' => 'sem1'
-])->where('is_locked', true)->exists();
+])->where('is_locked', true)->exists(); 
 
 $sem2Locked = \App\Models\GradeLock::where([
     'grade_level' => $gradeLevel,
@@ -186,7 +186,7 @@ public function store(Request $request)
     return redirect()->route('grades.load', [
         'grade_level' => $gradeLevel,
         'academic_year' => $academicYear
-    ])->with('success','Grades saved successfully');
+    ])->with('success','Grades saved successfully 🎉');
 }
 
 

@@ -56,7 +56,7 @@
 
 <button id="printSelected"
 class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm font-semibold">
-🖨 Print Selected (2 per page)
+🖨 Print Selected (1 per page)
 </button>
 
 </div>
