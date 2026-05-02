@@ -15,9 +15,9 @@
             </button>
         </div>
 
-        <form method="POST" action="{{ route('grades.store') }}"> 
+        <form method="POST" action="{{ route('grades.store') }}" id="gradesForm">
             @csrf
-
+            <input type="hidden" name="grades_json" id="grades_json">
             <input type="hidden" name="academic_year" value="{{ $academicYear }}">
             <input type="hidden" name="grade_level" value="{{ $gradeLevel }}">
 
@@ -64,10 +64,10 @@
                         @endcan
 
                         <!-- Save Changes Button -->
-                        <button type="submit" 
-                                class="bg-[#25D366] text-white px-3 py-2 hover:bg-[#1ebe5d] rounded text-xs">
-                            Save Changes
-                        </button>
+                      <button type="button" onclick="submitGrades()"
+                      class="bg-[#25D366] text-white px-3 py-2 hover:bg-[#1ebe5d] rounded text-xs">
+                      Save Changes
+                    </button>
 
                     </div>
                 </div>
@@ -87,11 +87,21 @@
 
                         <thead class="bg-gray-800 text-white sticky top-0 z-40">
                             <tr>
-                                <!-- CHANGE #3: sticky student column kept -->
-                                <th rowspan="2"
-                                    class="p-3 font-medium text-left sticky left-0 bg-gray-800 z-10 min-w-[180px] border-2 border-black">
-                                    Student
-                                </th>
+
+                            
+                            <!-- # Number Column -->
+<th rowspan="2"
+    class="p-1 font-medium text-left pl-1  bg-black text-white z-10 w-10 border-2 border-black"
+    style="position: sticky; left: 0px; min-width: 40px;">
+    row:#
+</th>
+
+<!-- Student Column -->
+<th rowspan="2"
+    class="p-3 font-medium text-left bg-gray-800 z-10 min-w-[180px] border-2 border-black"
+    style="position: sticky; left: 40px;">
+    Student
+</th>
 
                                 @foreach($subjects as $subject)
                                 <!-- CHANGE #4: thicker borders -->
@@ -135,14 +145,21 @@
 
                       <tbody class="divide-y divide-gray-200">
 
+
     @foreach($students as $student)
     <tr class="studentRow {{ $loop->even ? 'bg-blue-50' : 'bg-white' }}">
 
-        <!-- CHANGE #9: sticky student column -->
-        <td class="studentName p-3 font-medium text-left sticky left-0 bg-white z-10 border-2 border-black">
-            {{ $student->name }}
-        </td>
-       
+   <!-- Row Number -->
+<td class="p-2 text-left pl-3 font-semibold bg-black text-white z-10 border-2 border-black text-sm"
+    style="position: sticky; left: 0px; min-width: 40px;">
+    {{ $loop->index + 1 }}
+</td>
+
+ <!-- CHANGE #9: sticky student column student name -->
+<td class="studentName p-3 font-medium text-left bg-white z-10 border-2 border-black"
+    style="position: sticky; left: 40px; min-width: 180px;">
+    {{ $student->name }}
+</td>
 
         @foreach($subjects as $subject)
         @php
@@ -152,20 +169,21 @@
 
         <!-- PERIODS 1–3 and EXAM 1 -->
         @foreach(['period1','period2','period3','exam1'] as $period)
-        <td class="p-1 border-2 border-black">
-            <input type="number"
-                   name="grades[{{ $student->id }}][{{ $subject->id }}][{{ $period }}]"
-                   value="{{ $grade->$period ?? '' }}"
-                   class="form-control form-control-sm text-center w-16 score-input
-                   @if($sem1Locked || (isset($grade->$period) && !auth()->user()->can('edit student grades')))
-                       bg-red-100 text-red-800 cursor-not-allowed
-                   @endif"
-                   @if($sem1Locked || (isset($grade->$period) && !auth()->user()->can('edit student grades')))
-                       readonly
-                       title="This grade is locked by admin: you cannot edit it"
-                   @endif>
-        </td>
-        @endforeach
+          <td class="p-1 border-2 border-black">
+          <input type="number"
+           name="grades[{{ $student->id }}][{{ $subject->id }}][{{ $period }}]"
+           value="{{ $grade->$period ?? '' }}"
+           class="form-control form-control-sm text-center w-16 score-input
+           {{ isset($grade->$period) ? ($grade->$period < 70 ? 'text-red-600 font-semibold' : 'text-black') : 'text-black' }}
+           @if($sem1Locked || (isset($grade->$period) && !auth()->user()->can('edit student grades')))
+               bg-red-100 cursor-not-allowed
+           @endif"
+           @if($sem1Locked || (isset($grade->$period) && !auth()->user()->can('edit student grades')))
+               readonly
+               title="This grade is locked by admin: you cannot edit it"
+           @endif>
+              </td>
+           @endforeach
 
         <!-- 1st Semester Avg -->
         <td class="p-1 border-2 border-black bg-blue-100">
@@ -173,21 +191,22 @@
         </td>
 
         <!-- PERIODS 4–6 and EXAM 2 -->
-        @foreach(['period4','period5','period6','exam2'] as $period)
-        <td class="p-1 border-2 border-black">
+         @foreach(['period4','period5','period6','exam2'] as $period)
+           <td class="p-1 border-2 border-black">
             <input type="number"
-                   name="grades[{{ $student->id }}][{{ $subject->id }}][{{ $period }}]"
-                   value="{{ $grade->$period ?? '' }}"
-                   class="form-control form-control-sm text-center w-16 score-input
-                   @if($sem2Locked || (isset($grade->$period) && !auth()->user()->can('edit student grades')))
-                       bg-red-100 text-red-800 cursor-not-allowed
-                   @endif"
-                   @if($sem2Locked || (isset($grade->$period) && !auth()->user()->can('edit student grades')))
-                       readonly
-                       title="This grade is locked by admin: you cannot edit it"
-                   @endif>
-        </td>
-        @endforeach
+           name="grades[{{ $student->id }}][{{ $subject->id }}][{{ $period }}]"
+           value="{{ $grade->$period ?? '' }}"
+           class="form-control form-control-sm text-center w-16 score-input
+           {{ isset($grade->$period) ? ($grade->$period < 70 ? 'text-red-600 font-semibold' : 'text-black') : 'text-black' }}
+           @if($sem2Locked || (isset($grade->$period) && !auth()->user()->can('edit student grades')))
+               bg-red-100 cursor-not-allowed
+           @endif"
+           @if($sem2Locked || (isset($grade->$period) && !auth()->user()->can('edit student grades')))
+               readonly
+               title="This grade is locked by admin: you cannot edit it"
+           @endif>
+             </td>
+          @endforeach
 
         <!-- 2nd Semester Avg -->
         <td class="p-1 border-2 border-black bg-blue-100">
@@ -204,7 +223,7 @@
     @endforeach
     <!-- 🔔 Fallback row -->
 <tr id="noStudentRow" class="hidden">
-    <td colspan="{{ 1 + ($subjects->count() * 11) }}"
+    <td colspan="{{ 2 + ($subjects->count() * 11) }}"
         class="p-5 text-center bg-yellow-100 font-semibold">
         ⚠️ No student found for your search.
         <a href="#" id="resetSearch" class="text-blue-600 underline ml-3 font-bold">
@@ -214,18 +233,18 @@
 </tr>
 
 </tbody>
-                    </table>
-                </div>
+</table>
+    </div>
 
             </div>
 
             <!-- Footer Save Button -->
             <div class="card-footer text-end">
                 <!-- CHANGE #12: green save button -->
-                <button type="submit" 
-                        class="bg-[#25D366] text-white px-3 py-2 hover:bg-[#1ebe5d] rounded text-xs">
-                    Save Changes
-                </button>
+               <button type="button" onclick="submitGrades()"
+                  class="bg-[#25D366] text-white px-3 py-2 hover:bg-[#1ebe5d] rounded text-xs">
+                 Save Changes
+                 </button>
             </div>
 
         </form>
@@ -275,6 +294,7 @@
 
 
 <script>
+    //average calculations 
 document.querySelectorAll("input[type='number']").forEach(input => {
 
     input.addEventListener("input", function(){
@@ -309,6 +329,39 @@ document.querySelectorAll("input[type='number']").forEach(input => {
 
     });
 
+});
+
+
+// ─────────────────────────────────────────
+// LIVE GRADE COLOR — red if < 70, black if >= 70
+// ─────────────────────────────────────────
+function applyGradeColor(input) {
+    const val = input.value.trim();
+    if (val === '') {
+        input.style.color = '';
+        input.style.fontWeight = '';
+        return;
+    }
+    const num = parseInt(val);
+    if (!isNaN(num) && num < 70) {
+        input.style.color = '#dc2626'; // red-600
+        input.style.fontWeight = '600';
+    } else {
+        input.style.color = '#000000'; // black
+        input.style.fontWeight = '600';
+    }
+}
+
+// Apply on page load to all existing values
+document.querySelectorAll('input.score-input').forEach(function(input) {
+    applyGradeColor(input);
+});
+
+// Apply live as user types
+document.addEventListener('input', function(e) {
+    if (e.target.classList.contains('score-input')) {
+        applyGradeColor(e.target);
+    }
 });
 </script>
 
@@ -372,5 +425,111 @@ document.addEventListener('DOMContentLoaded', function() {
     resetRow.addEventListener('click', resetSearch);
 
 });
+
+
+// =====for my form submission to alow every data to be inserted insted of 10 rows only  ======
+function submitGrades() {
+    let gradesData = {};
+
+    document.querySelectorAll('input[name]').forEach(function(input) {
+        let match = input.name.match(/^grades\[(\d+)\]\[(\d+)\]\[(\w+)\]$/);
+        if (match) {
+            let studentId = match[1];
+            let subjectId = match[2];
+            let field     = match[3];
+
+            if (!gradesData[studentId]) gradesData[studentId] = {};
+            if (!gradesData[studentId][subjectId]) gradesData[studentId][subjectId] = {};
+
+            // Store null for empty values, integer for filled ones
+            let val = input.value.trim();
+            gradesData[studentId][subjectId][field] = val === '' ? null : val;
+        }
+    });
+
+    // Check we actually collected data
+    if (Object.keys(gradesData).length === 0) {
+        alert('No grade data found. Please check the form.');
+        return;
+    }
+
+    // Put into hidden field
+    document.getElementById('grades_json').value = JSON.stringify(gradesData);
+
+    // Disable all grade inputs so they don't submit alongside JSON
+    document.querySelectorAll('input[name^="grades["]').forEach(function(input) {
+        input.disabled = true;
+    });
+
+    console.log('Submitting grades for students:', Object.keys(gradesData).length);
+
+    // Submit
+    document.getElementById('gradesForm').submit();
+}
+
+
+// ─────────────────────────────────────────
+// ARROW KEY NAVIGATION (Excel-like)
+// ─────────────────────────────────────────
+document.addEventListener('keydown', function(e) {
+    const arrowKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
+    if (!arrowKeys.includes(e.key)) return;
+
+    const active = document.activeElement;
+    if (!active || !active.classList.contains('score-input')) return;
+
+    e.preventDefault(); // prevent page scrolling
+
+    // Build a 2D grid of all visible, non-readonly score-input cells
+    // Group by row first
+    const rows = Array.from(document.querySelectorAll('tr.studentRow'))
+        .filter(row => !row.classList.contains('hidden'));
+
+    let currentRow = -1;
+    let currentCol = -1;
+
+    // Build grid: grid[rowIndex] = [input, input, ...]
+    const grid = rows.map((row, rIdx) => {
+        const inputs = Array.from(row.querySelectorAll('input.score-input'))
+            .filter(inp => !inp.readOnly && !inp.disabled);
+
+        inputs.forEach((inp, cIdx) => {
+            if (inp === active) {
+                currentRow = rIdx;
+                currentCol = cIdx;
+            }
+        });
+
+        return inputs;
+    });
+
+    if (currentRow === -1) return; // active input not found in grid
+
+    let targetRow = currentRow;
+    let targetCol = currentCol;
+
+    if (e.key === 'ArrowRight') targetCol++;
+    if (e.key === 'ArrowLeft')  targetCol--;
+    if (e.key === 'ArrowDown')  targetRow++;
+    if (e.key === 'ArrowUp')    targetRow--;
+
+    // Clamp to grid bounds
+    targetRow = Math.max(0, Math.min(targetRow, grid.length - 1));
+
+    const targetRowInputs = grid[targetRow];
+    if (!targetRowInputs || targetRowInputs.length === 0) return;
+
+    targetCol = Math.max(0, Math.min(targetCol, targetRowInputs.length - 1));
+
+    const targetInput = targetRowInputs[targetCol];
+    if (targetInput) {
+        targetInput.focus();
+        targetInput.select();
+
+        // Scroll into view smoothly
+        targetInput.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    }
+});
+
 </script>
 @endsection

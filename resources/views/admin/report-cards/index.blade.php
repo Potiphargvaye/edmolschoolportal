@@ -69,6 +69,7 @@ class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm f
 
 <thead class="bg-gray-100 border-b">
 <tr>
+<th class="px-6 py-3 font-semibold bg-blue-900 text-white text-left pl-3">Row:#</th>
 <th class="px-6 py-3 font-semibold">Student Name</th>
 <th class="px-6 py-3 font-semibold">Registration ID</th>
 <th class="px-6 py-3 font-semibold">Grade Level</th>
@@ -96,6 +97,11 @@ class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm f
 @endphp
 
 <tr class="hover:bg-gray-50 transition">
+
+     <!-- Row Number -->
+    <td class="px-6 py-3 font-semibold bg-white text-black text-left pl-3">
+        {{ $loop->index + 1 }}
+    </td>
 
     <!-- Student Name -->
     <td class="px-6 py-3 font-medium text-gray-900">
@@ -138,7 +144,7 @@ class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm f
    target="_blank"
    data-student="{{ $student->id }}"
    data-level="{{ Str::slug($level, '-') }}" 
-   class="print-btn inline-flex items-center gap-2 bg-blue-600 text-white text-sm font-semibold px-4 py-2 rounded-md hover:bg-blue-700 transition">
+   class="print-btn inline-flex items-center gap-2 bg-blue-900 text-white text-sm font-semibold px-4 py-2 rounded-md hover:bg-blue-700 transition">
    Print-Card
 </a>
 
@@ -219,7 +225,7 @@ class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm f
 @empty
 
 <tr>
-    <td colspan="6" class="px-6 py-4 text-center text-gray-500">
+    <td colspan="7" class="px-6 py-4 text-center text-gray-500">
         No students available.
     </td>
 </tr>
