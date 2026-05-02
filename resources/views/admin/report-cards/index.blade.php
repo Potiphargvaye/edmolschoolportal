@@ -283,17 +283,15 @@ function filterTable() {
 
     rows.forEach(function(row) {
 
-        let name = row.cells[0].innerText.toLowerCase().trim();
-        let studentId = row.cells[1].innerText.toLowerCase().trim();
-        let grade = row.cells[2].innerText.toLowerCase().trim();
+        // Shifted by 1 because of the new # column
+        let name      = row.cells[1].innerText.toLowerCase().trim(); // was cells[0]
+        let studentId = row.cells[2].innerText.toLowerCase().trim(); // was cells[1]
+        let grade     = row.cells[3].innerText.toLowerCase().trim(); // was cells[2]
 
         let matchesSearch = name.includes(searchValue) || studentId.includes(searchValue);
-
-        // ✅ FIXED HERE
-        let matchesGrade = gradeValue === "" || grade.includes(gradeValue);
+        let matchesGrade  = gradeValue === "" || grade.includes(gradeValue);
 
         row.style.display = (matchesSearch && matchesGrade) ? "" : "none";
-
     });
 }
 
