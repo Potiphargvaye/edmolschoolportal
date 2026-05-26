@@ -1,6 +1,8 @@
 @extends('public.layouts.public')
 
-@section('title', 'Edmol-Register')
+@section('title', 'Registeration - Edmol MBHS')
+@section('description', 'Resister your child child Now! Edmol MBHS.')
+@section('canonical_url', 'https://www.edmolmbhs.com/registeration-form')
 
 @section('content')
 <meta name="csrf-token" content="{{ csrf_token() }}">

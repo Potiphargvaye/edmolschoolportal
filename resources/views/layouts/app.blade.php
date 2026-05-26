@@ -5,7 +5,28 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>@yield('title', 'EDMOL School Portal')</title>
+ <title>@yield('title', 'Edmol MBHS - Official School Website')</title>
+
+<meta name="description" content="@yield('description', 'Official website of Edmol MBHS. Explore school information, teachers, fees, and announcements.')">
+
+<meta name="keywords" content="Edmol MBHS, school, education, teachers, fees structure, Liberia school">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Canonical URL (VERY IMPORTANT for SEO) -->
+<link rel="canonical" href="@yield('canonical_url', 'https://www.edmolmbhs.com')">
+
+<!-- Open Graph -->
+<meta property="og:title" content="@yield('title', 'Edmol MBHS')">
+<meta property="og:description" content="@yield('description', 'Official school website')">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.edmolmbhs.com/@yield('canonical', '')">
+<meta property="og:image" content="https://www.edmolmbhs.com/images/school-banner.jpg">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="@yield('title', 'Edmol MBHS')">
+<meta name="twitter:description" content="@yield('description', 'Official school website')">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">

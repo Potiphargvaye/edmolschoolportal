@@ -1,8 +1,10 @@
 @extends('public.layouts.public')
 
-@section('title', 'Edmol-Baptish-login Pannel')
+@section('title', 'Student Login - Edmol MBHS Portal')
+@section('description', 'Access the Edmol MBHS student and staff portal. Login to check results, fees, and school information.')
+@section('canonical_url', 'https://www.edmolmbhs.com/login')
 
-@section('content')
+@section('content') 
 
 <body> 
 	  <div class="py-2 bg-primary" style="background-color:#0a2a66 !important;">
@@ -101,6 +103,15 @@
     </div>
 </section>
 
+
+<!-- WhatsApp Floating Button -->
+<a href="https://wa.me/250794241623" 
+   target="_blank" 
+   class="whatsapp-float" 
+   aria-label="Message us on WhatsApp">
+  <i class="fab fa-whatsapp"></i>
+  <span class="whatsapp-tooltip">Message us on WhatsApp</span>
+</a>
 
 <!-- ================================
      NOTIFICATION CONTAINER

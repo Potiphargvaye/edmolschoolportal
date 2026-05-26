@@ -1,6 +1,8 @@
 @extends('public.layouts.public')
 
-@section('title', 'Edmol-Teachers')
+@section('title', 'Our Teachers - Edmol MBHS')
+@section('description', 'Meet qualified teachers of Edmol MBHS school.')
+@section('canonical_url', 'https://www.edmolmbhs.com/teachers')
 
 @section('content')
 

@@ -1,7 +1,8 @@
 @extends('public.layouts.public')
 
-@section('title', 'Our Fees Structure')
-
+@section('title', 'Fees Structure - Edmol MBHS')
+@section('description', 'View school fees structure and payment information for Edmol MBHS.')
+@section('canonical_url', 'https://www.edmolmbhs.com/fees-structure')
 @section('content')
 
 <!-- ABOUT PAGE CONTENT GOES HERE -->

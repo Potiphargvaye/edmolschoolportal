@@ -1,7 +1,8 @@
 @extends('public.layouts.public')
 
-@section('title', 'Contact-us')
-
+@section('title', 'Contact Us - Edmol MBHS')
+@section('description', 'Contact Edmol MBHS for admissions, support, and inquiries.')
+@section('canonical_url', 'https://www.edmolmbhs.com/contact-us')
 @section('content')
 
 <body> 

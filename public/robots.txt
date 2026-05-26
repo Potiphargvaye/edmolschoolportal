@@ -1,2 +1,8 @@
 User-agent: *
-Disallow:
+Allow: /
+
+# Allow login page (IMPORTANT for your school system)
+Allow: /login
+
+# Sitemap location
+Sitemap: https://www.edmolmbhs.com/sitemap.xml

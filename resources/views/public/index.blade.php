@@ -1,6 +1,8 @@
 @extends('public.layouts.public')
 
-@section('title', 'Welcome to Edmol School')
+@section('title', 'Welcome to Edmol MBHS ')
+@section('description', 'Welcome to Edmol MBHS official website. Explore announcements, teachers, and school updates.')
+@section('canonical_url', 'https://www.edmolmbhs.com/index')
 
 @section('content')
 
