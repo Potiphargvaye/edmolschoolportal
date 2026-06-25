@@ -357,6 +357,7 @@ Clear Search
                             class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors mb-2">
                         <option value="">Select Class</option>
                         <optgroup label="kindergarten">
+                             <option value="Nursery">Nursery</option>
                             <option value="K-3">K-3</option>
                             <option value="K-4">K-4</option>
                             <option value="K-3">K-5</option>

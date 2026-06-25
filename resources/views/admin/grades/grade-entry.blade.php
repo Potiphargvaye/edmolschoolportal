@@ -293,45 +293,74 @@
 </div>
 
 
+
 <script>
-    //average calculations 
-document.querySelectorAll("input[type='number']").forEach(input => {
+    //average calculations
+document.addEventListener('input', function (e) {
 
-    input.addEventListener("input", function(){
+    if (!e.target.classList.contains('score-input')) return;
 
-        let row = this.closest("tr");
-        let cells = row.querySelectorAll("td");
+    let row = e.target.closest('tr');
 
-        for(let i=1; i<cells.length; i+=11){
+    // get all td cells in this row
+    let cells = row.querySelectorAll('td');
 
-            let p1 = parseFloat(cells[i].querySelector("input").value) || 0;
-            let p2 = parseFloat(cells[i+1].querySelector("input").value) || 0;
-            let p3 = parseFloat(cells[i+2].querySelector("input").value) || 0;
-            let exam1 = parseFloat(cells[i+3].querySelector("input").value) || 0;
+    /*
+    |--------------------------------------------------------------------------
+    | Table structure
+    |--------------------------------------------------------------------------
+    |
+    | 0 = row number
+    | 1 = student name
+    |
+    | then every subject block has 11 columns:
+    |
+    | P1
+    | P2
+    | P3
+    | Exam1
+    | Sem1 Avg
+    | P4
+    | P5
+    | P6
+    | Exam2
+    | Sem2 Avg
+    | Year Avg
+    |
+    */
 
-            let p4 = parseFloat(cells[i+5].querySelector("input").value) || 0;
-            let p5 = parseFloat(cells[i+6].querySelector("input").value) || 0;
-            let p6 = parseFloat(cells[i+7].querySelector("input").value) || 0;
-            let exam2 = parseFloat(cells[i+8].querySelector("input").value) || 0;
+    for (let i = 2; i < cells.length; i += 11) {
 
-            // Semester averages → round to nearest whole number
-            let sem1 = Math.round((((p1 + p2 + p3) / 3) + exam1) / 2);
-            let sem2 = Math.round((((p4 + p5 + p6) / 3) + exam2) / 2);
+        // ───── SEMESTER 1 ─────
+        let p1 = parseFloat(cells[i]?.querySelector('input')?.value) || 0;
+        let p2 = parseFloat(cells[i + 1]?.querySelector('input')?.value) || 0;
+        let p3 = parseFloat(cells[i + 2]?.querySelector('input')?.value) || 0;
+        let exam1 = parseFloat(cells[i + 3]?.querySelector('input')?.value) || 0;
 
-            // Yearly average → keep decimal
-            let yearly = (sem1 + sem2) / 2;
+        let sem1Avg = (((p1 + p2 + p3) / 3) + exam1) / 2;
 
-            cells[i+4].querySelector("input").value = sem1;
-            cells[i+9].querySelector("input").value = sem2;
-            cells[i+10].querySelector("input").value = yearly.toFixed(2);
+        // ───── SEMESTER 2 ─────
+        let p4 = parseFloat(cells[i + 5]?.querySelector('input')?.value) || 0;
+        let p5 = parseFloat(cells[i + 6]?.querySelector('input')?.value) || 0;
+        let p6 = parseFloat(cells[i + 7]?.querySelector('input')?.value) || 0;
+        let exam2 = parseFloat(cells[i + 8]?.querySelector('input')?.value) || 0;
 
-        }
+        let sem2Avg = (((p4 + p5 + p6) / 3) + exam2) / 2;
 
-    });
+        // ───── YEARLY ─────
+        let yearlyAvg = (sem1Avg + sem2Avg) / 2;
+
+        // ───── UPDATE UI ─────
+        let sem1Field = cells[i + 4]?.querySelector('input');
+        let sem2Field = cells[i + 9]?.querySelector('input');
+        let yearlyField = cells[i + 10]?.querySelector('input');
+
+        if (sem1Field) sem1Field.value = Math.round(sem1Avg);
+        if (sem2Field) sem2Field.value = Math.round(sem2Avg);
+        if (yearlyField) yearlyField.value = yearlyAvg.toFixed(2);
+    }
 
 });
-
-
 // ─────────────────────────────────────────
 // LIVE GRADE COLOR — red if < 70, black if >= 70
 // ─────────────────────────────────────────

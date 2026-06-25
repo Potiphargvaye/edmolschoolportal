@@ -19,7 +19,7 @@
 
 <body class="text-gray-800 bg-[#F8FAFC] min-h-screen">
 
-    {{-- Sidebar --}}
+    {{-- Sidebar --}} 
     @include('partials.admin.admin-sidebar')
 
     {{-- Mobile overlay --}}
@@ -47,6 +47,9 @@
     {{-- Scripts --}}
     @include('partials.admin.admin-scripts')
  @livewireScripts
+
+ {{-- Page specific scripts --}}
+@stack('scripts')
 </body>
 </html>
 

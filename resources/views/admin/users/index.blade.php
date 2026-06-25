@@ -468,7 +468,7 @@ use Illuminate\Support\Facades\Storage;
                             @error('password')
                                 <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                             @enderror
-                            <p class="mt-1 text-[10px] text-gray-500">6-8 characters with letters and numbers</p>
+                            <p class="mt-1 text-[10px] text-gray-500"> Enter a password for this account.</p>
                         </div>
 
                         <!-- Confirm Password -->
@@ -480,6 +480,7 @@ use Illuminate\Support\Facades\Storage;
                             @error('password_confirmation')
                                 <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                             @enderror
+                            <p id="passwordMatchMessage" class="mt-1 text-xs hidden"></p>
                         </div>
                     </div>
 
@@ -1576,6 +1577,46 @@ document.addEventListener('click', function(event) {
         // Hide loading spinner initially
         hideLoadingSpinner();
     });
+
+
+    /// passwordword match and mismatch message script 
+    document.addEventListener("DOMContentLoaded", function () {
+
+    const password = document.getElementById("password");
+    const confirmPassword = document.getElementById("password_confirmation");
+    const message = document.getElementById("passwordMatchMessage");
+
+    function checkPasswords() {
+
+        if (confirmPassword.value === "") {
+            message.classList.add("hidden");
+            return;
+        }
+
+        message.classList.remove("hidden");
+
+        if (password.value === confirmPassword.value) {
+
+            message.className = "mt-1 text-xs text-green-600";
+
+            message.innerHTML =
+                '<i class="fas fa-check-circle mr-1"></i> Passwords match';
+
+        } else {
+
+            message.className = "mt-1 text-xs text-red-600";
+
+            message.innerHTML =
+                '<i class="fas fa-times-circle mr-1"></i> Passwords do not match';
+
+        }
+
+    }
+
+    password.addEventListener("input", checkPasswords);
+    confirmPassword.addEventListener("input", checkPasswords);
+
+});
 </script>
 
 @endsection

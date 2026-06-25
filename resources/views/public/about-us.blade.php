@@ -8,10 +8,6 @@
 
 <!-- ABOUT PAGE CONTENT GOES HERE -->
 
-
-
-
-
 <body>
 	<div class="about-page">
 	  <div class="py-2 bg-primary" style="background-color:#0a2a66 !important;">
@@ -29,7 +25,7 @@
 					    </div>
 					    <div class="col-md pr-4 d-flex topper align-items-center">
 					    	<div class="icon bg-tertiary mr-2 d-flex justify-content-center align-items-center"><span class="icon-phone2"></span></div>
-						    <span class="text">+231777-151-394</span>
+						    <span class="text">+231555472972 / +231776597201</span>
 					    </div>
 				    </div>
 			    </div>
@@ -84,9 +80,9 @@
 
     <!-- Image Card -->
     <div class="row justify-content-center mb-5">
-      <div class="col-md-8 text-center">
+      <div class="col-md-8 text-center">   
         <div class="img img-2 d-flex align-items-center justify-content-center"
-          style="background-image: url('{{ asset('kiddos-school-master/images/bg_2.jpg') }}'); 
+          style="background-image: url('{{ asset('logo/edmol-orginal-logo.png') }}'); 
                  height: 350px; 
                  border-radius: 12px;
                  box-shadow: 0 10px 30px rgba(0,0,0,0.15);">
@@ -327,7 +323,7 @@
         </div>
         <div class="row ftco-animate justify-content-center">
       <div class="col-md-12">
-        <div class="carousel-testimony owl-carousel">
+        <div class="carousel-testimony owl-carousel">  
 
           <div class="item">
             <div class="testimony-wrap d-flex">
@@ -359,7 +355,7 @@
 
           <div class="item">
             <div class="testimony-wrap d-flex">
-              <div class="user-img mr-4" style="background-image: url('{{ asset('kiddos-school-master/images/parent_image2.jpg') }}')"></div>
+              <div class="user-img mr-4" style="background-image: url('{{ asset('logo/edmol-orginal-logo.png') }}')"></div>
               <div class="text ml-2 bg-light">
                 <span class="quote d-flex align-items-center justify-content-center">
                   <i class="icon-quote-left"></i>
@@ -387,7 +383,7 @@
 
           <div class="item">
             <div class="testimony-wrap d-flex">
-              <div class="user-img mr-4" style="background-image: url('{{ asset('kiddos-school-master/images/parent_image2.jpg') }}')"></div>
+              <div class="user-img mr-4" style="background-image: url('{{ asset('logo/edmol-orginal-logo.png') }}')"></div>
               <div class="text ml-2 bg-light">
                 <span class="quote d-flex align-items-center justify-content-center">
                   <i class="icon-quote-left"></i>
@@ -403,9 +399,9 @@
       </div>
     </div>
       </div>
-    </section>
+    </section> 
 
-	<section class="ftco-section ftco-consult ftco-no-pt ftco-no-pb" style="background-image: url('{{ asset('kiddos-school-master/images/school_logo1.jpg') }}');" data-stellar-background-ratio="0.5">
+	<section class="ftco-section ftco-consult ftco-no-pt ftco-no-pb" style="background-image: url('{{ asset('logo/edmol-orginal-logo.png') }}');" data-stellar-background-ratio="0.5">
 
    	<div class="container">
     		<div class="row justify-content-end">
@@ -516,8 +512,8 @@ style="background-image: url('{{ asset('kiddos-school-master/images/blog_post1.j
             	<div class="block-23 mb-3">
 	              <ul>
 	                <li><span class="icon icon-map-marker"></span><span class="text">New Matadi, Opposite Don-Bossco Youth-Center Monrovia, Liberia </span></li>
-	                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+231777-151-394</span></a></li>
-	                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a></li>
+	                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+231555472972 / +231776597201</span></a></li>
+	                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">emmmbhs@gmail.com</span></a></li> 
 	              </ul>
 	            </div>
             </div>

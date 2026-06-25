@@ -27,7 +27,7 @@
 					    </div>
 					    <div class="col-md pr-4 d-flex topper align-items-center">
 					    	<div class="icon bg-tertiary mr-2 d-flex justify-content-center align-items-center"><span class="icon-phone2"></span></div>
-						    <span class="text">+231777-151-394</span>
+						    <span class="text">+231555472972 / +231776597201</span>
 					    </div>
 				    </div>
 			    </div>
@@ -118,7 +118,7 @@
 	        			<h3 class="mb-3">Grade 12th</h3>
 	        			<p><span class="price">LRD$33,500</span> <span class="per">Per/Year</span></p>
 	        		</div>
-	        		<div class="img" style="background-image: url('{{ asset('kiddos-school-master/images/school_logo1.jpg') }}');"></div>
+	        		<div class="img" style="background-image: url('{{ asset('kiddos-school-master/images/edmol-orginal-logo (2).png') }}');"></div>
         			<div class="px-4">
 	        			<p>Our fees cover registration, tuition, and computer studies, ensuring quality education, skilled instruction, and essential learning resources..</p>
         			</div>
@@ -159,7 +159,7 @@
 	        			<h3 class="mb-3">Grade 11th</h3>
 	        			<p><span class="price">LRD$30,000</span> <span class="per">Per/Year</span></p>
 	        		</div>
-	        		<div class="img" style="background-image: url('{{ asset('kiddos-school-master/images/school_logo1.jpg') }}');"></div>
+	        		<div class="img" style="background-image: url('{{ asset('kiddos-school-master/images/edmol-orginal-logo (2).png') }}');"></div>
 
         			<div class="px-4">
 	        		<p>Our fees cover registration, tuition, and computer studies, ensuring quality education, skilled instruction, and essential learning resources..</p>
@@ -201,7 +201,7 @@
 	        			<h3 class="mb-3">Grade 10th</h3>
 	        			<p><span class="price">LRD$30,000</span> <span class="per">Per/Year</span></p>
 	        		</div>
-	        		<div class="img" style="background-image: url('{{ asset('kiddos-school-master/images/school_logo1.jpg') }}');"></div>
+	        		<div class="img" style="background-image: url('{{ asset('kiddos-school-master/images/edmol-orginal-logo (2).png') }}');"></div>
         			<div class="px-4">
 	        	     <p>Our fees cover registration, tuition, and computer studies, ensuring quality education, skilled instruction, and essential learning resources..</p>
         			</div>
@@ -242,7 +242,7 @@
 	        			<h3 class="mb-3">Grade 9th</h3>
 	        			<p><span class="price">LRD$27,875</span> <span class="per">Per/Year</span></p>
 	        		</div>
-	        		<div class="img" style="background-image: url('{{ asset('kiddos-school-master/images/school_logo1.jpg') }}');"></div>
+	        		<div class="img" style="background-image: url('{{ asset('kiddos-school-master/images/edmol-orginal-logo (2).png') }}');"></div>
 
 	        		<div class="px-4">
 	        			<p>Our fees cover registration, tuition, and computer studies, ensuring quality education, skilled instruction, and essential learning resources..</p>
@@ -301,7 +301,7 @@
 	        			<h3 class="mb-3">Grade 8th</h3>
 	        			<p><span class="price">LRD$27,875</span> <span class="per">Per/Year</span></p>
 	        		</div>
-	        		<div class="img" style="background-image: url('{{ asset('kiddos-school-master/images/school_logo1.jpg') }}');"></div>
+	        		<div class="img" style="background-image: url('{{ asset('kiddos-school-master/images/edmol-orginal-logo (2).png') }}');"></div>
 
 	        		<div class="px-4">
 	        			<p>Our fees cover registration, tuition, and computer studies, ensuring quality education, skilled instruction, and essential learning resources..</p>
@@ -345,7 +345,7 @@
 	        			<h3 class="mb-3">Grade 7th</h3>
 	        			<p><span class="price">LRD$27,875</span> <span class="per">Per/Year</span></p>
 	        		</div>
-	        		<div class="img" style="background-image: url('{{ asset('kiddos-school-master/images/school_logo1.jpg') }}');"></div>
+	        		<div class="img" style="background-image: url('{{ asset('kiddos-school-master/images/edmol-orginal-logo (2).png') }}');"></div>
         			<div class="px-4">
 	        	     <p>Our fees cover registration, tuition, and computer studies, ensuring quality education, skilled instruction, and essential learning resources..</p>
         			</div>
@@ -388,7 +388,7 @@
 	        			<h3 class="mb-3">Grade 6th</h3>
 	        			<p><span class="price">LRD$26,375</span> <span class="per">Per/Year</span></p>
 	        		</div>
-	        		<div class="img" style="background-image: url('{{ asset('kiddos-school-master/images/school_logo1.jpg') }}');"></div>
+	        		<div class="img" style="background-image: url('{{ asset('kiddos-school-master/images/edmol-orginal-logo (2).png') }}');"></div>
 
         			<div class="px-4">
 	        		<p>Our fees cover registration, tuition, and computer studies, ensuring quality education, skilled instruction, and essential learning resources..</p>
@@ -430,7 +430,7 @@
 	        			<h3 class="mb-3">Grade 5th</h3>
 	        			<p><span class="price">LRD$21,375</span> <span class="per">Per/Year</span></p>
 	        		</div>
-	        		<div class="img" style="background-image: url('{{ asset('kiddos-school-master/images/school_logo1.jpg') }}');"></div>
+	        		<div class="img" style="background-image: url('{{ asset('kiddos-school-master/images/edmol-orginal-logo (2).png') }}');"></div>
         			<div class="px-4">
 	        			<p>Our fees cover registration, tuition, and computer studies, ensuring quality education, skilled instruction, and essential learning resources..</p>
         			</div>
@@ -488,7 +488,7 @@
 	        			<h3 class="mb-3">Grade 4th</h3>
 	        			<p><span class="price">LRD$21,375</span> <span class="per">Per/Year</span></p>
 	        		</div>
-	        		<div class="img" style="background-image: url('{{ asset('kiddos-school-master/images/school_logo1.jpg') }}');"></div>
+	        		<div class="img" style="background-image: url('{{ asset('kiddos-school-master/images/edmol-orginal-logo (2).png') }}');"></div>
 
 	        		<div class="px-4">
 	        			<p>Grade 4 tuition includes registration, structured academic instruction, and essential learning materials to support student growth..</p>
@@ -532,7 +532,7 @@
 	        			<h3 class="mb-3">Grade 3th</h3>
 	        			<p><span class="price">LRD$19,125</span> <span class="per">Per/Year</span></p>
 	        		</div>
-	        		<div class="img" style="background-image: url('{{ asset('kiddos-school-master/images/school_logo1.jpg') }}');"></div>
+	        		<div class="img" style="background-image: url('{{ asset('kiddos-school-master/images/edmol-orginal-logo (2).png') }}');"></div>
         			<div class="px-4">
 	        	     <p>Grade 3 tuition covers registration, classroom instruction, and essential resources that reinforce academic development..</p>
         			</div>
@@ -573,7 +573,7 @@
 	        			<h3 class="mb-3">Grade 2th</h3>
 	        			<p><span class="price">LRD$19,125</span> <span class="per">Per/Year</span></p>
 	        		</div>
-	        		<div class="img" style="background-image: url('{{ asset('kiddos-school-master/images/school_logo1.jpg') }}');"></div>
+	        		<div class="img" style="background-image: url('{{ asset('kiddos-school-master/images/edmol-orginal-logo (2).png') }}');"></div>
 
         			<div class="px-4">
 	        		<p>Grade 2 tuition includes registration, structured academic instruction, and learning materials that support steady progress..</p>
@@ -615,7 +615,7 @@
 	        			<h3 class="mb-3">Grade 1st</h3>
 	        			<p><span class="price">LRD$19,125</span> <span class="per">Per/Year</span></p>
 	        		</div>
-	        		<div class="img" style="background-image: url('{{ asset('kiddos-school-master/images/school_logo1.jpg') }}');"></div>
+	        		<div class="img" style="background-image: url('{{ asset('kiddos-school-master/images/edmol-orginal-logo (2).png') }}');"></div>
         			<div class="px-4">
 	        			<p>Grade 1 tuition includes registration, core academic instruction, and essential learning resources for strong foundations..</p>
         			</div>
@@ -674,7 +674,7 @@
 	        			<h3 class="mb-3">K-G</h3>
 	        			<p><span class="price">LRD$17,750</span> <span class="per">Per/Year</span></p>
 	        		</div>
-	        		<div class="img" style="background-image: url('{{ asset('kiddos-school-master/images/school_logo1.jpg') }}');"></div>
+	        		<div class="img" style="background-image: url('{{ asset('kiddos-school-master/images/edmol-orginal-logo (2).png') }}');"></div>
 
 	        		<div class="px-4">
 	        			<p>KG tuition covers registration, foundational instruction, and learning materials to support early childhood development...</p>
@@ -732,7 +732,7 @@
             	<div class="block-23 mb-3">
 	              <ul>
 	                <li><span class="icon icon-map-marker"></span><span class="text">New Matadi, Opposite Don-Bossco Youth-Center Monrovia, Liberia </span></li>
-	                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+231777-151-394</span></a></li>
+	                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+231555472972 / +231776597201</span></a></li>
 	                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">emmmbhs@gmail.com</span></a></li>
 	              </ul>
 	            </div>
@@ -934,10 +934,10 @@ function downloadSheet() {
 
     // ================================
     // WATERMARK LOGO
-    // ================================
+    // ================================  
   // Watermark
 const logo = new Image();
-logo.src = "/kiddos-school-master/images/school_logo1.jpg";
+logo.src = "/kiddos-school-master/images/edmol-orginal-logo.png";
 
 // apply transparency
 doc.setGState(new doc.GState({ opacity: 0.08 }));

@@ -1,3 +1,15 @@
+
+
+
+
+
+
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -364,7 +376,25 @@ table tr td:not(:first-child) {
     letter-spacing: 0.3px;
 }
 
+.grade-A {
+    color: #16a34a; /* green */
+    font-weight: 600;
+}
 
+.grade-B {
+    color: #2563eb; /* blue */
+    font-weight: 600;
+}
+
+.grade-C {
+    color: #374151; /* dark gray */
+    font-weight: 600;
+}
+
+.grade-F {
+    color: #dc2626; /* red */
+    font-weight: 600;
+}
     </style>
 </head>
 <body>
@@ -400,7 +430,7 @@ if(!isset($grades)){
         <p>P.O. Box: 4330 - Monrovia, Liberia</p>
         <p>
             <a href="mailto:emmmbhs@gmail.com">emmmbhs@gmail.com</a> 
-            - 0778127778 / 0886566869
+            - +231555472972 / +231776597201
         </p>
     </div>
    <!-- RIGHT: STUDENT IMAGE -->  
@@ -437,6 +467,21 @@ if(!isset($grades)){
 </div>
 @endif
 
+<!-- function to convert grade into letter  -->
+@php
+function gradeLetter($score) {
+
+    if ($score === null || $score === '') return 'NG';
+
+    if ($score >= 90) return 'A';
+    if ($score >= 80) return 'B';
+    if ($score >= 70) return 'C';
+    if ($score >= 65) return 'F';
+
+    return 'F';
+}
+@endphp
+
 <!-- Report card table -->
 <table class="{{ in_array($period,['p1','p2','p3','p4','p5','p6']) ? 'period-view' : '' }}">
     <thead>
@@ -461,8 +506,19 @@ if(!isset($grades)){
             $secondSemTotal = 0;
             $subjectCount = $grades->count();
 
-            // Grade color logic: red if score <= 69
-            $color = fn($val) => ($val !== null && $val <= 69) ? 'red-grade' : 'blue-grade';
+            // Grade color logic: red if score 
+         
+function gradeColor($score) {
+
+    if ($score === null || $score === '') return 'NG';
+
+    if ($score >= 90) return 'grade-A';
+    if ($score >= 80) return 'grade-B';
+    if ($score >= 70) return 'grade-C';
+
+    return 'grade-F';
+}
+
         @endphp
 
         @foreach($grades as $grade)
@@ -522,27 +578,30 @@ elseif($period === 'semester2') {
 elseif($period === 'yearly') {
     $firstSemTotal += $yearAvg; // Yearly average = (Semester1 + Semester2) / 2
 }
+
             @endphp
 
             <tr>
                 <td>{{ $grade->subject->name }}</td>
 
                 <!-- Dynamic period columns -->
-                @if(in_array($period, ['p1','semester1','yearly']))<td class="{{ $color($grade->period1) }}"><strong>{{ $grade->period1 }}</strong></td>@endif
-                @if(in_array($period, ['p2','semester1','yearly']))<td class="{{ $color($grade->period2) }}"><strong>{{ $grade->period2 }}</strong></td>@endif
-                @if(in_array($period, ['p3','semester1','yearly']))<td class="{{ $color($grade->period3) }}"><strong>{{ $grade->period3 }}</strong></td>@endif
+                @if(in_array($period, ['p1','semester1','yearly']))<td> <span class="{{ gradeColor($grade->period1) }}"> {{ gradeLetter($grade->period1) }}</span></td>@endif
+                @if(in_array($period, ['p2','semester1','yearly']))<td> <span class="{{ gradeColor($grade->period2) }}"> {{ gradeLetter($grade->period2) }}</span></td>@endif
+                @if(in_array($period, ['p3','semester1','yearly']))<td> <span class="{{ gradeColor($grade->period3) }}"> {{ gradeLetter($grade->period3) }}</span></td>@endif
                 @if(in_array($period, ['semester1','yearly']))
-                    <td class="{{ $color($grade->exam1) }}"><strong>{{ $grade->exam1 }}</strong></td>
-                    <td class="{{ $color($firstSemAvg) }}"><strong>{{ $firstSemAvg }}</strong></td>
+                    <td> <span class="{{ gradeColor($grade->exam1) }}"><strong>{{ gradeLetter($grade->exam1) }}</strong></span></td>
+                    <td><span class="{{ gradeColor($firstSemAvg) }}"><strong>{{ gradeLetter($firstSemAvg) }}</strong></span></td>
                 @endif
-                @if(in_array($period, ['p4','semester2','yearly']))<td class="{{ $color($grade->period4) }}"><strong>{{ $grade->period4 }}</strong></td>@endif
-                @if(in_array($period, ['p5','semester2','yearly']))<td class="{{ $color($grade->period5) }}"><strong>{{ $grade->period5 }}</strong></td>@endif
-                @if(in_array($period, ['p6','semester2','yearly']))<td class="{{ $color($grade->period6) }}"><strong>{{ $grade->period6 }}</strong></td>@endif
+                @if(in_array($period, ['p4','semester2','yearly']))<td> <span class="{{ gradeColor($grade->period4) }}"> {{ gradeLetter($grade->period4) }}</span></td>@endif
+                @if(in_array($period, ['p5','semester2','yearly']))<td> <span class="{{ gradeColor($grade->period5) }}"> {{ gradeLetter($grade->period5) }}</span></td>@endif
+                @if(in_array($period, ['p6','semester2','yearly']))<td> <span class="{{ gradeColor($grade->period6) }}"> {{ gradeLetter($grade->period6) }}</span></td>@endif
                 @if(in_array($period, ['semester2','yearly']))
-                    <td class="{{ $color($grade->exam2) }}"><strong>{{ $grade->exam2 }}</strong></td>
-                    <td class="{{ $color($secondSemAvg) }}"><strong>{{ $secondSemAvg }}</strong></td>
+                    <td> <span class="{{ gradeColor($grade->exam2) }}"><strong>{{ gradeLetter($grade->exam2) }}</strong></span></td>
+                    <td><span class="{{ gradeColor($secondSemAvg) }}"><strong>{{ gradeLetter($secondSemAvg) }}</strong></span></td>
                 @endif
-                @if($period === 'yearly')<td class="{{ $color($yearAvg) }}"><strong>{{ $yearAvg }}</strong></td>@endif
+                @if($period === 'yearly')
+                 <td><span class="{{ gradeColor($yearAvg) }}"><strong>{{ gradeLetter($yearAvg) }}</strong></span></td>
+@endif
             </tr>
         @endforeach
 
@@ -567,45 +626,41 @@ elseif($period === 'yearly') {
     <td>Average</td>
 
     @if(in_array($period, ['p1','semester1','yearly']))
-        <td>{{ round($periodAverages['p1'][$student->id] ?? 0,2) }}</td>
+        <td><strong>{{ gradeLetter($periodAverages['p1'][$student->id] ?? 0) }}</strong></td>
     @endif
 
     @if(in_array($period, ['p2','semester1','yearly']))
-        <td>{{ round($periodAverages['p2'][$student->id] ?? 0,2) }}</td>
+        <td><strong>{{ gradeLetter($periodAverages['p2'][$student->id] ?? 0) }}</strong></td>
     @endif
 
     @if(in_array($period, ['p3','semester1','yearly']))
-        <td>{{ round($periodAverages['p3'][$student->id] ?? 0,2) }}</td>
+        <td><strong>{{ gradeLetter($periodAverages['p3'][$student->id] ?? 0) }}</strong></td>
     @endif
 
     @if(in_array($period, ['semester1','yearly']))
-        {{-- ✅ FIXED: exam1 average --}}
-        <td>{{ round($periodAverages['exam1'][$student->id] ?? 0,2) }}</td>
-
-        <td>{{ round($periodAverages['semester1'][$student->id] ?? 0,2) }}</td>
+        <td><strong>{{ gradeLetter($periodAverages['exam1'][$student->id] ?? 0) }}</strong></td>
+        <td><strong>{{ gradeLetter($periodAverages['semester1'][$student->id] ?? 0) }}</strong></td>
     @endif
 
     @if(in_array($period, ['p4','semester2','yearly']))
-        <td>{{ round($periodAverages['p4'][$student->id] ?? 0,2) }}</td>
+        <td><strong>{{ gradeLetter($periodAverages['p4'][$student->id] ?? 0) }}</strong></td>
     @endif
 
     @if(in_array($period, ['p5','semester2','yearly']))
-        <td>{{ round($periodAverages['p5'][$student->id] ?? 0,2) }}</td>
+        <td><strong>{{ gradeLetter($periodAverages['p5'][$student->id] ?? 0) }}</strong></td>
     @endif
 
     @if(in_array($period, ['p6','semester2','yearly']))
-        <td>{{ round($periodAverages['p6'][$student->id] ?? 0,2) }}</td>
+        <td><strong>{{ gradeLetter($periodAverages['p6'][$student->id] ?? 0) }}</strong></td>
     @endif
 
     @if(in_array($period, ['semester2','yearly']))
-        {{-- ✅ FIXED: exam2 average --}} 
-        <td>{{ round($periodAverages['exam2'][$student->id] ?? 0,2) }}</td>
-
-        <td>{{ round($periodAverages['semester2'][$student->id] ?? 0,2) }}</td>
+        <td><strong>{{ gradeLetter($periodAverages['exam2'][$student->id] ?? 0) }}</strong></td>
+        <td><strong>{{ gradeLetter($periodAverages['semester2'][$student->id] ?? 0) }}</strong></td>
     @endif
 
     @if($period === 'yearly')
-        <td>{{ round($periodAverages['yearly'][$student->id] ?? 0,2) }}</td>
+        <td><strong>{{ gradeLetter($periodAverages['yearly'][$student->id] ?? 0) }}</strong></td>
     @endif
 </tr>
  

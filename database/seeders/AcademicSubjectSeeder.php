@@ -23,19 +23,22 @@ class AcademicSubjectSeeder extends Seeder
 
 
         // KINDERGARTEN SUBJECTS
+// KINDERGARTEN SUBJECTS
 $kindergartenSubjects = [
     'Bible',
     'English',
     'Reciting Rhymes',
-    'Reciting/Identifying Numb.',
-    'Reciting/Identifying Letters',
-    'Math/Tracing Numbers',
+    'Reciting/ID Nos.',
+    'Reciting',
+    'Math',
     'General Science',
     'Social Studies',
-    'Drawing/Arts',
-    'Writing/Tracing Letters',
-    'Identifying Objects',
-    'P. E.'
+    'Drawing',
+    'Writing',
+    'Identifying Objs',
+    'P.E.',
+    'Spelling',
+    'Phonics'
 ];
 
 foreach ($kindergartenSubjects as $subject) {
@@ -58,7 +61,7 @@ foreach ($kindergartenSubjects as $subject) {
             'Social Studies',
             'Computer',
             'Writing',
-            'Drawing/Arts',
+            'Drawing',
             'P.E.'
         ];
 
@@ -98,7 +101,7 @@ foreach ($kindergartenSubjects as $subject) {
         $seniorSubjects = [
             'Bible',
             'Mathematics',
-            'English Language',
+            'English Lang',
             'Oral English',
             'Literature',
             'Biology',

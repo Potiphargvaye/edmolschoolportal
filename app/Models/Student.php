@@ -19,7 +19,7 @@ class Student extends Model
         'transcript',
         'recommendation_letter',
         'class_applying_for',
-        'date_of_admission',
+        'date_of_admission',  
         'status', // ✅ added
         'status',
         'shift',
@@ -31,9 +31,9 @@ class Student extends Model
 
     ];
 
-    protected $casts = [
+    protected $casts = [ 
         'date_of_admission' => 'date',
-        'created_at' => 'datetime',
+        'created_at' => 'datetime',  
         'updated_at' => 'datetime',
         'subjects' => 'array',
         'grade_id' => 'integer',

@@ -1,11 +1,12 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\StudentDashboardController;
+use App\Http\Controllers\Students\StudentDashboardController;
 use App\Http\Controllers\TeacherDashboardController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
@@ -14,6 +15,7 @@ use App\Http\Controllers\TeacherMaterialController; // Correct import for the te
 use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\UserPermissionController;
 use App\Http\Controllers\StudentGradeController;
+use App\Http\Controllers\Students\StudentPortalGradeController;
 
 
 use App\Http\Controllers\Admin\FeeController; // Add this import
@@ -96,6 +98,7 @@ Route::middleware('auth')->group(function () {
         return redirect()->route(auth()->user()->role . '.dashboard');
     })->name('dashboard');
 });
+
 
 // Admin routes (keep exactly as is)
 Route::prefix('admin')->middleware(['auth', 'can:is-admin'])->group(function () {
@@ -273,13 +276,17 @@ Route::get('/admin/fees/{fee}/edit', [FeeController::class, 'getFeeEditData'])
 
 
 
-// Rout for student displaying students  materials 
+// ======Rout for student information  displaying  and  students  materials 
 
 Route::middleware(['auth'])->group(function () {
     // Student routes
     Route::prefix('student')->name('student.')->group(function () {
         Route::get('/dashboard', [StudentDashboardController::class, 'index'])->name('dashboard');
         Route::get('/materials', [StudentDashboardController::class, 'materials'])->name('materials');
+        Route::get('/grades', [StudentPortalGradeController::class, 'index'])
+        
+        ->name('grades');
+
     });
 });
 

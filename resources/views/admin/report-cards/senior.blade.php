@@ -402,7 +402,7 @@ if(!isset($grades)){
         <p>P.O. Box: 4330 - Monrovia, Liberia</p>
         <p>
             <a href="mailto:emmmbhs@gmail.com">emmmbhs@gmail.com</a> 
-            - 0778127778 / 0886566869
+            - +231555472972 / +231776597201
         </p>
     </div>
    <!-- RIGHT: STUDENT IMAGE -->

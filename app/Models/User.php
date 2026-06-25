@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use App\Notifications\SchoolResetPasswordNotification;
 
 
 class User extends Authenticatable
@@ -71,4 +72,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(TeacherGradeSubject::class, 'teacher_id');
     }
+
+
+    // Reset password notification 
+    public function sendPasswordResetNotification($token)
+{
+    $this->notify(new SchoolResetPasswordNotification($token));
+}
 }

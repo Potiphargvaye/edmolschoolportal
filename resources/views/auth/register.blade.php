@@ -99,7 +99,7 @@
                     @error('password')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
-                    <p class="mt-1 text-xs text-gray-500">6-8 characters with letters and numbers</p>
+                    <p class="mt-1 text-xs text-gray-500">Enter a password for this account.</p>
                 </div>
 
                 <!-- Confirm Password -->
@@ -152,7 +152,7 @@
                     preview.src = URL.createObjectURL(this.files[0]);
                 }
             });
-        }
+        }  
 
         // Cancel button functionality
         const cancelButton = document.getElementById('cancelButton');

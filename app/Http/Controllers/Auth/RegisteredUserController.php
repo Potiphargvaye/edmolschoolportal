@@ -9,7 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules\Password;
+
 
 class RegisteredUserController extends Controller
 {
@@ -27,7 +27,7 @@ class RegisteredUserController extends Controller
     }
 
     /**
-     * Handle user registration.
+     * Handle user registration.app/Http/Controllers/Auth/RegisteredUserController.php
      */
     public function store(Request $request): RedirectResponse
     {
@@ -41,10 +41,9 @@ class RegisteredUserController extends Controller
                 'regex:/^EDMOL\d{4}\/\d{4}$/',
             ],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => [
-                'required',
-                'confirmed',
-                Password::min(6)->max(8)->letters()->numbers(),
+           'password' => [
+           'required',
+           'confirmed',
             ],
             'role' => ['required', 'in:student,teacher,admin'],
             'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],

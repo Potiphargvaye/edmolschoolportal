@@ -10,8 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
-use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use App\Notifications\PasswordResetSuccessNotification;
 
 class NewPasswordController extends Controller
 {
@@ -33,7 +33,7 @@ class NewPasswordController extends Controller
         $request->validate([
             'token' => ['required'],
             'email' => ['required', 'email'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+           'password' => ['required', 'confirmed'],
         ]);
 
         // Here we will attempt to reset the user's password. If it is successful we
@@ -42,13 +42,17 @@ class NewPasswordController extends Controller
         $status = Password::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
             function (User $user) use ($request) {
-                $user->forceFill([
-                    'password' => Hash::make($request->password),
-                    'remember_token' => Str::random(60),
-                ])->save();
 
-                event(new PasswordReset($user));
-            }
+    $user->forceFill([
+        'password' => Hash::make($request->password),
+        'remember_token' => Str::random(60),
+    ])->save();
+
+    event(new PasswordReset($user));
+
+    // ✅ SEND SUCCESS EMAIL AFTER RESET
+    $user->notify(new PasswordResetSuccessNotification($user));
+}
         );
 
         // If the password was successfully reset, we will redirect the user back to

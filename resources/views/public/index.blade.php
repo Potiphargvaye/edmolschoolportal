@@ -24,7 +24,7 @@
 					    </div>
 					    <div class="col-md pr-4 d-flex topper align-items-center">
 					    	<div class="icon bg-tertiary mr-2 d-flex justify-content-center align-items-center"><span class="icon-phone2"></span></div>
-						    <span class="text">+231777-151-394</span>
+						    <span class="text">+231555472972 / +231776597201</span>
 					    </div>
 				    </div>
 			    </div>
@@ -91,9 +91,9 @@
           </div>
         </div>
         </div>
-      </div>
+      </div>  
 
-	    <div class="slider-item" style="background-image: url('{{ asset('kiddos-school-master/images/new-school-logo.jpeg') }}');">
+	    <div class="slider-item" style="background-image: url('{{ asset('kiddos-school-master/images/edmol-orginal-logo.png') }}');">
 
       	<div class="overlay"></div>
         <div class="container">
@@ -158,21 +158,21 @@
 			</div>
 		</section>
 		
-		<section class="ftco-section ftco-no-pt ftc-no-pb">
+		<section class="ftco-section ftco-no-pt ftc-no-pb">  
 			<div class="container">
-				<div class="row">
+				<div class="row"> 
 					<div class="col-md-5 order-md-last wrap-about py-5 wrap-about bg-light">
 						<div class="text px-4 ftco-animate">
 	          <h2 class="mb-4">Welcome to Edmol Baptist School</h2>
 					<p>Edmol Baptist School is a Christ-centered academic institution located in New Matadi, Opposite Don Bossco Youuth-Center,Monrovia, Liberia. Established to respond to the growing educational needs of children during a challenging period in our nation’s history, the school has remained committed to academic excellence and moral discipline.</p>
-                     <p>From Kindergarten through Senior High School, we provide quality education that nurtures the mind, builds character, and prepares students to become responsible leaders in their families, communities, and nation.</p>
+          <p>From Kindergarten through Senior High School, we provide quality education that nurtures the mind, builds character, and prepares students to become responsible leaders in their families, communities, and nation.</p>
 
 							<p><a href="#" class="btn btn-secondary px-4 py-3">Read our History..</a></p>
 						</div>
 					</div>
 					<div class="col-md-7 wrap-about py-5 pr-md-4 ftco-animate">
           	<h2 class="mb-4">What We Offer</h2>
-						<p>At Edmol Baptist School, we focus on holistic education—academic excellence, Christian values, leadership development, and student well-being.</p>
+						<p>At Edmol Baptist School, we focus on holistic education—academic excellence, values, leadership development, and student well-being.</p>
 						<div class="row mt-5">
 							<div class="col-lg-6">
 								<div class="services-2 d-flex">
@@ -235,7 +235,7 @@
 			</div>
 		</section>
 <!-- introduction section  -->
-		<section class="ftco-intro" style="background-image: url('{{ asset('kiddos-school-master/images/school_logo1.jpg') }}');" data-stellar-background-ratio="0.5">
+		<section class="ftco-intro" style="background-image: url('{{ asset('kiddos-school-master/images/edmol-orginal-logo.png') }}');" data-stellar-background-ratio="0.5">
 
 			<div class="overlay"></div>
 			<div class="container">
@@ -388,7 +388,7 @@
 		<div class="col-md-6 col-lg-3 ftco-animate">
 		<div class="staff">
           <div class="img-wrap d-flex align-items-stretch">
-            <div class="img align-self-stretch" style="background-image: url('{{ asset('kiddos-school-master/images/school_logo2.jpeg') }}');"></div>
+            <div class="img align-self-stretch" style="background-image: url('{{ asset('logo/edmol-orginal-logo.png') }}');"></div>
           </div>
           <div class="text pt-3 text-center">
             <h3>Pst. John K. Sackie</h3>  
@@ -753,7 +753,7 @@ data-stellar-background-ratio="0.5">
 
           <div class="item">
             <div class="testimony-wrap d-flex">
-              <div class="user-img mr-4" style="background-image: url('{{ asset('kiddos-school-master/images/parent_image2.jpg') }}')"></div>
+              <div class="user-img mr-4" style="background-image: url('{{ asset('logo/edmol-orginal-logo.png') }}')"></div>
               <div class="text ml-2 bg-light">
                 <span class="quote d-flex align-items-center justify-content-center">
                   <i class="icon-quote-left"></i>
@@ -781,7 +781,7 @@ data-stellar-background-ratio="0.5">
 
           <div class="item">
             <div class="testimony-wrap d-flex">
-              <div class="user-img mr-4" style="background-image: url('{{ asset('kiddos-school-master/images/parent_image2.jpg') }}')"></div>
+              <div class="user-img mr-4" style="background-image: url('{{ asset('logo/edmol-orginal-logo.png') }}')"></div>
               <div class="text ml-2 bg-light">
                 <span class="quote d-flex align-items-center justify-content-center">
                   <i class="icon-quote-left"></i>
@@ -799,7 +799,7 @@ data-stellar-background-ratio="0.5">
   </div>
 </section>
 
-	<section class="ftco-section ftco-consult ftco-no-pt ftco-no-pb" style="background-image: url('{{ asset('kiddos-school-master/images/school_logo1.jpg') }}');" data-stellar-background-ratio="0.5">
+	<section class="ftco-section ftco-consult ftco-no-pt ftco-no-pb" style="background-image: url('{{ asset('logo/edmol-orginal-logo.png') }}');" data-stellar-background-ratio="0.5">
 
     	<div class="container">
     		<div class="row justify-content-end">
@@ -866,7 +866,7 @@ data-stellar-background-ratio="0.5">
 	        			<h3 class="mb-3">Grade 9th</h3>
 	        			<p><span class="price">LRD$27,875</span> <span class="per">Per/Year</span></p>
 	        		</div>
-	        		<div class="img" style="background-image: url('{{ asset('kiddos-school-master/images/school_logo1.jpg') }}');"></div>
+	        		<div class="img" style="background-image: url('{{ asset('kiddos-school-master/images/edmol-orginal-logo (2).png') }}');"></div>
 
 	        		<div class="px-4">
 	        			<p>Our fees cover registration, tuition, and computer studies, ensuring quality education, skilled instruction, and essential learning resources..</p>
@@ -880,7 +880,7 @@ data-stellar-background-ratio="0.5">
 	        			<h3 class="mb-3">Grade 10th</h3>
 	        			<p><span class="price">LRD$30,000</span> <span class="per">Per/Year</span></p>
 	        		</div>
-	        		<div class="img" style="background-image: url('{{ asset('kiddos-school-master/images/school_logo1.jpg') }}');"></div>
+	        		<div class="img" style="background-image: url('{{ asset('kiddos-school-master/images/edmol-orginal-logo (2).png') }}');"></div>
         			<div class="px-4">
 	        	     <p>Our fees cover registration, tuition, and computer studies, ensuring quality education, skilled instruction, and essential learning resources..</p>
         			</div>
@@ -893,12 +893,12 @@ data-stellar-background-ratio="0.5">
 	        			<h3 class="mb-3">Grade 11th</h3>
 	        			<p><span class="price">LRD$30,000</span> <span class="per">Per/Year</span></p>
 	        		</div>
-	        		<div class="img" style="background-image: url('{{ asset('kiddos-school-master/images/school_logo1.jpg') }}');"></div>
+	        		<div class="img" style="background-image: url('{{ asset('kiddos-school-master/images/edmol-orginal-logo (2).png') }}');"></div>
 
         			<div class="px-4">
 	        		<p>Our fees cover registration, tuition, and computer studies, ensuring quality education, skilled instruction, and essential learning resources..</p>
         			</div>
-        			<p class="button text-center"><a href="#" class="btn btn-tertiary px-4 py-3">read more..</a></p>
+          	<p class="button text-center"><a  href="{{ url('/fees-structure') }}" class="btn btn-primary px-4 py-3">read more..</a></p>
         		</div>
         	</div>
         	<div class="col-md-6 col-lg-3 ftco-animate">
@@ -907,7 +907,7 @@ data-stellar-background-ratio="0.5">
 	        			<h3 class="mb-3">Grade 12th</h3>
 	        			<p><span class="price">LRD$33,500</span> <span class="per">Per/Year</span></p>
 	        		</div>
-	        		<div class="img" style="background-image: url('{{ asset('kiddos-school-master/images/school_logo1.jpg') }}');"></div>
+	        		<div class="img" style="background-image: url('{{ asset('kiddos-school-master/images/edmol-orginal-logo (2).png') }}');"></div>
         			<div class="px-4">
 	        			<p>Our fees cover registration, tuition, and computer studies, ensuring quality education, skilled instruction, and essential learning resources..</p>
         			</div>
@@ -1061,7 +1061,7 @@ style="background-image: url('{{ asset('kiddos-school-master/images/blog_post1.j
             	<div class="block-23 mb-3">
 	              <ul>
 	                <li><span class="icon icon-map-marker"></span><span class="text">New Matadi, Opposite Don-Bossco Youth-Center Monrovia, Liberia </span></li>
-	                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+231777-151-394</span></a></li>
+	                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+231555472972 / +231776597201</span></a></li>
 	                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">emmmbhs@gmail.com</span></a></li>
 	              </ul>
 	            </div>

@@ -10901,6 +10901,9 @@ textarea.form-control {
 
 
 
+@keyframes spin {
+    to { transform: translateY(-50%) rotate(360deg); }
+}
 
 @-webkit-keyframes loader-rotate {
   100% {
@@ -10933,3 +10936,5 @@ textarea.form-control {
   100% {
     stroke-dasharray: 89, 200;
     stroke-dashoffset: -136px; } }
+
+    

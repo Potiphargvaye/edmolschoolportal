@@ -18,7 +18,7 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#28a745',
+                        primary: '#28a745', 
                         secondary: '#218838',
                         accent: '#17a2b8',
                         dark: '#343a40',

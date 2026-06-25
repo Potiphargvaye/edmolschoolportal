@@ -21,7 +21,7 @@
 					    </div>
 					    <div class="col-md pr-4 d-flex topper align-items-center">
 					    	<div class="icon bg-tertiary mr-2 d-flex justify-content-center align-items-center"><span class="icon-phone2"></span></div>
-						    <span class="text">+231777-151-394</span>
+						    <span class="text">+231555472972 / +231776597201</span>
 					    </div>
 				    </div>
 			    </div>
@@ -91,7 +91,8 @@
             <i class="fas fa-phone-alt"></i>
           </div>
           <h3 class="mb-4">Contact Number</h3>
-          <p><a href="tel://1234567920">+ 1235 2355 98</a></p>
+          <p><a href="tel://231555472972">+231 555472972</a></p>    
+            <p><a href="tel://231776597201">+231 776597201</a></p>    
         </div>
       </div>
 
@@ -111,7 +112,7 @@
             <i class="fas fa-globe"></i>
           </div>
           <h3 class="mb-4">Website</h3>
-          <p><a href="#">yoursite.com</a></p>
+          <p><a href="https://www.edmolmbhs.com">www.edmolmbhs.com</a></p>
         </div>
       </div>
 
@@ -159,7 +160,7 @@
             	<div class="block-23 mb-3">
 	              <ul>
 	                <li><span class="icon icon-map-marker"></span><span class="text">New Matadi, Opposite Don-Bossco Youth-Center Monrovia, Liberia </span></li>
-	                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+231777-151-394</span></a></li>
+	                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+231555472972 / +231776597201</span></a></li>
 	                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">emmmbhs@gmail.com</span></a></li>
 	              </ul>
 	            </div>

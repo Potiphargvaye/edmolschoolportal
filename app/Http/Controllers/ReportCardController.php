@@ -15,7 +15,7 @@ class ReportCardController extends Controller
         
         // Map level to actual grade levels
         if ($level === 'kindergarten') {
-    $gradeLevels = ['K-3','K-4','K-5'];
+    $gradeLevels = ['K-3','K-4','K-5','Nursery'];
   } elseif ($level === 'elementary') {
     $gradeLevels = ['Grade 1','Grade 2','Grade 3','Grade 4','Grade 5','Grade 6'];
   } elseif ($level === 'junior') {
@@ -80,7 +80,7 @@ public function printMultiple(Request $request)
     $students = Student::whereIn('id', $studentIds)->get();
 
     $gradesData = []; 
-    $overallAverages = [];
+    $overallAverages = []; 
 
     // ✅ NEW: store per-column totals
     $periodAverages = [];
@@ -368,7 +368,7 @@ foreach ($rankableColumns as $col) {
 
     $gradeLevel = $student->class_applying_for;
 
-    if (in_array($gradeLevel, ['K-3','K-4','K-5'])) {
+    if (in_array($gradeLevel, ['K-3','K-4','K-5','Nursery'])) {
         $level = 'kindergarten';
     } elseif (in_array($gradeLevel, ['Grade 1','Grade 2','Grade 3','Grade 4','Grade 5','Grade 6'])) {
         $level = 'elementary';

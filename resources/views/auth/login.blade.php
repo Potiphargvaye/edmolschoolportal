@@ -60,7 +60,7 @@
     <div class="login-card glass-card">
         <div class="login-header text-center">  
             <img 
-                src="{{ asset('storage/logo/edmol-school-logo.jpg') }}"
+                src="{{ asset('logo/edmol-orginal-logo.png') }}"  
                 alt="School Logo"
                 class="login-logo"
             >

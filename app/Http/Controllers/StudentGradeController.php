@@ -42,7 +42,7 @@ $sem2Locked = \App\Models\GradeLock::where([
 ])->where('is_locked', true)->exists();
 
     // Determine level
-   if (in_array($gradeLevel, ['K-3','K-4','K-5'])) {
+   if (in_array($gradeLevel, ['K-3','K-4','K-5','Nursery'])) {
     $level = 'kindergarten';
 } elseif (in_array($gradeLevel, ['Grade 1','Grade 2','Grade 3','Grade 4','Grade 5','Grade 6'])) {
     $level = 'elementary';

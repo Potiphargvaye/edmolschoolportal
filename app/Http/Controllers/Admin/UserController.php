@@ -159,4 +159,4 @@ public function show(Request $request, User $user)
     // Regular request - return the full view (for non-JS fallback)
     return view('admin.users.show', compact('user'));
 }
-}
+}  
