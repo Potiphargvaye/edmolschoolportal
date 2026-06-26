@@ -377,7 +377,7 @@ table tr td:not(:first-child) {
 }
 
 .grade-A {
-    color: #16a34a; /* green */
+    color: #2563eb; /* blue */
     font-weight: 600;
 }
 
@@ -387,7 +387,7 @@ table tr td:not(:first-child) {
 }
 
 .grade-C {
-    color: #374151; /* dark gray */
+    color: #2563eb; /* blue */
     font-weight: 600;
 }
 
