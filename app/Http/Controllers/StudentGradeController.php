@@ -140,14 +140,26 @@ public function store(Request $request)
             ];
 
             // Skip if all fields are null
-            if (
-                is_null($data['period1']) && is_null($data['period2']) &&
-                is_null($data['period3']) && is_null($data['exam1'])   &&
-                is_null($data['period4']) && is_null($data['period5']) &&
-                is_null($data['period6']) && is_null($data['exam2'])
-            ) {
-                continue;
-            }
+            // If all grade fields are empty, remove the existing grade record
+if (
+    is_null($data['period1']) &&
+    is_null($data['period2']) &&
+    is_null($data['period3']) &&
+    is_null($data['exam1']) &&
+    is_null($data['period4']) &&
+    is_null($data['period5']) &&
+    is_null($data['period6']) &&
+    is_null($data['exam2'])
+) {
+    StudentGrade::where([
+        'student_id'          => $studentId,
+        'academic_subject_id' => $subjectId,
+        'academic_year'       => $academicYear,
+        'grade_level'         => $gradeLevel,
+    ])->delete();
+
+    continue;
+}
 
             $existingGrade = \App\Models\StudentGrade::where([
                 'student_id'          => $studentId,
