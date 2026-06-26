@@ -360,7 +360,7 @@ Clear Search
                              <option value="Nursery">Nursery</option>
                             <option value="K-3">K-3</option>
                             <option value="K-4">K-4</option>
-                            <option value="K-3">K-5</option>
+                            <option value="K-5">K-5</option>
                         </optgroup>
                         <optgroup label="Primary">
                             <option value="Grade 1">Grade 1</option>
@@ -536,7 +536,7 @@ Clear Search
                                 <optgroup label="kindergarten">
                                  <option value="K-3">K-3</option> 
                                 <option value="K-4">K-4</option>
-                                <option value="K-3">K-5</option>
+                                <option value="K-5">K-5</option>
                                  </optgroup>
                                 <optgroup label="Primary">
                                     <option>Grade 1</option>

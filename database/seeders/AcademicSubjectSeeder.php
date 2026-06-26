@@ -22,23 +22,22 @@ class AcademicSubjectSeeder extends Seeder
 
 
 
-        // KINDERGARTEN SUBJECTS
+        // KINDERGARTEN SUBJECTS database/seeders/AcademicSubjectSeeder.php
 // KINDERGARTEN SUBJECTS
 $kindergartenSubjects = [
     'Bible',
     'English',
-    'Reciting Rhymes',
-    'Reciting/ID Nos.',
-    'Reciting',
+    'Reciting ',
+    'Phonics',
     'Math',
     'General Science',
     'Social Studies',
-    'Drawing',
-    'Writing',
-    'Identifying Objs',
-    'P.E.',
     'Spelling',
-    'Phonics'
+    'Writing', 
+    'P.E.' ,
+    'Health Science',
+    'Drawing',
+    'Reading'
 ];
 
 foreach ($kindergartenSubjects as $subject) {
