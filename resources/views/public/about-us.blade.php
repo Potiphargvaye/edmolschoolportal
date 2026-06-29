@@ -1,6 +1,6 @@
 @extends('public.layouts.public')
 
-@section('title', 'About Us - Edmol MBHS')
+@section('title', 'About Us - Edmol MBHS Monrovia, Liberia')
 @section('description', 'Learn about Edmol MBHS history, mission, and academic programs.')
 @section('canonical_url', 'https://www.edmolmbhs.com/about-us')
 

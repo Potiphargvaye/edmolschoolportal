@@ -1,6 +1,6 @@
 @extends('public.layouts.public')
 
-@section('title', 'Welcome to Edmol MBHS ')
+@section('title', 'Welcome to ED-Mol Memorial Matadi Baptist High School Monrovia, Liberia ')
 @section('description', 'Welcome to Edmol MBHS official website. Explore announcements, teachers, and school updates.')
 @section('canonical_url', 'https://www.edmolmbhs.com/index')
 

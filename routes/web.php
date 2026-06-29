@@ -16,6 +16,8 @@ use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\UserPermissionController;
 use App\Http\Controllers\StudentGradeController;
 use App\Http\Controllers\Students\StudentPortalGradeController;
+// routes for report card printing
+use App\Http\Controllers\ReportCardController;
 
 
 use App\Http\Controllers\Admin\FeeController; // Add this import
@@ -298,32 +300,32 @@ Route::put('/subjects/{subject}', [GradeAssignmentController::class, 'updateSubj
 Route::get('/subjects/{subject}', [GradeAssignmentController::class, 'getSubject'])->name('subjects.show');
 
 
+// routes for grade and grade entry
+Route::middleware(['auth'])->group(function () {
 
-// routes for grade and grade entry 
 Route::get('/grades/entry', [StudentGradeController::class, 'create'])
-    ->name('grades.entry');
-    Route::get('/grades/load', [StudentGradeController::class, 'load'])->name('grades.load');
+->name('grades.entry');
 
-    Route::post('/grades/store',[StudentGradeController::class,'store'])->name('grades.store');
-// routes for locking semester 
-    Route::post('/admin/grades/lock', [StudentGradeController::class, 'lockSemester'])
+Route::get('/grades/load', [StudentGradeController::class, 'load'])
+->name('grades.load');
+
+Route::post('/grades/store', [StudentGradeController::class, 'store'])
+->name('grades.store');
+
+// routes for locking semester
+Route::post('/admin/grades/lock', [StudentGradeController::class, 'lockSemester'])
 ->name('grades.lock');
-
-
-// routes for report card printing   
-use App\Http\Controllers\ReportCardController;
-
-
 Route::get('/admin/report-cards/{level?}', [ReportCardController::class, 'index'])
-    ->name('report.cards.index');
-
+->name('report.cards.index');
 
 // ✅ NEW (main one)
-Route::get('/report-card/{level}/{student}', 
-    [ReportCardController::class, 'printSenior']
+Route::get('/report-card/{level}/{student}',
+[ReportCardController::class, 'printSenior']
 )->name('report.card.dynamic');
 
-    Route::get('/report-cards/print-multiple', [ReportCardController::class, 'printMultiple']);
-    
-    Route::delete('/report-card/student-grades/{student}', [ReportCardController::class, 'deleteStudentGrades'])
-    ->name('student.grades.delete');
+Route::get('/report-cards/print-multiple', [ReportCardController::class, 'printMultiple']);
+
+Route::delete('/report-card/student-grades/{student}', [ReportCardController::class, 'deleteStudentGrades'])
+->name('student.grades.delete');
+
+});

@@ -65,26 +65,44 @@
             }
         </script>
 
-        <!-- Admin image & name section -->
+        <!-- Admin image & name section --> 
         <li class="dropdown ml-3">
           <button type="button" class="dropdown-toggle flex items-center">
-    <div class="flex-shrink-0 w-10 h-10 relative">
-        @if(Auth::user()->image)
-            <div class="p-1 bg-white rounded-full focus:outline-none focus:ring">
-                <img class="w-8 h-8 rounded-full object-cover" 
-                     src="{{ asset('storage/' . Auth::user()->image) }}" 
-                     alt="{{ Auth::user()->name }}" />
-                <div class="top-0 left-7 absolute w-3 h-3 bg-lime-400 border-2 border-white rounded-full animate-ping"></div>
-                <div class="top-0 left-7 absolute w-3 h-3 bg-lime-500 border-2 border-white rounded-full"></div>
-            </div>
-        @else
-            <div class="p-1 bg-white rounded-full flex items-center justify-center">
-                <span class="text-sm font-bold text-gray-800">{{ substr(Auth::user()->name, 0, 1) }}</span>
-                <div class="top-0 left-7 absolute w-3 h-3 bg-lime-400 border-2 border-white rounded-full animate-ping"></div>
-                <div class="top-0 left-7 absolute w-3 h-3 bg-lime-500 border-2 border-white rounded-full"></div>
-            </div>
-        @endif
+   <div class="flex-shrink-0 w-10 h-10 relative">
+@auth
+
+    @if(auth()->user()->image)
+        <div class="p-1 bg-white rounded-full focus:outline-none focus:ring">
+            <img
+                class="w-8 h-8 rounded-full object-cover"
+                src="{{ asset('storage/' . auth()->user()->image) }}"
+                alt="{{ auth()->user()->name }}"
+            />
+            <div class="top-0 left-7 absolute w-3 h-3 bg-lime-400 border-2 border-white rounded-full animate-ping"></div>
+            <div class="top-0 left-7 absolute w-3 h-3 bg-lime-500 border-2 border-white rounded-full"></div>
+        </div>
+    @else
+        <div class="p-1 bg-white rounded-full flex items-center justify-center">
+            <span class="text-sm font-bold text-gray-800">
+                {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+            </span>
+            <div class="top-0 left-7 absolute w-3 h-3 bg-lime-400 border-2 border-white rounded-full animate-ping"></div>
+            <div class="top-0 left-7 absolute w-3 h-3 bg-lime-500 border-2 border-white rounded-full"></div>
+        </div>
+    @endif
+
+@else
+
+    <div class="p-1 bg-white rounded-full flex items-center justify-center bg-gray-200">
+        <span class="text-sm font-bold text-gray-700">
+            ?
+        </span>
     </div>
+
+@endauth
+
+</div>
+
 
     <div class="p-2 md:block text-left">
         <h2 class="text-sm font-semibold text-white">{{ Auth::user()->name }}</h2>

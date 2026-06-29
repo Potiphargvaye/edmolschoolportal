@@ -1,6 +1,6 @@
 @extends('public.layouts.public')
 
-@section('title', 'Contact Us - Edmol MBHS')
+@section('title', 'Contact Us - New Matadi, Opposite Don-Bossco Youth-Center Monrovia, Liberia ')
 @section('description', 'Contact Edmol MBHS for admissions, support, and inquiries.')
 @section('canonical_url', 'https://www.edmolmbhs.com/contact-us')
 @section('content')

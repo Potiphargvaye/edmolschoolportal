@@ -8,11 +8,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
    <!-- Favicon for various devices -->
-        <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon" sizes="32x32">
-        <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
-        <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
-        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
-        <link rel="manifest" href="{{ asset('site.webmanifest') }}">
+<link rel="icon" type="image/png" sizes="96x96" href="{{ asset('favicon-96x96.png') }}">
+<link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
+<link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
+<link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
+<meta name="apple-mobile-web-app-title" content="Edmol-MBHS Portal">
+<link rel="manifest" href="{{ asset('site.webmanifest') }}">  
+        
     <script>
         tailwind.config = {
             theme: {
