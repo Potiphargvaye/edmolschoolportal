@@ -444,15 +444,15 @@ if(!isset($grades)){
         <tr>
             <th>Subject</th>
             <!-- Display columns dynamically based on selected period -->
-            @if(in_array($period, ['p1','semester1','yearly']))<th>1st Period</th>@endif
-            @if(in_array($period, ['p2','semester1','yearly']))<th>2nd Period</th>@endif
-            @if(in_array($period, ['p3','semester1','yearly']))<th>3rd Period</th>@endif
-            @if(in_array($period, ['semester1','yearly']))<th>1st Sem. Exam</th><th>1st Sem. Average</th>@endif
-            @if(in_array($period, ['p4','semester2','yearly']))<th>4th Period</th>@endif
-            @if(in_array($period, ['p5','semester2','yearly']))<th>5th Period</th>@endif
-            @if(in_array($period, ['p6','semester2','yearly']))<th>6th Period</th>@endif
-            @if(in_array($period, ['semester2','yearly']))<th>2nd Sem. Exam</th><th>2nd Sem. Average</th>@endif
-            @if($period === 'yearly')<th>Yearly Average</th>@endif
+            @if(in_array($period, ['p1','semester1','yearly']))<th>1st Prd</th>@endif
+            @if(in_array($period, ['p2','semester1','yearly']))<th>2nd Prd</th>@endif
+            @if(in_array($period, ['p3','semester1','yearly']))<th>3rd Prd</th>@endif
+            @if(in_array($period, ['semester1','yearly']))<th>1st Exam</th><th>1st Sem. Avg</th>@endif
+            @if(in_array($period, ['p4','semester2','yearly']))<th>4th Prd</th>@endif
+            @if(in_array($period, ['p5','semester2','yearly']))<th>5th Prd</th>@endif
+            @if(in_array($period, ['p6','semester2','yearly']))<th>6th Prd</th>@endif
+            @if(in_array($period, ['semester2','yearly']))<th>2nd Exam</th><th>2nd Sem. Avg</th>@endif
+            @if($period === 'yearly')<th>Yearly Avg</th>@endif
         </tr>
     </thead>
     <tbody>
