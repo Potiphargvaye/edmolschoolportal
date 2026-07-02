@@ -148,11 +148,10 @@ table tr td:not(:first-child) {
         margin: 0;
         font-size: 18px;
         color: #000;
-         -webkit-print-color-adjust: exact;
-        
+        -webkit-print-color-adjust: exact;
     }
 
-     /* 🔥 Prevent auto shrink */
+    /* 🔥 Prevent auto shrink */
     html, body {
         zoom: 1; 
     }
@@ -165,23 +164,39 @@ table tr td:not(:first-child) {
     table {
         width: auto !important;   /* prevents stretching */
         margin: 0 auto;
-        font-size: 20px;  /* NEW NEW */
+        font-size: 20px;
+    }
+    
+    /* 🔥 TARGET ONLY THE HEADER CELLS FOR SHRINKING */
+    table thead tr th {
+        font-size: 13px !important;      /* Makes header text smaller */
+        padding: 2px 4px !important;     /* Tighter padding on the header row */
+        line-height: 1.1 !important;     /* Prevents tall header row spacing */
+    }
+
+    /* Keeps the Subject header left-aligned but allows it to stay smaller */
+    table thead tr th:first-child {
+        text-align: left;
     }
 
     th, td {
         padding: 4px;
         text-align: center;
         white-space: nowrap;
-        font-size: 17px;  /* NEW NEW */
+        font-size: 17px;  
     }
 
-    /* Allow subject wrapping */
+    /* Allow subject wrapping and keep width contained */
+   /* Allow subject wrapping without stretching excessively */
     th:first-child,
     td:first-child {
         white-space: normal;
-        width: 35%;
+        width: auto !important;       /* 🔥 Lets the column fit the text size naturally */
+        max-width: 150px !important;  /* Prevents it from getting too wide */
+        min-width: 100px !important;  /* Ensures it doesn't get squeezed too tiny */
         text-align: left;
     }
+}
 
     /* Prevent row breaking */
     tr {
@@ -190,10 +205,32 @@ table tr td:not(:first-child) {
 
     .school-header {
         margin-bottom: 5px;
+        min-height: 80px; /* 🔥 MUST match image size */
+    }
+
+    .header-left,
+    .header-right {
+        top: 45%;
+        transform: translateY(-45%);
+    }
+
+    .school-logo {
+        width: 75px;   /* 🔥 adjust print size */
+        height: 75px;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 45%;
+        display: block;
+        border: 2px solid #0e0e14;
+        overflow: hidden; /* 🔥 prevents cut-off */
+    }
+
+    .report-title-box {
+        border: 5px solid #990000;
     }
 
     .school-header h2 {
-        font-size: 18px;
+        font-size: 15px;
     }
 
     .student-info {
@@ -207,7 +244,7 @@ table tr td:not(:first-child) {
     .signature div {
         page-break-inside: avoid;
     }
-}
+
 
 /* HEADER LAYOUT  for logo and image*/
 .school-header {
@@ -444,14 +481,14 @@ if(!isset($grades)){
         <tr>
             <th>Subject</th>
             <!-- Display columns dynamically based on selected period -->
-            @if(in_array($period, ['p1','semester1','yearly']))<th>1st Prd</th>@endif
-            @if(in_array($period, ['p2','semester1','yearly']))<th>2nd Prd</th>@endif
-            @if(in_array($period, ['p3','semester1','yearly']))<th>3rd Prd</th>@endif
-            @if(in_array($period, ['semester1','yearly']))<th>1st Exam</th><th>1st Sem. Avg</th>@endif
+            @if(in_array($period, ['p1','semester1','yearly']))<th>1st Pd</th>@endif
+            @if(in_array($period, ['p2','semester1','yearly']))<th>2nd Pd</th>@endif
+            @if(in_array($period, ['p3','semester1','yearly']))<th>3rd Pd</th>@endif
+            @if(in_array($period, ['semester1','yearly']))<th>1st Exam</th><th>1st Sem.Avg</th>@endif
             @if(in_array($period, ['p4','semester2','yearly']))<th>4th Prd</th>@endif
             @if(in_array($period, ['p5','semester2','yearly']))<th>5th Prd</th>@endif
             @if(in_array($period, ['p6','semester2','yearly']))<th>6th Prd</th>@endif
-            @if(in_array($period, ['semester2','yearly']))<th>2nd Exam</th><th>2nd Sem. Avg</th>@endif
+            @if(in_array($period, ['semester2','yearly']))<th>2nd Exam</th><th>2nd Sem.Avg</th>@endif
             @if($period === 'yearly')<th>Yearly Avg</th>@endif
         </tr>
     </thead>
