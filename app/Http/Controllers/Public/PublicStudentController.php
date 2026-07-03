@@ -65,6 +65,18 @@ return redirect()->back()->with(
 );
 }
 
+
+/**
+     * 🛡️ Secure dynamic report card verification engine
+     */
+    public function verifyReportCard($id)
+    {
+        // 🔥 Target the exact varchar student_id column (e.g. EDMOL0012/2026)
+        $student = Student::where('student_id', $id)->firstOrFail();
+
+        // Render the ultra-clean validation sheet layout
+        return view('public.verify-card', compact('student'));
+    }
 }
 
 

@@ -42,7 +42,13 @@ Route::get('/registeration-form', function () {
 
 
 
-  
+// Verification engine endpoint linking directly to your controller method above
+// Verification engine endpoint explicitly looking for standard database primary IDs
+// Verification engine endpoint looking for structural student_ids with slash character safety rules
+Route::get('/verify/report-card/{id}', [PublicStudentController::class, 'verifyReportCard'])
+    ->name('public.verify.report_card')
+    ->where('id', '.*');
+
 Route::get('/student/register', [PublicStudentController::class, 'create'])
     ->name('public.students.create');
 

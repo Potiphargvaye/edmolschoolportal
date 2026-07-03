@@ -4,121 +4,108 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\AcademicSubject;
-use Illuminate\Support\Facades\DB;
 
 class AcademicSubjectSeeder extends Seeder
 {
     public function run(): void
     {
-        // Disable foreign key checks
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        /*
+        |--------------------------------------------------------------------------
+        | Subject Lists
+        |--------------------------------------------------------------------------
+        | Keep these arrays updated whenever you add new subjects.
+        | Existing subjects will NOT be duplicated.
+        | Existing IDs will NEVER change.
+        |--------------------------------------------------------------------------
+        */
 
-        // Reset table before seeding
-        DB::table('academic_subjects')->truncate();
+        $subjects = [
 
-        // Enable foreign key checks again
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+            'kindergarten' => [
+                'Bible',
+                'English',
+                'Reciting ',
+                'Phonics',
+                'Math',
+                'General Science',
+                'Social Studies',
+                'Spelling',
+                'Writing',
+                'P.E.',
+                'Health Science',
+                'Drawing',
+                'Reading',
+            ],
 
+            'elementary' => [
+                'Bible',
+                'Mathematics',
+                'English',
+                'Phonics',
+                'Reading',
+                'Spelling',
+                'General Science',
+                'Health Science',
+                'Social Studies',
+                'Computer',
+                'Writing',
+                'Drawing',
+                'P.E.',
+            ],
 
+            'junior' => [
+                'Bible',
+                'Mathematics',
+                'English',
+                'Phonics',
+                'Literature',
+                'Vocabulary',
+                'General Science',
+                'History',
+                'Geography',
+                'Civics',
+                'Computer',
+                'P.E.',
+            ],
 
+            'senior' => [
+                'Bible',
+                'Mathematics',
+                'English Lang',
+                'Oral English',
+                'Literature',
+                'Biology',
+                'Chemistry',
+                'Physics',
+                'History',
+                'Geography',
+                'Government',
+                'Economics',
+                'Computer',
+                'ROTC',
+            ],
 
-        // KINDERGARTEN SUBJECTS database/seeders/AcademicSubjectSeeder.php
-// KINDERGARTEN SUBJECTS
-$kindergartenSubjects = [
-    'Bible',
-    'English',
-    'Reciting ',
-    'Phonics',
-    'Math',
-    'General Science',
-    'Social Studies',
-    'Spelling',
-    'Writing', 
-    'P.E.' ,
-    'Health Science',
-    'Drawing',
-    'Reading'
-];
-
-foreach ($kindergartenSubjects as $subject) {
-    AcademicSubject::create([
-        'name' => $subject,
-        'level' => 'kindergarten'
-    ]);
-}
-     
-// ELEMENTARY SUBJECTS
-        $elementarySubjects = [
-            'Bible',
-            'Mathematics',
-            'English',
-            'Phonics',
-            'Reading',
-            'Spelling',
-            'General Science',
-            'Health Science',
-            'Social Studies',
-            'Computer',
-            'Writing',
-            'Drawing',
-            'P.E.'
         ];
 
-        foreach ($elementarySubjects as $subject) {
-            AcademicSubject::create([
-                'name' => $subject,
-                'level' => 'elementary'
-            ]);
-        }
+        /*
+        |--------------------------------------------------------------------------
+        | Insert New Subjects Only
+        |--------------------------------------------------------------------------
+        */
 
+        foreach ($subjects as $level => $subjectList) {
 
-        // JUNIOR HIGH SUBJECTS
-        $juniorSubjects = [
-            'Bible',
-            'Mathematics',
-            'English Grammar',
-            'Phonics',
-            'Literature',
-            'Vocabulary',
-            'General Science',
-            'History',
-            'Geography',
-            'Civics',
-            'Computer',
-            'P.E.'
-        ];
+            foreach ($subjectList as $subjectName) {
 
-        foreach ($juniorSubjects as $subject) {
-            AcademicSubject::create([
-                'name' => $subject,
-                'level' => 'junior'
-            ]);
-        }
+                AcademicSubject::firstOrCreate(
+                    [
+                        'name'  => $subjectName,
+                        'level' => $level,
+                    ]
+                );
 
+            }
 
-        // SENIOR HIGH SUBJECTS  
-        $seniorSubjects = [
-            'Bible',
-            'Mathematics',
-            'English Lang',
-            'Oral English',
-            'Literature',
-            'Biology',
-            'Chemistry',
-            'Physics',
-            'History',
-            'Geography',
-            'Government',
-            'Economics',
-            'Computer',
-            'ROTC'
-        ];
-
-        foreach ($seniorSubjects as $subject) {
-            AcademicSubject::create([
-                'name' => $subject,
-                'level' => 'senior'
-            ]);
         }
     }
 }
