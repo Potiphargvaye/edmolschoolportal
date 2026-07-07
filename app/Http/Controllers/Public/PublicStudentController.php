@@ -64,8 +64,6 @@ return redirect()->back()->with(
     'Your application has been submitted successfully.'
 );
 }
-
-
 /**
      * 🛡️ Secure dynamic report card verification engine
      */

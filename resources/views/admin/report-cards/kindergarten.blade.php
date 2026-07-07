@@ -1,22 +1,11 @@
 
-
-
-
-
-
-
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Kindergarten-edmol</title>
-    <style>
-   body {
+  <style>
+body {
     font-family: 'Times New Roman', Times, serif;
     font-size: 17px;
     margin: 20px;
@@ -24,12 +13,13 @@
 
 /* HEADER */
 .school-header {
-    text-align: center;
+    text-align: center;  
 }
 
 .school-header h2 {
     margin: 0;
     font-weight: bold;
+    color: navy; /* 🔥 CHANGE COLOR HERE */
 }
 
 .school-header p {
@@ -60,7 +50,6 @@ table {
     width: auto;                 /* 🔥 prevents stretching */
     margin: 0 auto;              /* center table */
     border-collapse: collapse;
-    
     table-layout: fixed;
 }
 
@@ -110,7 +99,7 @@ table tr td:not(:first-child) {
     width: 30%;
 }
 
-/* ================= COLORS =================, */
+/* ================= COLORS ================= */
 
 .red-grade {
     color: rgb(236, 3, 3);
@@ -151,20 +140,92 @@ table tr td:not(:first-child) {
     width: 200px;
 }
 
+/* ================= PROFESSIONAL FOOTER CONTAINER ================= */
+.footer-info-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    max-width: 520px;
+    margin: 45px auto 0 auto;
+    gap: 20px;
+}
 
-/* ================= PRINT ================= */
+/* Left Side: Grading Card Layout */
+.grading-method-box {
+    flex: 1;
+}
+
+.grading-method-box .brand-title {
+    font-size: 15px;
+    color: navy;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 8px 0;
+    border-bottom: 2px solid navy;
+    padding-bottom: 3px;
+}
+
+.grade-scale-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 3px 0;
+    font-size: 14px;
+    border-bottom: 1px dashed #e5e7eb;
+}
+
+.grade-range {
+    font-weight: bold;
+    color: #333;
+}
+
+.grade-label {
+    font-style: italic;
+    font-weight: 500;
+}
+
+/* Right Side: QR Code Frame */
+.qr-code-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.qr-frame {
+    width: 90px;
+    height: 90px;
+    border: 2px solid navy; /* Branded frame color */
+    padding: 4px;
+    background: #ffffff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.qr-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.qr-caption {
+    font-size: 11px;
+    font-style: italic;
+    color: navy;
+    margin: 4px 0 0 0;
+    font-weight: bold;
+}
+
+/* ================= PRINT CONFIGURATION ================= */
 
 @media print {
-
+    
     body {
         margin: 0;
-        font-size: 18px;
+        font-size: 17px !important; /* Global scale down to ensure components don't roll onto page 2 */
         color: #000;
-         -webkit-print-color-adjust: exact;
-        
+        -webkit-print-color-adjust: exact;
     }
 
-     /* 🔥 Prevent auto shrink */
+    /* 🔥 Prevent auto shrink */
     html, body {
         zoom: 1; 
     }
@@ -176,22 +237,36 @@ table tr td:not(:first-child) {
     /* 🔥 CRITICAL FIX FOR PRINT */
     table {
         width: auto !important;   /* prevents stretching */
-        margin: 0 auto;
-        font-size: 20px;
+        margin: 4px auto !important;
+        font-size: 20px !important;
+    }
+    
+    /* 🔥 TARGET ONLY THE HEADER CELLS FOR SHRINKING */
+    table thead tr th {
+        font-size: 14px !important;      /* Makes header text smaller */
+        padding: 2px 4px !important;     /* Tighter padding on the header row */
+        line-height: 1.1 !important;     /* Prevents tall header row spacing */
+    }
+
+    /* Keeps the Subject header left-aligned but allows it to stay smaller */ 
+    table thead tr th:first-child {
+        text-align: left;
     }
 
     th, td {
-        padding: 4px;
+        padding: 3px 5px !important;     /* Tighten up row spaces to fit elements on shorter paper */
         text-align: center;
         white-space: nowrap;
-        font-size: 17px;
+        font-size: 18px !important;  
     }
 
-    /* Allow subject wrapping */
+    /* Allow subject wrapping without stretching excessively */
     th:first-child,
     td:first-child {
         white-space: normal;
-        width: 35%;
+        width: auto !important;       /* 🔥 Lets the column fit the text size naturally */
+        max-width: 140px !important;  /* Prevents it from getting too wide */
+        min-width: 90px !important;   /* Ensures it doesn't get squeezed too tiny */
         text-align: left;
     }
 
@@ -201,42 +276,122 @@ table tr td:not(:first-child) {
     }
 
     .school-header {
-        margin-bottom: 5px;
+        margin-bottom: 2px !important;
+        min-height: 65px !important; /* Shrunk from 80px to prevent header from eating vertical room */
     }
 
     .school-header h2 {
-        font-size: 18px;
+        font-size: 13px !important;
+    }
+
+    .school-header p {
+        font-size: 11px !important;
+        margin: 1px 0 !important;
+    }
+
+    .header-left,
+    .header-right {
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .school-logo {
+        width: 60px !important;   /* Clean size reduction to ensure 1-page limits */
+        height: 60px !important;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 45%;
+        display: block;
+        border: 2px solid #0e0e14;
+        overflow: hidden; /* 🔥 prevents cut-off */
+    }
+
+    .report-title-box {
+        border: 3px solid #990000 !important;
+        padding: 3px !important;
+        font-size: 12px !important;
+        width: 60% !important;
+        margin: 5px auto !important;
     }
 
     .student-info {
-        margin: 8px 0;
+        margin: 4px 0 !important;
+        font-size: 12px !important;
     }
 
     .signature {
-        margin-top: 25px;
+        margin-top: 15px !important; /* Pull elements upwards snugly */
     }
 
     .signature div {
         page-break-inside: avoid;
+        font-size: 12px !important;
+        width: 150px !important;
+    }
+
+    /* Target the grading section wrapper directly to enforce single page bounds */
+    .grading-method-box {
+        margin-top: 10px !important;
+        page-break-inside: avoid;
+    }
+
+    .grading-method-box h1 {
+        font-size: 13px !important;
+        margin: 2px 0 !important;
+    }
+
+    .grading-method-box h2 {
+        font-size: 11px !important;
+        margin: 1px 0 !important;
+    }
+
+    .footer-note {
+        font-size: 11px !important;
+        margin-top: 8px !important;
+        padding-top: 4px !important;
+        max-width: 400px !important;
+    }
+
+    /* Enforce tight single page margins inside your @media print query */
+    .footer-info-container {
+        margin-top: 25px !important;
+        max-width: 440px !important;
+        gap: 15px !important;
+        page-break-inside: avoid;
+    }
+
+    .grading-method-box .brand-title {
+        font-size: 12px !important;
+        margin-bottom: 4px !important;
+    }
+
+    .grade-scale-row {
+        font-size: 11px !important;
+        padding: 1px 0 !important;
+    }
+
+    .qr-frame {
+        width: 70px !important;
+        height: 70px !important;
+        border: 1.5px solid navy !important;
+        padding: 2px !important;
+    }
+
+    .qr-caption {
+        font-size: 9px !important;
+        margin-top: 2px !important;
     }
 }
 
-/* HEADER LAYOUT  for logo and image*/
+/* ================= NO-PRINTING SCREEN ENGINE BASE STYLES ================= */
+
+/* HEADER LAYOUT for logo and image*/
 .school-header {
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
     margin-bottom: 10px;
-}
-
-/* HEADER CONTAINER (FIXED HEIGHT ISSUE) */
-.school-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-
     min-height: 110px; /* 🔥 IMPORTANT: controls space for images */
 }
 
@@ -244,7 +399,6 @@ table tr td:not(:first-child) {
 .header-left {
     position: absolute;
     left: 0;
-
     top: 50%; /* 🔥 vertical center */
     transform: translateY(-50%);
 }
@@ -253,7 +407,6 @@ table tr td:not(:first-child) {
 .header-right {
     position: absolute;
     right: 0;
-
     top: 50%; /* 🔥 vertical center */
     transform: translateY(-50%);
 }
@@ -274,17 +427,11 @@ table tr td:not(:first-child) {
     border: 2px solid #0e0e14;
     display: block; /* 🔥 FIX 2: prevents inline distortion */
 }
+
 /* REPORT TITLE BOX */
 .report-title-box {
     text-align: center;
-    
     border: 5px solid #990000; /* 🔥 CHANGE COLOR HERE */
-    /* Example:
-       border: 3px solid red;   #990000
-       border: 3px solid #002966;
-       border: 3px solid green;
-    */
-
     padding: 6px;
     font-weight: bold;
     font-size: 15px;
@@ -292,9 +439,8 @@ table tr td:not(:first-child) {
     margin: 10px auto;
 }
 
-/* MOBILE */
+/* MOBILE RESPONSIVENESS */
 @media (max-width: 768px) {
-
     .school-logo {
         width: 50px;
         height: 50px;
@@ -306,72 +452,18 @@ table tr td:not(:first-child) {
     }
 }
 
-@media print {
-
-    .school-header {
-        min-height: 80px; /* 🔥 MUST match image size */
-    }
-
-    .header-left,
-    .header-right {
-        top: 45%;
-        transform: translateY(-45%);
-    }
-
-    .school-logo {
-        width: 75px;   /* 🔥 adjust print size */
-        height: 75px;
-
-        object-fit: cover;
-        object-position: center;
-
-        border-radius: 45%;
-        display: block;
-         border: 2px solid #0e0e14;
-
-        overflow: hidden; /* 🔥 prevents cut-off */
-    }
-
-
-    .report-title-box {
-        border: 5px solid #990000;
-    }
-
-    .school-header h2 {
-        font-size: 15px;
-    }
-}
-
-/* 🔥 School header colorl here */
-.school-header h2 {
-    margin: 0;
-    font-weight: bold;
-    color: navy; /* 🔥 CHANGE COLOR HERE */
-    
-}
-
 /* FOOTER LEGAL NOTE */
 .footer-note {
     text-align: center;
     font-size: 16px;
     margin-top: 15px;
-
     font-style: italic;
     color: #242323;
-
     border-top: 1px solid #999;
     padding-top: 6px;
-
     max-width: 500px;
     margin-left: auto;
     margin-right: auto;
-}
-
-.footer-note {
-    font-size: 16px;
-    color: #000;
-
-    border-top: 1px solid #000;
     font-weight: 500;
     letter-spacing: 0.3px;
 }
@@ -395,7 +487,7 @@ table tr td:not(:first-child) {
     color: #dc2626; /* red */
     font-weight: 600;
 }
-    </style>
+</style>
 </head>
 <body>
  <div class="report-card">  
@@ -488,15 +580,15 @@ function gradeLetter($score) {
         <tr>
             <th>Subject</th>
             <!-- Display columns dynamically based on selected period -->
-            @if(in_array($period, ['p1','semester1','yearly']))<th>1st Period</th>@endif
-            @if(in_array($period, ['p2','semester1','yearly']))<th>2nd Period</th>@endif
-            @if(in_array($period, ['p3','semester1','yearly']))<th>3rd Period</th>@endif
-            @if(in_array($period, ['semester1','yearly']))<th>1st Sem. Exam</th><th>1st Sem. Average</th>@endif
-            @if(in_array($period, ['p4','semester2','yearly']))<th>4th Period</th>@endif
-            @if(in_array($period, ['p5','semester2','yearly']))<th>5th Period</th>@endif
-            @if(in_array($period, ['p6','semester2','yearly']))<th>6th Period</th>@endif
-            @if(in_array($period, ['semester2','yearly']))<th>2nd Sem. Exam</th><th>2nd Sem. Average</th>@endif
-            @if($period === 'yearly')<th>Yearly Average</th>@endif
+            @if(in_array($period, ['p1','semester1','yearly']))<th>1st Pd</th>@endif
+            @if(in_array($period, ['p2','semester1','yearly']))<th>2nd Pd</th>@endif
+            @if(in_array($period, ['p3','semester1','yearly']))<th>3rd Pd</th>@endif
+            @if(in_array($period, ['semester1','yearly']))<th>1st Exam</th><th>1st Sem.Avg</th>@endif
+            @if(in_array($period, ['p4','semester2','yearly']))<th>4th Pd</th>@endif
+            @if(in_array($period, ['p5','semester2','yearly']))<th>5th Pd</th>@endif
+            @if(in_array($period, ['p6','semester2','yearly']))<th>6th Pd</th>@endif
+            @if(in_array($period, ['semester2','yearly']))<th>2nd Exam</th><th>2nd Sem.Avg</th>@endif
+            @if($period === 'yearly')<th>Yearly Avg</th>@endif
         </tr>
     </thead>
     <tbody>
@@ -626,44 +718,54 @@ elseif($period === 'yearly') {
     <td>Average</td>
 
     @if(in_array($period, ['p1','semester1','yearly']))
-        <td><strong>{{ gradeLetter($periodAverages['p1'][$student->id] ?? 0) }}</strong></td>
+        @php $score = $periodAverages['p1'][$student->id] ?? 0; @endphp
+        <td><span class="{{ gradeColor($score) }}"><strong>{{ gradeLetter($score) }}</strong></span></td>
     @endif
 
     @if(in_array($period, ['p2','semester1','yearly']))
-        <td><strong>{{ gradeLetter($periodAverages['p2'][$student->id] ?? 0) }}</strong></td>
+        @php $score = $periodAverages['p2'][$student->id] ?? 0; @endphp
+        <td><span class="{{ gradeColor($score) }}"><strong>{{ gradeLetter($score) }}</strong></span></td>
     @endif
 
     @if(in_array($period, ['p3','semester1','yearly']))
-        <td><strong>{{ gradeLetter($periodAverages['p3'][$student->id] ?? 0) }}</strong></td>
+        @php $score = $periodAverages['p3'][$student->id] ?? 0; @endphp
+        <td><span class="{{ gradeColor($score) }}"><strong>{{ gradeLetter($score) }}</strong></span></td>
     @endif
 
     @if(in_array($period, ['semester1','yearly']))
-        <td><strong>{{ gradeLetter($periodAverages['exam1'][$student->id] ?? 0) }}</strong></td>
-        <td><strong>{{ gradeLetter($periodAverages['semester1'][$student->id] ?? 0) }}</strong></td>
+        @php $exam1Score = $periodAverages['exam1'][$student->id] ?? 0; @endphp
+        @php $sem1Score = $periodAverages['semester1'][$student->id] ?? 0; @endphp
+        <td><span class="{{ gradeColor($exam1Score) }}"><strong>{{ gradeLetter($exam1Score) }}</strong></span></td>
+        <td><span class="{{ gradeColor($sem1Score) }}"><strong>{{ gradeLetter($sem1Score) }}</strong></span></td>
     @endif
 
     @if(in_array($period, ['p4','semester2','yearly']))
-        <td><strong>{{ gradeLetter($periodAverages['p4'][$student->id] ?? 0) }}</strong></td>
+        @php $score = $periodAverages['p4'][$student->id] ?? 0; @endphp
+        <td><span class="{{ gradeColor($score) }}"><strong>{{ gradeLetter($score) }}</strong></span></td>
     @endif
 
     @if(in_array($period, ['p5','semester2','yearly']))
-        <td><strong>{{ gradeLetter($periodAverages['p5'][$student->id] ?? 0) }}</strong></td>
+        @php $score = $periodAverages['p5'][$student->id] ?? 0; @endphp
+        <td><span class="{{ gradeColor($score) }}"><strong>{{ gradeLetter($score) }}</strong></span></td>
     @endif
 
     @if(in_array($period, ['p6','semester2','yearly']))
-        <td><strong>{{ gradeLetter($periodAverages['p6'][$student->id] ?? 0) }}</strong></td>
+        @php $score = $periodAverages['p6'][$student->id] ?? 0; @endphp
+        <td><span class="{{ gradeColor($score) }}"><strong>{{ gradeLetter($score) }}</strong></span></td>
     @endif
 
     @if(in_array($period, ['semester2','yearly']))
-        <td><strong>{{ gradeLetter($periodAverages['exam2'][$student->id] ?? 0) }}</strong></td>
-        <td><strong>{{ gradeLetter($periodAverages['semester2'][$student->id] ?? 0) }}</strong></td>
+        @php $exam2Score = $periodAverages['exam2'][$student->id] ?? 0; @endphp
+        @php $sem2Score = $periodAverages['semester2'][$student->id] ?? 0; @endphp
+        <td><span class="{{ gradeColor($exam2Score) }}"><strong>{{ gradeLetter($exam2Score) }}</strong></span></td>
+        <td><span class="{{ gradeColor($sem2Score) }}"><strong>{{ gradeLetter($sem2Score) }}</strong></span></td>
     @endif
 
     @if($period === 'yearly')
-        <td><strong>{{ gradeLetter($periodAverages['yearly'][$student->id] ?? 0) }}</strong></td>
+        @php $yearlyScore = $periodAverages['yearly'][$student->id] ?? 0; @endphp
+        <td><span class="{{ gradeColor($yearlyScore) }}"><strong>{{ gradeLetter($yearlyScore) }}</strong></span></td>
     @endif
 </tr>
- 
 
 <tr style="background:#f3f4f6; font-weight: bold;">
     <td>Rank</td>
@@ -724,7 +826,6 @@ elseif($period === 'yearly') {
     </tbody>
 </table>
 
-
 <!-- Signature / Footer -->
 @if(request()->query('showFooter', 1))
 
@@ -740,12 +841,41 @@ elseif($period === 'yearly') {
     </div>
 </div>
 
-<!-- 🔒 LEGAL NOTICE -->
 <div class="footer-note">
     Any alteration of this document renders it invalid. <br>
     Invalid without school stamp.
 </div>
+
+<div class="footer-info-container">
+    
+    <div class="grading-method-box">
+        <h1 class="brand-title">Grading Method</h1>
+        <div class="grade-scale-row">
+            <span class="grade-range">90 - 100%:</span>
+            <span class="grade-label label-excellent">Excellent</span>
+        </div>
+        <div class="grade-scale-row">
+            <span class="grade-range">80 - 89%:</span>
+            <span class="grade-label label-vgood">V. Good</span>
+        </div>
+        <div class="grade-scale-row">
+            <span class="grade-range">69 - 79%:</span>
+            <span class="grade-label label-good">Good</span>
+        </div>
+        <div class="grade-scale-row">
+            <span class="grade-range">67 - 69%:</span>
+            <span class="grade-label label-fail">Fail</span>
+        </div>
+    </div>
+
+    <div class="qr-code-box">
+    <div class="qr-frame">
+        {!! QrCode::size(90)->backgroundColor(255, 255, 255)->color(0, 0, 128)->generate(route('public.verify.report_card', ['id' => $student->student_id])) !!}
+    </div>
+    <p class="qr-caption">Scan to Verify</p>
+</div>
+
+</div>
 @endif
- </div>
 </body>
 </html>
