@@ -369,17 +369,39 @@ table tr td:not(:first-child) {
         padding: 1px 0 !important;
     }
 
-    .qr-frame {
-        width: 70px !important;
-        height: 70px !important;
-        border: 1.5px solid navy !important;
-        padding: 2px !important;
-    }
+     .qr-code-box{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+}
 
-    .qr-caption {
-        font-size: 9px !important;
-        margin-top: 2px !important;
-    }
+.qr-frame{
+    width:70px !important;
+    height:70px !important;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border:1.5px solid navy;
+    padding:2px;
+}
+
+.qr-frame svg{
+    display:block;
+    width:100%;
+    height:100%;
+}
+
+.qr-caption{
+    display:block;
+    margin-top:4px !important;
+    font-size:10px !important;
+    font-weight:bold;
+    color:#000 !important;
+    line-height:1.2;
+}
 }
 
 /* ================= NO-PRINTING SCREEN ENGINE BASE STYLES ================= */
@@ -523,7 +545,7 @@ if(!isset($grades)){
 <div class="report-title-box">
     JUNIOR HIGH GRADE SHEET
 </div>
-
+@endif
 
 <!-- Student information -->
 <div class="student-info">
@@ -536,7 +558,6 @@ if(!isset($grades)){
     <span>ACADEMIC YEAR: {{ $grades->first()->academic_year ?? 'N/A' }}</span>
     
 </div>
-@endif
 
 <!-- Report card table -->
 <table class="{{ in_array($period,['p1','p2','p3','p4','p5','p6']) ? 'period-view' : '' }}">
@@ -824,6 +845,8 @@ elseif($period === 'yearly') {
     Invalid without school stamp.
 </div>
 
+@endif
+
 <div class="footer-info-container">
     
     <div class="grading-method-box">
@@ -854,7 +877,6 @@ elseif($period === 'yearly') {
 </div>
 
 </div>
-@endif
 </body>
 </html>
 
