@@ -10900,6 +10900,94 @@ textarea.form-control {
 }
 
 
+/* ============================= */
+/* Announcement Cards Animation  */
+/* ============================= */
+
+.ftco-announcement .announcement-card {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: announceFadeUp 0.6s ease-out both !important;
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.35s ease !important;
+    will-change: transform;
+}
+
+.ftco-announcement .announcement-col:nth-child(1) .announcement-card { animation-delay: 0.05s !important; }
+.ftco-announcement .announcement-col:nth-child(2) .announcement-card { animation-delay: 0.15s !important; }
+.ftco-announcement .announcement-col:nth-child(3) .announcement-card { animation-delay: 0.25s !important; }
+.ftco-announcement .announcement-col:nth-child(4) .announcement-card { animation-delay: 0.35s !important; }
+.ftco-announcement .announcement-col:nth-child(5) .announcement-card { animation-delay: 0.45s !important; }
+.ftco-announcement .announcement-col:nth-child(6) .announcement-card { animation-delay: 0.55s !important; }
+
+@keyframes announceFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Hover: pop + wobble */
+.ftco-announcement .announcement-card:hover {
+    animation: announceWobble 0.6s ease !important;
+    box-shadow: 0 20px 35px rgba(0, 0, 0, 0.25) !important;
+    cursor: pointer;
+    z-index: 2;
+    position: relative;
+}
+
+@keyframes announceWobble {
+    0%   { transform: scale(1) rotate(0deg); }
+    20%  { transform: scale(1.05) rotate(-2deg); }
+    40%  { transform: scale(1.05) rotate(2deg); }
+    60%  { transform: scale(1.05) rotate(-1deg); }
+    80%  { transform: scale(1.03) rotate(1deg); }
+    100% { transform: scale(1.03) rotate(0deg); }
+}
+
+
+/* ============================= */
+/* Liberia Independence Day Banner */
+/* ============================= */
+.lib-independence-banner {
+    background: linear-gradient(90deg, #BF0A30 0%, #002868 50%, #BF0A30 100%);
+    color: #fff;
+}
+
+.lib-banner-text {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+.lib-flag-icon svg {
+    display: block;
+    animation: flagWave 2s ease-in-out infinite;
+    transform-origin: left center;
+}
+
+@keyframes flagWave {
+    0%, 100% { transform: rotate(0deg); }
+    25%      { transform: rotate(-3deg); }
+    75%      { transform: rotate(3deg); }
+}
+
+/* Responsive tweaks */
+@media (max-width: 576px) {
+    .lib-banner-text {
+        font-size: 12px;
+    }
+    .lib-flag-icon svg {
+        width: 22px;
+        height: 16px;
+    }
+}
+
+
 
 @keyframes spin {
     to { transform: translateY(-50%) rotate(360deg); }
