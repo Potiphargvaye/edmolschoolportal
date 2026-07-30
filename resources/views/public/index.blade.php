@@ -1219,7 +1219,7 @@
                     <div class="pricing-entry bg-light pb-4 text-center">
                         <div>
                             <h3 class="mb-3">Grade 9th</h3>
-                            <p><span class="price">LRD$27,875</span> <span class="per">Per/Year</span></p>
+                            <p><span class="price">LRD$ 40,875</span> <span class="per">Per/Year</span></p>
                         </div>
                         <div class="img"
                             style="background-image: url('{{ asset('kiddos-school-master/images/edmol-orginal-logo (2).png') }}');">
@@ -1237,7 +1237,7 @@
                     <div class="pricing-entry bg-light pb-4 text-center">
                         <div>
                             <h3 class="mb-3">Grade 10th</h3>
-                            <p><span class="price">LRD$30,000</span> <span class="per">Per/Year</span></p>
+                            <p><span class="price">LRD$47,500</span> <span class="per">Per/Year</span></p>
                         </div>
                         <div class="img"
                             style="background-image: url('{{ asset('kiddos-school-master/images/edmol-orginal-logo (2).png') }}');">
@@ -1254,7 +1254,7 @@
                     <div class="pricing-entry bg-light active pb-4 text-center">
                         <div>
                             <h3 class="mb-3">Grade 11th</h3>
-                            <p><span class="price">LRD$30,000</span> <span class="per">Per/Year</span></p>
+                            <p><span class="price">LRD$47,500</span> <span class="per">Per/Year</span></p>
                         </div>
                         <div class="img"
                             style="background-image: url('{{ asset('kiddos-school-master/images/edmol-orginal-logo (2).png') }}');">
@@ -1272,7 +1272,7 @@
                     <div class="pricing-entry bg-light pb-4 text-center">
                         <div>
                             <h3 class="mb-3">Grade 12th</h3>
-                            <p><span class="price">LRD$33,500</span> <span class="per">Per/Year</span></p>
+                            <p><span class="price">LRD$53,000</span> <span class="per">Per/Year</span></p>
                         </div>
                         <div class="img"
                             style="background-image: url('{{ asset('kiddos-school-master/images/edmol-orginal-logo (2).png') }}');">
