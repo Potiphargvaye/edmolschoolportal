@@ -131,7 +131,8 @@
                             <p class="mt-3">
                                 <strong>Entrance Fees:</strong><br>
                                 • Kindergarten & Elementary: <strong>L$500</strong><br>
-                                • Junior & Senior High School: <strong>L$750</strong>
+                                • Junior & Senior High School: <strong>L$750</strong><br>
+                                • Vacation School: <strong>L$1,500</strong>
                             </p>
 
                             <p class="mt-3">
@@ -155,7 +156,7 @@
                             <div class="pricing-entry bg-light pb-4 text-center">
                                 <div>
                                     <h3 class="mb-3">Grade 12th</h3>
-                                    <p><span class="price">LRD$33,500</span> <span class="per">Per/Year</span></p>
+                                    <p><span class="price">LRD$53,000</span> <span class="per">Per/Year</span></p>
                                 </div>
                                 <div class="img"
                                     style="background-image: url('{{ asset('kiddos-school-master/images/edmol-orginal-logo (2).png') }}');">
@@ -164,40 +165,87 @@
                                     <p>Our fees cover registration, tuition, and computer studies, ensuring quality
                                         education, skilled instruction, and essential learning resources..</p>
                                 </div>
-                                <p class="button text-center"><a href="#" class="btn btn-primary open-fee-modal"
-                                        data-grade="Grade 12" data-fee="LRD 33,500"
+                                <p class="button text-center">
+                                    <a href="#" class="btn btn-primary open-fee-modal" data-grade="Grade 12"
+                                        data-fee="LRD 53,000.00 "
                                         data-details="
-     <table class='table table-bordered'>
-       <tr>
-         <th>Registration</th>
-         <td>LRD 5,500</td>
-       </tr>
-       <tr>
-         <th>Tuition</th>
-         <td>LRD 23,000</td>
-       </tr>
-       <tr>
-         <th>Computer Studies</th>
-         <td>LRD 5,000</td>
-       </tr>
-       <tr>
-         <th>Total</th>
-         <td><strong>LRD 33,500</strong></td>
-       </tr>
-     </table>
-     <p>
+     <div class='table-responsive' style='max-height: 380px; overflow-y: auto;'>
+       <table class='table table-bordered table-striped mb-0'>
+         <tbody>
+           <tr>
+             <th>Registration</th>
+             <td>LRD 2,500</td>
+           </tr>
+           <tr >
+             <th >Tuition</th>
+             <td><strong>LRD  28,500.00</strong></td>
+           </tr>
+          
+           <tr>
+             <th>ID Card</th>
+             <td>LRD 1,500</td>
+           </tr>
+           <tr>
+             <th>Badge</th>
+             <td>LRD 200</td>
+           </tr>
+           <tr>
+             <th>Breakage</th>
+             <td>LRD 500</td>
+           </tr>
+           <tr>
+             <th>Activities</th>
+             <td>LRD 300</td>
+           </tr>
+           <tr>
+             <th>Gala</th>
+             <td>LRD 1,000</td>
+           </tr>
+           <tr>
+             <th>Computer Fees</th>
+             <td>LRD 5,000</td>
+           </tr>
+           <tr>
+             <th>Science Lab Coat</th>
+             <td>LRD 3,000</td>
+           </tr>
+           <tr>                                                  
+             <th>Science Lab Fees</th>
+             <td>LRD 4,000</td>
+           </tr>
+           <tr>
+             <th>Senior Class Shirt</th>
+             <td>LRD 2,000</td>
+           </tr>
+           <tr>
+             <th>First Aid</th>
+             <td>LRD 1,000</td>
+           </tr>
+           <tr>
+             <th>Compulsory Saturday Class</th>
+             <td>LRD 3,500</td>
+           </tr>
+           <tr>
+             <th>Total</th>
+             <td><strong>LRD 53,000.00 </strong></td>
+           </tr>
+         </tbody>
+       </table>
+     </div>
+     <p class='mt-3 mb-0 text-muted small'>
        Covers registration, tuition, computer studies, assessments, and academic support.
      </p>
    ">
                                         Read more..
-                                    </a></p>
+                                    </a>
+                                </p>
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-3 ftco-animate">
                             <div class="pricing-entry bg-light active pb-4 text-center">
                                 <div>
                                     <h3 class="mb-3">Grade 11th</h3>
-                                    <p><span class="price">LRD$30,000</span> <span class="per">Per/Year</span></p>
+                                    <p><span class="price">LRD$47,500</span> <span class="per">Per/Year</span></p>
                                 </div>
                                 <div class="img"
                                     style="background-image: url('{{ asset('kiddos-school-master/images/edmol-orginal-logo (2).png') }}');">
@@ -207,40 +255,86 @@
                                     <p>Our fees cover registration, tuition, and computer studies, ensuring quality
                                         education, skilled instruction, and essential learning resources..</p>
                                 </div>
-                                <p class="button text-center"><a href="#" class="btn btn-primary open-fee-modal"
-                                        data-grade="Grade 11" data-fee="LRD 30,000"
+                                <p class="button text-center">
+                                    <a href="#" class="btn btn-primary open-fee-modal" data-grade="Grade 11"
+                                        data-fee="LRD 47,500.00 "
                                         data-details="
-     <table class='table table-bordered'>
-       <tr>
-         <th>Registration</th>
-         <td>LRD 5,500</td>
-       </tr>
-       <tr>
-         <th>Tuition</th>
-         <td>LRD 19,500</td>
-       </tr>
-       <tr>
-         <th>Computer Studies</th>
-         <td>LRD 5,000</td>
-       </tr>
-       <tr>
-         <th>Total</th>
-         <td><strong>LRD 30,000</strong></td>
-       </tr>
-     </table>
-     <p>
+     <div class='table-responsive' style='max-height: 380px; overflow-y: auto;'>
+       <table class='table table-bordered table-striped mb-0'>
+         <tbody>
+           <tr>
+             <th>Registration</th>
+             <td>LRD 2,500</td>
+           </tr>
+           <tr >
+             <th >Tuition</th>
+             <td><strong>LRD 25,000</strong></td>
+           </tr>
+           <tr>
+             <th>PE</th>
+             <td>LRD 2,000</td>
+           </tr>
+           <tr>
+             <th>ID Card</th>
+             <td>LRD 1,500</td>
+           </tr>
+           <tr>
+             <th>Badge</th>
+             <td>LRD 200</td>
+           </tr>
+           <tr>
+             <th>Breakage</th>
+             <td>LRD 500</td>
+           </tr>
+           <tr>
+             <th>Activities</th>
+             <td>LRD 300</td>
+           </tr>
+           <tr>
+             <th>Gala</th>
+             <td>LRD 1,000</td>
+           </tr>
+           <tr>
+             <th>Computer Fees</th>
+             <td>LRD 5,000</td>
+           </tr>
+           <tr>
+             <th>Science Lab Coat</th>
+             <td>LRD 3,000</td>
+           </tr>
+           <tr>
+             <th>Science Lab Fees</th>
+             <td>LRD 4,000</td>
+           </tr>
+           <tr>
+             <th>Color House Shirt</th>
+             <td>LRD 1,500</td>
+           </tr>
+           <tr>
+             <th>First Aid</th>
+             <td>LRD 1,000</td>
+           </tr>
+           <tr>
+             <th>Total</th>
+             <td><strong>LRD 47,500.00</strong></td>
+           </tr>
+         </tbody>
+       </table>
+     </div>
+     <p class='mt-3 mb-0 text-muted small'>
        Covers registration, tuition, computer studies, assessments, and academic support.
      </p>
    ">
                                         Read more..
-                                    </a></p>
+                                    </a>
+                                </p>
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-3 ftco-animate">
                             <div class="pricing-entry bg-light pb-4 text-center">
                                 <div>
                                     <h3 class="mb-3">Grade 10th</h3>
-                                    <p><span class="price">LRD$30,000</span> <span class="per">Per/Year</span></p>
+                                    <p><span class="price">LRD$47,500</span> <span class="per">Per/Year</span></p>
                                 </div>
                                 <div class="img"
                                     style="background-image: url('{{ asset('kiddos-school-master/images/edmol-orginal-logo (2).png') }}');">
@@ -249,40 +343,86 @@
                                     <p>Our fees cover registration, tuition, and computer studies, ensuring quality
                                         education, skilled instruction, and essential learning resources..</p>
                                 </div>
-                                <p class="button text-center"><a href="#" class="btn btn-primary open-fee-modal"
-                                        data-grade="Grade 10" data-fee="LRD 30,000"
+                                <p class="button text-center">
+                                    <a href="#" class="btn btn-primary open-fee-modal" data-grade="Grade 10"
+                                        data-fee="LRD 47,500.00 "
                                         data-details="
-     <table class='table table-bordered'>
-       <tr>
-         <th>Registration</th>
-         <td>LRD 5,500</td>
-       </tr>
-       <tr>
-         <th>Tuition</th>
-         <td>LRD 19,500</td>
-       </tr>
-       <tr>
-         <th>Computer Studies</th>
-         <td>LRD 5,000</td>
-       </tr>
-       <tr>
-         <th>Total</th>
-         <td><strong>LRD 30,000</strong></td>
-       </tr>
-     </table>
-     <p>
+     <div class='table-responsive' style='max-height: 380px; overflow-y: auto;'>
+       <table class='table table-bordered table-striped mb-0'>
+         <tbody>
+           <tr>
+             <th>Registration</th>
+             <td>LRD 2,500</td>
+           </tr>
+           <tr >
+             <th >Tuition</th>
+             <td><strong>LRD 25,000</strong></td>
+           </tr>
+           <tr>
+             <th>PE</th>
+             <td>LRD 2,000</td>
+           </tr>
+           <tr>
+             <th>ID Card</th>
+             <td>LRD 1,500</td>
+           </tr>
+           <tr>
+             <th>Badge</th>
+             <td>LRD 200</td>
+           </tr>
+           <tr>
+             <th>Breakage</th>
+             <td>LRD 500</td>
+           </tr>
+           <tr>
+             <th>Activities</th>
+             <td>LRD 300</td>
+           </tr>
+           <tr>
+             <th>Gala</th>
+             <td>LRD 1,000</td>
+           </tr>
+           <tr>
+             <th>Computer Fees</th>
+             <td>LRD 5,000</td>
+           </tr>
+           <tr>
+             <th>Science Lab Coat</th>
+             <td>LRD 3,000</td>
+           </tr>
+           <tr>
+             <th>Science Lab Fees</th>
+             <td>LRD 4,000</td>
+           </tr>
+           <tr>
+             <th>Color House Shirt</th>
+             <td>LRD 1,500</td>
+           </tr>
+           <tr>
+             <th>First Aid</th>
+             <td>LRD 1,000</td>
+           </tr>
+           <tr>
+             <th>Total</th>
+             <td><strong>LRD 47,500.00</strong></td>
+           </tr>
+         </tbody>
+       </table>
+     </div>
+     <p class='mt-3 mb-0 text-muted small'>
        Covers registration, tuition, computer studies, assessments, and academic support.
      </p>
    ">
                                         Read more..
-                                    </a></p>
+                                    </a>
+                                </p>
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-3 ftco-animate">
                             <div class="pricing-entry bg-light pb-4 text-center">
                                 <div>
                                     <h3 class="mb-3">Grade 9th</h3>
-                                    <p><span class="price">LRD$27,875</span> <span class="per">Per/Year</span></p>
+                                    <p><span class="price">LRD$40,875</span> <span class="per">Per/Year</span></p>
                                 </div>
                                 <div class="img"
                                     style="background-image: url('{{ asset('kiddos-school-master/images/edmol-orginal-logo (2).png') }}');">
@@ -292,32 +432,73 @@
                                     <p>Our fees cover registration, tuition, and computer studies, ensuring quality
                                         education, skilled instruction, and essential learning resources..</p>
                                 </div>
-                                <p class="button text-center"><a href="#" class="btn btn-primary open-fee-modal"
-                                        data-grade="Grades 9" data-fee="LRD 27,875"
+                                <p class="button text-center">
+                                    <a href="#" class="btn btn-primary open-fee-modal" data-grade="Grade 9"
+                                        data-fee="LRD 40,875.00 "
                                         data-details="
-   <table class='table table-bordered'>
-     <tr>
-       <th>Registration</th>
-       <td>LRD 5,250</td>
-     </tr>
-     <tr>
-       <th>Tuition</th>
-       <td>LRD 17,625</td>
-     </tr>
-     <tr>
-       <th>Computer Studies</th>
-       <td>LRD 5,000</td>
-     </tr>
-     <tr>
-       <th>Total</th>
-       <td><strong>LRD 27,875</strong></td>
-     </tr>
-   </table>
-   <p>
-     Includes academic instruction, computer education, continuous
-     assessment, and academic support services.
-   </p>
- ">
+     <div class='table-responsive' style='max-height: 380px; overflow-y: auto;'>
+       <table class='table table-bordered table-striped mb-0'>
+         <tbody>
+           <tr>
+             <th>Registration</th>
+             <td>LRD 2,500</td>
+           </tr>
+           <tr >
+             <th >Tuition</th>
+             <td><strong>LRD 23,125.00</strong></td>
+           </tr>
+           <tr>
+             <th>PE</th>
+             <td>LRD 2,000</td>
+           </tr>
+           <tr>
+             <th>ID Card</th>
+             <td>LRD 1,500</td>
+           </tr>
+           <tr>
+             <th>Badge</th>
+             <td>LRD 200</td>
+           </tr>
+           <tr>
+             <th>Breakage</th>
+             <td>LRD 500</td>
+           </tr>
+           <tr>
+             <th>Activities</th>
+             <td>LRD 300</td>
+           </tr>
+           <tr>
+             <th>Gala</th>
+             <td>LRD 1,000</td>
+           </tr>
+           <tr>
+             <th>Computer Fees</th>
+             <td>LRD 5,000</td>
+           </tr>
+        
+           <tr>
+             <th>Color House Shirt</th>
+             <td>LRD 1,500</td>
+           </tr>
+           <tr>
+             <th>First Aid</th>
+             <td>LRD 1,000</td>
+           </tr>
+           <tr>
+             <th>Compulsory Saturday Class</th>
+             <td>LRD 2,500</td>
+           </tr>
+           <tr>
+             <th>Total</th>
+             <td><strong>LRD 40,875.00</strong></td>
+           </tr>
+         </tbody>
+       </table>
+     </div>
+     <p class='mt-3 mb-0 text-muted small'>
+       Covers registration, tuition, computer studies, assessments, and academic support.
+     </p>
+   ">
                                         Read more..
                                     </a>
                                 </p>
@@ -344,7 +525,7 @@
                             <div class="pricing-entry bg-light pb-4 text-center">
                                 <div>
                                     <h3 class="mb-3">Grade 8th</h3>
-                                    <p><span class="price">LRD$27,875</span> <span class="per">Per/Year</span></p>
+                                    <p><span class="price">LRD$38,375</span> <span class="per">Per/Year</span></p>
                                 </div>
                                 <div class="img"
                                     style="background-image: url('{{ asset('kiddos-school-master/images/edmol-orginal-logo (2).png') }}');">
@@ -354,32 +535,73 @@
                                     <p>Our fees cover registration, tuition, and computer studies, ensuring quality
                                         education, skilled instruction, and essential learning resources..</p>
                                 </div>
-                                <p class="button text-center"><a href="#" class="btn btn-primary open-fee-modal"
-                                        data-grade="Grades 8" data-fee="LRD 27,875"
+                                <p class="button text-center">
+                                    <a href="#" class="btn btn-primary open-fee-modal" data-grade="Grade 8"
+                                        data-fee="LRD 38,375.00"
                                         data-details="
-   <table class='table table-bordered'>
-     <tr>
-       <th>Registration</th>
-       <td>LRD 5,250</td>
-     </tr>
-     <tr>
-       <th>Tuition</th>
-       <td>LRD 17,625</td>
-     </tr>
-     <tr>
-       <th>Computer Studies</th>
-       <td>LRD 5,000</td>
-     </tr>
-     <tr>
-       <th>Total</th>
-       <td><strong>LRD 27,875</strong></td>
-     </tr>
-   </table>
-   <p>
-     Includes academic instruction, computer education, continuous
-     assessment, and academic support services.
-   </p>
- ">
+     <div class='table-responsive' style='max-height: 380px; overflow-y: auto;'>
+       <table class='table table-bordered table-striped mb-0'>
+         <tbody>      
+           <tr>
+             <th>Registration</th>
+             <td>LRD 2,500</td>
+           </tr>
+           <tr> 
+             <th >Tuition</th>
+             <td><strong>LRD 23,125.00</strong></td>
+           </tr>
+           <tr>
+             <th>PE</th>
+             <td>LRD 2,000</td>
+           </tr>
+           <tr>
+             <th>ID Card</th>
+             <td>LRD 1,500</td>
+           </tr>
+           <tr>
+             <th>Badge</th>
+             <td>LRD 200</td>
+           </tr>
+           <tr>
+             <th>Breakage</th>
+             <td>LRD 500</td>
+           </tr>
+           <tr>
+             <th>Activities</th>
+             <td>LRD 300</td>
+           </tr>
+           <tr>
+             <th>Gala</th>
+             <td>LRD 1,000</td>
+           </tr>
+           <tr>
+             <th>Computer Fees</th>
+             <td>LRD 5,000</td>
+           </tr>
+        
+           <tr>
+             <th>Color House Shirt</th>
+             <td>LRD 1,500</td>
+           </tr>
+           <tr>
+             <th>First Aid</th>
+             <td>LRD 1,000</td>
+           </tr>
+           <tr>
+             <th>Compulsory Saturday Class</th>
+             <td>N/A</td>
+           </tr>
+           <tr>
+             <th>Total</th>
+             <td><strong>LRD 38,375.00</strong></td>
+           </tr>
+         </tbody>
+       </table>
+     </div>
+     <p class='mt-3 mb-0 text-muted small'>
+       Covers registration, tuition, computer studies, assessments, and academic support.
+     </p>
+   ">
                                         Read more..
                                     </a>
                                 </p>
@@ -389,7 +611,7 @@
                             <div class="pricing-entry bg-light pb-4 text-center">
                                 <div>
                                     <h3 class="mb-3">Grade 7th</h3>
-                                    <p><span class="price">LRD$27,875</span> <span class="per">Per/Year</span></p>
+                                    <p><span class="price">LRD$38,375</span> <span class="per">Per/Year</span></p>
                                 </div>
                                 <div class="img"
                                     style="background-image: url('{{ asset('kiddos-school-master/images/edmol-orginal-logo (2).png') }}');">
@@ -398,32 +620,73 @@
                                     <p>Our fees cover registration, tuition, and computer studies, ensuring quality
                                         education, skilled instruction, and essential learning resources..</p>
                                 </div>
-                                <p class="button text-center"><a href="#" class="btn btn-primary open-fee-modal"
-                                        data-grade="Grades 7" data-fee="LRD 27,875"
+                                <p class="button text-center">
+                                    <a href="#" class="btn btn-primary open-fee-modal" data-grade="Grade 7"
+                                        data-fee="LRD 38,375.00"
                                         data-details="
-   <table class='table table-bordered'>
-     <tr>
-       <th>Registration</th>
-       <td>LRD 5,250</td>
-     </tr>
-     <tr>
-       <th>Tuition</th>
-       <td>LRD 17,625</td>
-     </tr>
-     <tr>
-       <th>Computer Studies</th>
-       <td>LRD 5,000</td>
-     </tr>
-     <tr>
-       <th>Total</th>
-       <td><strong>LRD 27,875</strong></td>
-     </tr>
-   </table>
-   <p>
-     Includes academic instruction, computer education, continuous
-     assessment, and academic support services.
-   </p>
- ">
+     <div class='table-responsive' style='max-height: 380px; overflow-y: auto;'>
+       <table class='table table-bordered table-striped mb-0'>
+         <tbody>      
+           <tr>
+             <th>Registration</th>
+             <td>LRD 2,500</td>
+           </tr>
+           <tr> 
+             <th >Tuition</th>
+             <td><strong>LRD 23,125.00</strong></td>
+           </tr>
+           <tr>
+             <th>PE</th>
+             <td>LRD 2,000</td>
+           </tr>
+           <tr>
+             <th>ID Card</th>
+             <td>LRD 1,500</td>
+           </tr>
+           <tr>
+             <th>Badge</th>
+             <td>LRD 200</td>
+           </tr>
+           <tr>
+             <th>Breakage</th>
+             <td>LRD 500</td>
+           </tr>
+           <tr>
+             <th>Activities</th>
+             <td>LRD 300</td>
+           </tr>
+           <tr>
+             <th>Gala</th>
+             <td>LRD 1,000</td>
+           </tr>
+           <tr>
+             <th>Computer Fees</th>
+             <td>LRD 5,000</td>
+           </tr>
+        
+           <tr>
+             <th>Color House Shirt</th>
+             <td>LRD 1,500</td>
+           </tr>
+           <tr>
+             <th>First Aid</th>
+             <td>LRD 1,000</td>
+           </tr>
+           <tr>
+             <th>Compulsory Saturday Class</th>
+             <td>N/A</td>
+           </tr>
+           <tr>
+             <th>Total</th>
+             <td><strong>LRD 38,375.00</strong></td>
+           </tr>
+         </tbody>
+       </table>
+     </div>
+     <p class='mt-3 mb-0 text-muted small'>
+       Covers registration, tuition, computer studies, assessments, and academic support.
+     </p>
+   ">
                                         Read more..
                                     </a>
                                 </p>
@@ -433,7 +696,7 @@
                             <div class="pricing-entry bg-light active pb-4 text-center">
                                 <div>
                                     <h3 class="mb-3">Grade 6th</h3>
-                                    <p><span class="price">LRD$26,375</span> <span class="per">Per/Year</span></p>
+                                    <p><span class="price">LRD$40,875</span> <span class="per">Per/Year</span></p>
                                 </div>
                                 <div class="img"
                                     style="background-image: url('{{ asset('kiddos-school-master/images/edmol-orginal-logo (2).png') }}');">
@@ -443,40 +706,87 @@
                                     <p>Our fees cover registration, tuition, and computer studies, ensuring quality
                                         education, skilled instruction, and essential learning resources..</p>
                                 </div>
-                                <p class="button text-center"><a href="#" class="btn btn-primary open-fee-modal"
-                                        data-grade="Grade 6" data-fee="LRD 26,375"
+                                <p class="button text-center">
+                                    <a href="#" class="btn btn-primary open-fee-modal" data-grade="Grade 6"
+                                        data-fee="LRD 40,875.00"
                                         data-details="
-     <table class='table table-bordered'>
-       <tr>
-         <th>Registration</th>
-         <td>LRD 5,250</td>
-       </tr>
-       <tr>
-         <th>Tuition</th>
-         <td>LRD 16,125</td>
-       </tr>
-       <tr>
-         <th>Computer Studies</th>
-         <td>LRD 5,000</td>
-       </tr>
-       <tr>
-         <th>Total</th>
-         <td><strong>LRD 26,375</strong></td>
-       </tr>
-     </table>
-     <p>
+     <div class='table-responsive' style='max-height: 380px; overflow-y: auto;'>
+       <table class='table table-bordered table-striped mb-0'>
+         <tbody>      
+           <tr>
+             <th>Registration</th>
+             <td>LRD 2,250</td>
+           </tr>
+           <tr> 
+             <th >Tuition</th>
+             <td><strong>LRD 21,625.00</strong></td>
+           </tr>
+           <tr>
+             <th>PE</th>
+             <td>N/A</td>
+           </tr>
+           <tr>
+             <th>Track Suit</th>
+             <td>4,000</td>
+           </tr>
+           <tr>
+             <th>ID Card</th>
+             <td>LRD 1,500</td>
+           </tr>
+           <tr>
+             <th>Badge</th>
+             <td>LRD 200</td>
+           </tr>
+           <tr>
+             <th>Breakage</th>
+             <td>LRD 500</td>
+           </tr>
+           <tr>
+             <th>Activities</th>
+             <td>LRD 300</td>
+           </tr>
+           <tr>
+             <th>Gala</th>
+             <td>LRD 1,000</td>
+           </tr>
+           <tr>
+             <th>Computer Fees</th>
+             <td>LRD 5,000</td>
+           </tr>
+        
+           <tr>
+             <th>Color House Shirt</th>
+             <td>LRD 1,500</td>
+           </tr>
+           <tr>
+             <th>First Aid</th>
+             <td>LRD 1,000</td>
+           </tr>
+           <tr>
+             <th>Compulsory Saturday Class</th>
+             <td>2,000</td>
+           </tr>
+           <tr>
+             <th>Total</th>
+             <td><strong>LRD 40,875.00</strong></td>
+           </tr>
+         </tbody>
+       </table>
+     </div>
+     <p class='mt-3 mb-0 text-muted small'>
        Covers registration, tuition, computer studies, assessments, and academic support.
      </p>
    ">
                                         Read more..
-                                    </a></p>
+                                    </a>
+                                </p>
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-3 ftco-animate">
                             <div class="pricing-entry bg-light pb-4 text-center">
                                 <div>
                                     <h3 class="mb-3">Grade 5th</h3>
-                                    <p><span class="price">LRD$21,375</span> <span class="per">Per/Year</span></p>
+                                    <p><span class="price">LRD$39,875</span> <span class="per">Per/Year</span></p>
                                 </div>
                                 <div class="img"
                                     style="background-image: url('{{ asset('kiddos-school-master/images/edmol-orginal-logo (2).png') }}');">
@@ -485,32 +795,77 @@
                                     <p>Our fees cover registration, tuition, and computer studies, ensuring quality
                                         education, skilled instruction, and essential learning resources..</p>
                                 </div>
-                                <p class="button text-center"><a href="#" class="btn btn-primary open-fee-modal"
-                                        data-grade="Grades 4" data-fee="LRD 21,375"
+                                <p class="button text-center">
+                                    <a href="#" class="btn btn-primary open-fee-modal" data-grade="Grade 5"
+                                        data-fee="LRD 39,875.00"
                                         data-details="
-   <table class='table table-bordered'>
-     <tr>
-       <th>Registration</th>
-       <td>LRD 5,250</td>
-     </tr>
-     <tr>
-       <th>Tuition</th>
-       <td>LRD 16,125</td>
-     </tr>
-     <tr>
-       <th>Computer Studies</th>
-       <td>Not Applicable</td>
-     </tr>
-     <tr>
-       <th>Total</th>
-       <td><strong>LRD 21,375</strong></td>
-     </tr>
-   </table>
-   <p>
-     Covers academic instruction, classroom learning resources,
-     assessments, and student academic support.
-   </p>
- ">
+     <div class='table-responsive' style='max-height: 380px; overflow-y: auto;'>
+       <table class='table table-bordered table-striped mb-0'>
+         <tbody>      
+           <tr>
+             <th>Registration</th>
+             <td>LRD 2,250</td>
+           </tr>
+           <tr> 
+             <th >Tuition</th>
+             <td><strong>LRD 21,625.00</strong></td>
+           </tr>
+           <tr>
+             <th>PE</th>
+             <td>N/A</td>
+           </tr>
+           <tr>
+             <th>Track Suit</th>
+             <td>4,000</td>
+           </tr>
+           <tr>
+             <th>ID Card</th>
+             <td>LRD 1,500</td>
+           </tr>
+           <tr>
+             <th>Badge</th>
+             <td>LRD 200</td>
+           </tr>
+           <tr>
+             <th>Breakage</th>
+             <td>LRD 500</td>
+           </tr>
+           <tr>
+             <th>Activities</th>
+             <td>LRD 300</td>
+           </tr>
+           <tr>
+             <th>Gala</th>
+             <td>LRD 1,000</td>
+           </tr>
+           <tr>
+             <th>Computer Fees</th>
+             <td>N/A</td>
+           </tr>
+        
+           <tr>
+             <th>Color House Shirt</th>
+             <td>LRD 1,500</td>
+           </tr>
+           <tr>
+             <th>First Aid</th>
+             <td>LRD 1,000</td>
+           </tr>
+           <tr>
+             <th>Compulsory Study Class</th>
+             <td>6,000.00</td>
+           </tr>
+           <tr>
+             <th>Total</th>
+             <td><strong>LRD  39,875.00 </strong></td>
+           </tr>
+         </tbody>
+       </table>
+     </div>
+     <p class='mt-3 mb-0 text-muted small'>
+       Covers registration, tuition, computer studies, assessments, and academic support.
+     </p>
+   ">
                                         Read more..
                                     </a>
                                 </p>
@@ -537,7 +892,7 @@
                             <div class="pricing-entry bg-light pb-4 text-center">
                                 <div>
                                     <h3 class="mb-3">Grade 4th</h3>
-                                    <p><span class="price">LRD$21,375</span> <span class="per">Per/Year</span></p>
+                                    <p><span class="price">LRD$39,875</span> <span class="per">Per/Year</span></p>
                                 </div>
                                 <div class="img"
                                     style="background-image: url('{{ asset('kiddos-school-master/images/edmol-orginal-logo (2).png') }}');">
@@ -547,32 +902,78 @@
                                     <p>Grade 4 tuition includes registration, structured academic instruction, and essential
                                         learning materials to support student growth..</p>
                                 </div>
-                                <p class="button text-center"><a href="#" class="btn btn-primary open-fee-modal"
-                                        data-grade="Grades 5" data-fee="LRD 21,375"
+
+                                <p class="button text-center">
+                                    <a href="#" class="btn btn-primary open-fee-modal" data-grade="Grade 4"
+                                        data-fee="LRD 39,875.00"
                                         data-details="
-   <table class='table table-bordered'>
-     <tr>
-       <th>Registration</th>
-       <td>LRD 5,250</td>
-     </tr>
-     <tr>
-       <th>Tuition</th>
-       <td>LRD 16,125</td>
-     </tr>
-     <tr>
-       <th>Computer Studies</th>
-       <td>Not Applicable</td>
-     </tr>
-     <tr>
-       <th>Total</th>
-       <td><strong>LRD 21,375</strong></td>
-     </tr>
-   </table>
-   <p>
-     Covers academic instruction, classroom learning resources,
-     assessments, and student academic support.
-   </p>
- ">
+     <div class='table-responsive' style='max-height: 380px; overflow-y: auto;'>
+       <table class='table table-bordered table-striped mb-0'>
+         <tbody>      
+           <tr>
+             <th>Registration</th>
+             <td>LRD 2,250</td>
+           </tr>
+           <tr> 
+             <th >Tuition</th>
+             <td><strong>LRD 21,625.00</strong></td>
+           </tr>
+           <tr>
+             <th>PE</th>
+             <td>N/A</td>
+           </tr>
+           <tr>
+             <th>Track Suit</th>
+             <td>4,000</td>
+           </tr>
+           <tr>
+             <th>ID Card</th>
+             <td>LRD 1,500</td>
+           </tr>
+           <tr>
+             <th>Badge</th>
+             <td>LRD 200</td>
+           </tr>
+           <tr>
+             <th>Breakage</th>
+             <td>LRD 500</td>
+           </tr>
+           <tr>
+             <th>Activities</th>
+             <td>LRD 300</td>
+           </tr>
+           <tr>
+             <th>Gala</th>
+             <td>LRD 1,000</td>
+           </tr>
+           <tr>
+             <th>Computer Fees</th>
+             <td>N/A</td>
+           </tr>
+        
+           <tr>
+             <th>Color House Shirt</th>
+             <td>LRD 1,500</td>
+           </tr>
+           <tr>
+             <th>First Aid</th>
+             <td>LRD 1,000</td>
+           </tr>
+           <tr>
+             <th>Compulsory Study Class</th>
+             <td>6,000.00</td>
+           </tr>
+           <tr>
+             <th>Total</th>
+             <td><strong>LRD  39,875.00 </strong></td>
+           </tr>
+         </tbody>
+       </table>
+     </div>
+     <p class='mt-3 mb-0 text-muted small'>
+       Covers registration, tuition, computer studies, assessments, and academic support.
+     </p>
+   ">
                                         Read more..
                                     </a>
                                 </p>
@@ -582,7 +983,7 @@
                             <div class="pricing-entry bg-light pb-4 text-center">
                                 <div>
                                     <h3 class="mb-3">Grade 3th</h3>
-                                    <p><span class="price">LRD$19,125</span> <span class="per">Per/Year</span></p>
+                                    <p><span class="price">LRD$37,625</span> <span class="per">Per/Year</span></p>
                                 </div>
                                 <div class="img"
                                     style="background-image: url('{{ asset('kiddos-school-master/images/edmol-orginal-logo (2).png') }}');">
@@ -591,40 +992,87 @@
                                     <p>Grade 3 tuition covers registration, classroom instruction, and essential resources
                                         that reinforce academic development..</p>
                                 </div>
-                                <p class="button text-center"><a href="#" class="btn btn-primary open-fee-modal"
-                                        data-grade="Grades 3" data-fee="LRD 19,125"
+                                <p class="button text-center">
+                                    <a href="#" class="btn btn-primary open-fee-modal" data-grade="Grade 3"
+                                        data-fee="LRD 37,625.00"
                                         data-details="
-     <table class='table table-bordered'>
-       <tr>
-         <th>Registration</th>
-         <td>LRD 5,250</td>
-       </tr>
-       <tr>
-         <th>Tuition</th>
-         <td>LRD 13,875</td>
-       </tr>
-       <tr>
-         <th>Computer Studies</th>
-         <td>Not Applicable</td>
-       </tr>
-       <tr>
-         <th>Total</th>
-         <td><strong>LRD 19,125</strong></td>
-       </tr>
-     </table>
-     <p>
-       Covers academic instruction, classroom learning resources, assessments, and student academic support.
+     <div class='table-responsive' style='max-height: 380px; overflow-y: auto;'>
+       <table class='table table-bordered table-striped mb-0'>
+         <tbody>      
+           <tr>
+             <th>Registration</th>
+             <td>LRD 2,250</td>
+           </tr>
+           <tr> 
+             <th >Tuition</th>
+             <td><strong>LRD 19,375.00</strong></td>
+           </tr>
+           <tr>
+             <th>PE</th>
+             <td>N/A</td>
+           </tr>
+           <tr>
+             <th>Track Suit</th>
+             <td>4,000</td>
+           </tr>
+           <tr>
+             <th>ID Card</th>
+             <td>LRD 1,500</td>
+           </tr>
+           <tr>
+             <th>Badge</th>
+             <td>LRD 200</td>
+           </tr>
+           <tr>
+             <th>Breakage</th>
+             <td>LRD 500</td>
+           </tr>
+           <tr>
+             <th>Activities</th>
+             <td>LRD 300</td>
+           </tr>
+           <tr>
+             <th>Gala</th>
+             <td>LRD 1,000</td>
+           </tr>
+           <tr>
+             <th>Computer Fees</th>
+             <td>N/A</td>
+           </tr>
+        
+           <tr>
+             <th>Color House Shirt</th>
+             <td>LRD 1,500</td>
+           </tr>
+           <tr>
+             <th>First Aid</th>
+             <td>LRD 1,000</td>
+           </tr>
+           <tr>
+             <th>Compulsory Study Class</th>
+             <td>6,000.00</td>
+           </tr>
+           <tr>
+             <th>Total</th>
+             <td><strong>LRD 37,625.00 </strong></td>
+           </tr>
+         </tbody>
+       </table>
+     </div>
+     <p class='mt-3 mb-0 text-muted small'>
+       Covers registration, tuition, computer studies, assessments, and academic support.
      </p>
    ">
                                         Read more..
-                                    </a></p>
+                                    </a>
+                                </p>
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-3 ftco-animate">
                             <div class="pricing-entry bg-light active pb-4 text-center">
                                 <div>
                                     <h3 class="mb-3">Grade 2th</h3>
-                                    <p><span class="price">LRD$19,125</span> <span class="per">Per/Year</span></p>
+                                    <p><span class="price">LRD$37,625</span> <span class="per">Per/Year</span></p>
                                 </div>
                                 <div class="img"
                                     style="background-image: url('{{ asset('kiddos-school-master/images/edmol-orginal-logo (2).png') }}');">
@@ -634,40 +1082,87 @@
                                     <p>Grade 2 tuition includes registration, structured academic instruction, and learning
                                         materials that support steady progress..</p>
                                 </div>
-                                <p class="button text-center"><a href="#" class="btn btn-primary open-fee-modal"
-                                        data-grade="Grades 2" data-fee="LRD 19,125"
+                                <p class="button text-center">
+                                    <a href="#" class="btn btn-primary open-fee-modal" data-grade="Grade 2"
+                                        data-fee="LRD 37,625.00"
                                         data-details="
-     <table class='table table-bordered'>
-       <tr>
-         <th>Registration</th>
-         <td>LRD 5,250</td>
-       </tr>
-       <tr>
-         <th>Tuition</th>
-         <td>LRD 13,875</td>
-       </tr>
-       <tr>
-         <th>Computer Studies</th>
-         <td>Not Applicable</td>
-       </tr>
-       <tr>
-         <th>Total</th>
-         <td><strong>LRD 19,125</strong></td>
-       </tr>
-     </table>
-     <p>
-       Covers academic instruction, classroom learning resources, assessments, and student academic support.
+     <div class='table-responsive' style='max-height: 380px; overflow-y: auto;'>
+       <table class='table table-bordered table-striped mb-0'>
+         <tbody>      
+           <tr>
+             <th>Registration</th>
+             <td>LRD 2,250</td>
+           </tr>
+           <tr> 
+             <th >Tuition</th>
+             <td><strong>LRD 19,375.00</strong></td>
+           </tr>
+           <tr>
+             <th>PE</th>
+             <td>N/A</td>
+           </tr>
+           <tr>
+             <th>Track Suit</th>
+             <td>4,000</td>
+           </tr>
+           <tr>
+             <th>ID Card</th>
+             <td>LRD 1,500</td>
+           </tr>
+           <tr>
+             <th>Badge</th>
+             <td>LRD 200</td>
+           </tr>
+           <tr>
+             <th>Breakage</th>
+             <td>LRD 500</td>
+           </tr>
+           <tr>
+             <th>Activities</th>
+             <td>LRD 300</td>
+           </tr>
+           <tr>
+             <th>Gala</th>
+             <td>LRD 1,000</td>
+           </tr>
+           <tr>
+             <th>Computer Fees</th>
+             <td>N/A</td>
+           </tr>
+        
+           <tr>
+             <th>Color House Shirt</th>
+             <td>LRD 1,500</td>
+           </tr>
+           <tr>
+             <th>First Aid</th>
+             <td>LRD 1,000</td>
+           </tr>
+           <tr>
+             <th>Compulsory Study Class</th>
+             <td>6,000.00</td>
+           </tr>
+           <tr>
+             <th>Total</th>
+             <td><strong>LRD 37,625.00 </strong></td>
+           </tr>
+         </tbody>
+       </table>
+     </div>
+     <p class='mt-3 mb-0 text-muted small'>
+       Covers registration, tuition, computer studies, assessments, and academic support.
      </p>
    ">
                                         Read more..
-                                    </a></p>
+                                    </a>
+                                </p>
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-3 ftco-animate">
                             <div class="pricing-entry bg-light pb-4 text-center">
                                 <div>
                                     <h3 class="mb-3">Grade 1st</h3>
-                                    <p><span class="price">LRD$19,125</span> <span class="per">Per/Year</span></p>
+                                    <p><span class="price">LRD$37,625</span> <span class="per">Per/Year</span></p>
                                 </div>
                                 <div class="img"
                                     style="background-image: url('{{ asset('kiddos-school-master/images/edmol-orginal-logo (2).png') }}');">
@@ -676,29 +1171,75 @@
                                     <p>Grade 1 tuition includes registration, core academic instruction, and essential
                                         learning resources for strong foundations..</p>
                                 </div>
-                                <p class="button text-center"><a href="#" class="btn btn-primary open-fee-modal"
-                                        data-grade="Grades 1" data-fee="LRD 19,125"
+                                <p class="button text-center">
+                                    <a href="#" class="btn btn-primary open-fee-modal" data-grade="Grade 1"
+                                        data-fee="LRD 37,625.00"
                                         data-details="
-     <table class='table table-bordered'>
-       <tr>
-         <th>Registration</th>
-         <td>LRD 5,250</td>
-       </tr>
-       <tr>
-         <th>Tuition</th>
-         <td>LRD 13,875</td>
-       </tr>
-       <tr>
-         <th>Computer Studies</th>
-         <td>Not Applicable</td>
-       </tr>
-       <tr>
-         <th>Total</th>
-         <td><strong>LRD 19,125</strong></td>
-       </tr>
-     </table>
-     <p>
-       Covers academic instruction, classroom learning resources, assessments, and student academic support.
+     <div class='table-responsive' style='max-height: 380px; overflow-y: auto;'>
+       <table class='table table-bordered table-striped mb-0'>
+         <tbody>      
+           <tr>
+             <th>Registration</th>
+             <td>LRD 2,250</td>
+           </tr>
+           <tr> 
+             <th >Tuition</th>
+             <td><strong>LRD 19,375.00</strong></td>
+           </tr>
+           <tr>
+             <th>PE</th>
+             <td>N/A</td>
+           </tr>
+           <tr>
+             <th>Track Suit</th>
+             <td>4,000</td>
+           </tr>
+           <tr>
+             <th>ID Card</th>
+             <td>LRD 1,500</td>
+           </tr>
+           <tr>
+             <th>Badge</th>
+             <td>LRD 200</td>
+           </tr>
+           <tr>
+             <th>Breakage</th>
+             <td>LRD 500</td>
+           </tr>
+           <tr>
+             <th>Activities</th>
+             <td>LRD 300</td>
+           </tr>
+           <tr>
+             <th>Gala</th>
+             <td>LRD 1,000</td>
+           </tr>
+           <tr>
+             <th>Computer Fees</th>
+             <td>N/A</td>
+           </tr>
+        
+           <tr>
+             <th>Color House Shirt</th>
+             <td>LRD 1,500</td>
+           </tr>
+           <tr>
+             <th>First Aid</th>
+             <td>LRD 1,000</td>
+           </tr>
+           <tr>
+             <th>Compulsory Study Class</th>
+             <td>6,000.00</td>
+           </tr>
+           <tr>
+             <th>Total</th>
+             <td><strong>LRD 37,625.00 </strong></td>
+           </tr>
+         </tbody>
+       </table>
+     </div>
+     <p class='mt-3 mb-0 text-muted small'>
+       Covers registration, tuition, computer studies, assessments, and academic support.
      </p>
    ">
                                         Read more..
@@ -728,8 +1269,8 @@
                         <div class="col-md-6 col-lg-3 ftco-animate">
                             <div class="pricing-entry bg-light pb-4 text-center">
                                 <div>
-                                    <h3 class="mb-3">K-G</h3>
-                                    <p><span class="price">LRD$17,750</span> <span class="per">Per/Year</span></p>
+                                    <h3 class="mb-3">K-Gs</h3>
+                                    <p><span class="price">LRD$36,250.00 </span> <span class="per">Per/Year</span></p>
                                 </div>
                                 <div class="img"
                                     style="background-image: url('{{ asset('kiddos-school-master/images/edmol-orginal-logo (2).png') }}');">
@@ -739,36 +1280,79 @@
                                     <p>KG tuition covers registration, foundational instruction, and learning materials to
                                         support early childhood development...</p>
                                 </div>
-                                <p class="button text-center"><a href="#" class="btn btn-primary open-fee-modal"
-                                        data-grade="Kindergarten (K-G)" data-fee="LRD 17,750"
+                                <p class="button text-center">
+                                    <a href="#" class="btn btn-primary open-fee-modal" data-grade="Grade K -Gs"
+                                        data-fee="LRD 36,250.00 "
                                         data-details="
-   <table class='table table-bordered'>
-     <tr>
-       <th>Registration</th>
-       <td>LRD 5,000</td>
-     </tr>
-     <tr>
-       <th>Tuition</th>
-       <td>LRD 12,750</td>
-     </tr>
-     <tr>
-       <th>Computer Studies</th>
-       <td>Not Applicable</td>
-     </tr>
-     <tr>
-       <th>Total</th>
-       <td><strong>LRD 17,750</strong></td>
-     </tr>
-   </table>
-   <p>
-     This fee supports early childhood education, foundational learning,
-     classroom activities, and instructional materials.
-   </p>
- ">
+     <div class='table-responsive' style='max-height: 380px; overflow-y: auto;'>
+       <table class='table table-bordered table-striped mb-0'>
+         <tbody>      
+           <tr>
+             <th>Registration</th>
+             <td>LRD 2,000</td>
+           </tr>
+           <tr> 
+             <th >Tuition</th>
+             <td><strong>LRD 18,250.00</strong></td>
+           </tr>
+           <tr>
+             <th>PE</th>
+             <td>N/A</td>
+           </tr>
+           <tr>
+             <th>Track Suit</th>
+             <td>4,000</td>
+           </tr>
+           <tr>
+             <th>ID Card</th>
+             <td>LRD 1,500</td>
+           </tr>
+           <tr>
+             <th>Badge</th>
+             <td>LRD 200</td>
+           </tr>
+           <tr>
+             <th>Breakage</th>
+             <td>LRD 500</td>
+           </tr>
+           <tr>
+             <th>Activities</th>
+             <td>LRD 300</td>
+           </tr>
+           <tr>
+             <th>Gala</th>
+             <td>LRD 1,000</td>
+           </tr>
+           <tr>
+             <th>Computer Fees</th>
+             <td>N/A</td>
+           </tr>
+        
+           <tr>
+             <th>Color House Shirt</th>
+             <td>LRD 1,500</td>
+           </tr>
+           <tr>
+             <th>First Aid</th>
+             <td>LRD 1,000</td>
+           </tr>
+           <tr>
+             <th>Compulsory Study Class</th>
+             <td>6,000.00</td>
+           </tr>
+           <tr>
+             <th>Total</th>
+             <td><strong>LRD 36,250.00  </strong></td>
+           </tr>
+         </tbody>
+       </table>
+     </div>
+     <p class='mt-3 mb-0 text-muted small'>
+       Covers registration, tuition, computer studies, assessments, and academic support.
+     </p>
+   ">
                                         Read more..
                                     </a>
-
-
                                 </p>
                             </div>
                         </div>
