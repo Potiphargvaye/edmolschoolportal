@@ -631,8 +631,8 @@
         <!-- ================= JAVASCRIPT ================= -->
         <script>
             /* ----------------------------------------------------
-                   MULTI-STEP FORM LOGIC (UNCHANGED)
-                ---------------------------------------------------- */
+                                   MULTI-STEP FORM LOGIC (UNCHANGED)
+                                ---------------------------------------------------- */
 
             const steps = document.querySelectorAll('.form-step');
             const progressBar = document.getElementById('progressBar');

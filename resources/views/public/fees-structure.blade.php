@@ -33,8 +33,9 @@
                             </svg>
                         </span>
                         <span class="lib-banner-text">
-                            🇱🇷 Happy Independence Day, Liberia! Wishing our students, staff, and the entire Edmol family
-                            a joyful <strong>July 26th</strong> celebrating <strong>179 years of independence</strong>.
+                            🇱🇷 Happy National Flag Day, Liberia! Wishing our students, staff, and the entire Edmol family
+                            a proud
+                            <strong>August 24th</strong> celebrating our <strong>flag, unity, and national pride</strong>.
                         </span>
                     </div>
                 </div>
