@@ -6,16 +6,60 @@
 
 @section('content')
 
-    <!-- PASTE the <body> content of index.html HERE -->
-    <!-- ============================= -->
-    <!-- Liberia Independence Day Banner -->
-    <!-- ============================= -->
-    <div class="lib-independence-banner">
+    {{--
+    ============================================================
+    WASSCE 2026 CONGRATULATIONS BANNER
+    ------------------------------------------------------------
+    DIRECT REPLACEMENT for the "Liberia Independence Day Banner"
+    block. Same structural pattern (full-width strip > container
+    > centered flex row with icon + text), just re-themed:
+
+      - Colors: WAEC's own blue + gold (navy #0a2a66 / gold
+        #d4a017), which already matches your results section.
+      - Icon: an ORIGINAL graduation-cap + star-cluster motif —
+        not the WAEC or ECOWAS logo. Those are registered marks
+        and can't be reproduced, so this is a themed illustration
+        instead, in the same spirit (achievement + regional
+        unity) without copying anyone's emblem.
+      - The Liberian flag SVG is kept, exactly as before, as a
+        small secondary icon — flags aren't trademarked the way
+        an org logo is, so this part is unchanged.
+      - Added a "Check My Results" CTA button, linking out to
+        the official results portal at result.liberiareg.org
+        (opens in a new tab so users don't lose their place on
+        your site).
+
+    Swap this in wherever the old banner sat, right at the top
+    of the page.
+    ============================================================
+--}}
+
+    <div class="wassce-announce-banner">
         <div class="container">
-            <div class="d-flex flex-wrap align-items-center justify-content-center text-center py-2">
-                <span class="lib-flag-icon mr-2" aria-hidden="true">
-                    <!-- Inline SVG Liberian Flag -->
-                    <svg width="28" height="20" viewBox="0 0 28 20" xmlns="http://www.w3.org/2000/svg">
+            <div class="d-flex flex-wrap align-items-center justify-content-center text-center py-2 wassce-banner-row">
+
+                <span class="wassce-banner-icon mr-2" aria-hidden="true">
+                    <!-- Original graduation cap + star motif (not the WAEC/ECOWAS logo) -->
+                    <svg width="30" height="26" viewBox="0 0 32 28" xmlns="http://www.w3.org/2000/svg">
+                        <polygon points="27,2 27.6,3.6 29.3,3.7 27.9,4.7 28.4,6.3 27,5.3 25.6,6.3 26.1,4.7 24.7,3.7 26.4,3.6"
+                            fill="#F5B700" />
+                        <polygon points="4,4 4.4,5.1 5.6,5.2 4.7,5.9 5,7 4,6.4 3,7 3.3,5.9 2.4,5.2 3.6,5.1"
+                            fill="#F5B700" />
+                        <polygon points="16,8 30,13 16,18 2,13" fill="#F5B700" />
+                        <rect x="9" y="14" width="14" height="5" rx="1.2" fill="#0a2a66" />
+                        <path d="M24,13.5 L24,21.5" stroke="#F5B700" stroke-width="1.4" stroke-linecap="round" />
+                        <circle cx="24" cy="22.5" r="1.6" fill="#F5B700" />
+                    </svg>
+                </span>
+
+                <span class="wassce-banner-text">
+                    🎓 Congratulations, WASSCE 2026 Candidates! Your results are in —
+                    <strong>check your result here</strong> to view your official results.
+                </span>
+
+                <span class="wassce-flag-icon mx-2" aria-hidden="true" title="Proudly Liberian">
+                    <!-- Inline SVG Liberian Flag (unchanged) -->
+                    <svg width="24" height="17" viewBox="0 0 28 20" xmlns="http://www.w3.org/2000/svg">
                         <rect width="28" height="20" fill="#fff" />
                         <g fill="#BF0A30">
                             <rect y="0" width="28" height="1.82" />
@@ -30,13 +74,100 @@
                             fill="#fff" />
                     </svg>
                 </span>
-                <span class="lib-banner-text">
-                    🇱🇷 Happy National Flag Day, Liberia! Wishing our students, staff, and the entire Edmol family a proud
-                    <strong>August 24th</strong> celebrating our <strong>flag, unity, and national pride</strong>.
-                </span>
+
+                <a href="https://result.liberiareg.org/" target="_blank" rel="noopener" class="wassce-check-btn">
+                    Check My Results <span aria-hidden="true">→</span>
+                </a>
             </div>
         </div>
+
+        <style>
+            .wassce-announce-banner {
+                background: linear-gradient(90deg, #0a2a66 0%, #123a85 100%);
+                border-bottom: 3px solid #d4a017;
+                color: #fff;
+            }
+
+            .wassce-banner-row {
+                row-gap: 8px;
+                column-gap: 4px;
+            }
+
+            .wassce-banner-icon,
+            .wassce-flag-icon {
+                display: inline-flex;
+                align-items: center;
+                flex-shrink: 0;
+            }
+
+            .wassce-banner-text {
+                font-size: 0.95rem;
+                line-height: 1.5;
+            }
+
+            .wassce-banner-text strong {
+                color: #f4d374;
+            }
+
+            .wassce-check-btn {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                background: #d4a017;
+                color: #0a2a66 !important;
+                font-weight: 700;
+                font-size: 0.85rem;
+                white-space: nowrap;
+                padding: 6px 16px;
+                border-radius: 20px;
+                margin-left: 10px;
+                text-decoration: none !important;
+                transition: background-color .2s ease, transform .2s ease;
+            }
+
+            .wassce-check-btn:hover {
+                background: #f0b62a;
+                transform: translateY(-1px);
+            }
+
+            /* ---- Responsive ---- */
+            @media (max-width: 767px) {
+                .wassce-banner-row {
+                    text-align: center;
+                }
+
+                .wassce-banner-text {
+                    font-size: 0.85rem;
+                    width: 100%;
+                    order: 3;
+                    margin: 4px 0;
+                }
+
+                .wassce-check-btn {
+                    order: 4;
+                    margin-left: 0;
+                    width: 100%;
+                    justify-content: center;
+                    margin-top: 4px;
+                }
+
+                .wassce-flag-icon {
+                    order: 2;
+                }
+
+                .wassce-banner-icon {
+                    order: 1;
+                }
+            }
+
+            @media (max-width: 400px) {
+                .wassce-banner-text {
+                    font-size: 0.8rem;
+                }
+            }
+        </style>
     </div>
+    <!-- ========== End WASSCE Congratulations Banner ========== -->
 
     <div class="py-2 bg-primary" style="background-color:#0a2a66 !important;">
         <div class="container">
@@ -295,6 +426,630 @@
         </div>
     </section>
     <!-- ========== End Announcements Section ========== -->
+
+    {{--
+    ============================================================
+    WASSCE 2026 RESULTS STATISTICS SECTION
+    ------------------------------------------------------------
+    WHERE TO PASTE THIS:
+    Insert this block directly AFTER the closing </section> of
+    "End Announcements Section" and BEFORE @endsection in
+    index.blade.php.
+
+    RESPONSIVENESS PASS:
+    - Same design, structure, and visual style as before.
+    - Added proper breakpoints for tablet (≤991px) and phone
+      (≤575px) so KPI numbers, the "Perfect Score" badge, and
+      the pass-rate bar + percentage never overflow or break
+      awkwardly mid-text on small screens.
+    - Two small markup additions (wassce-subject-cell wrapper,
+      wassce-rate-cell wrapper) give CSS a precise flex target
+      to reflow on narrow screens — no visual change on desktop.
+    ============================================================
+    --}}
+
+    <section class="ftco-wassce py-5">
+        <style>
+            .ftco-wassce {
+                --navy: #0a2a66;
+                --navy-deep: #071c47;
+                --gold: #d4a017;
+                --gold-light: #f4d374;
+                --flag-red: #bf0a30;
+                --panel-bg: #f4f6fa;
+                background-color: #ffffff;
+                position: relative;
+            }
+
+            .ftco-wassce .wassce-eyebrow {
+                background-color: var(--flag-red);
+                color: #fff;
+                padding: 8px 18px;
+                font-size: 13px;
+                letter-spacing: 1.5px;
+                font-weight: 600;
+                display: inline-block;
+            }
+
+            .ftco-wassce .wassce-title {
+                color: var(--navy);
+                font-weight: 700;
+            }
+
+            /* ---- KPI cards ---- */
+            .wassce-stat-card {
+                background: var(--panel-bg);
+                border-radius: 10px;
+                padding: 28px 20px;
+                text-align: center;
+                height: 100%;
+                border-top: 4px solid var(--navy);
+                transition: transform .2s ease, box-shadow .2s ease;
+            }
+
+            .wassce-stat-card:hover {
+                transform: translateY(-4px);
+                box-shadow: 0 12px 24px rgba(10, 42, 102, 0.12);
+            }
+
+            .wassce-stat-card.is-gold {
+                border-top-color: var(--gold);
+            }
+
+            .wassce-stat-icon {
+                width: 54px;
+                height: 54px;
+                border-radius: 50%;
+                background: var(--navy);
+                color: #fff;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto 14px;
+                font-size: 1.3rem;
+            }
+
+            .wassce-stat-card.is-gold .wassce-stat-icon {
+                background: var(--gold);
+            }
+
+            .wassce-stat-number {
+                font-size: 2.4rem;
+                font-weight: 800;
+                color: var(--navy);
+                line-height: 1.1;
+                word-break: break-word;
+            }
+
+            .wassce-stat-label {
+                color: #5a6472;
+                font-size: 0.92rem;
+                margin-top: 4px;
+                letter-spacing: .3px;
+            }
+
+            /* ---- Achievement message ---- */
+            .wassce-message-card {
+                background: var(--navy);
+                background-image: linear-gradient(135deg, var(--navy) 0%, var(--navy-deep) 100%);
+                color: #fff;
+                border-radius: 12px;
+                padding: 40px 45px;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .wassce-message-card::before {
+                content: "";
+                position: absolute;
+                top: -40px;
+                right: -40px;
+                width: 160px;
+                height: 160px;
+                border-radius: 50%;
+                background: rgba(212, 160, 23, 0.12);
+            }
+
+            .wassce-quote-mark {
+                font-size: 3.5rem;
+                line-height: 1;
+                color: var(--gold);
+                font-family: Georgia, serif;
+                margin-bottom: 6px;
+            }
+
+            .wassce-message-card p {
+                font-size: 1.05rem;
+                line-height: 1.8;
+                margin-bottom: 18px;
+                position: relative;
+                z-index: 1;
+            }
+
+            .wassce-message-signoff {
+                display: block;
+                font-weight: 600;
+                color: var(--gold-light);
+                letter-spacing: .4px;
+            }
+
+            /* ---- Table ---- */
+            table.wassce-table {
+                margin-bottom: 0;
+                background: #fff;
+                /* Fixed width keeps every column at its original, undistorted
+                               size on all screens. The scroll wrapper below is what makes
+                               narrow phones scroll to it instead of it getting squeezed. */
+                min-width: 720px;
+            }
+
+            table.wassce-table thead th {
+                background: var(--navy);
+                color: #fff;
+                font-weight: 600;
+                font-size: 0.85rem;
+                letter-spacing: .6px;
+                text-transform: uppercase;
+                border: none;
+                padding: 16px 18px;
+                vertical-align: middle;
+                white-space: nowrap;
+            }
+
+            table.wassce-table tbody td {
+                padding: 16px 18px;
+                vertical-align: middle;
+                border-color: #eef1f6;
+                white-space: nowrap;
+            }
+
+            /* Outer wrapper only handles the rounded corners + shadow.
+                           The actual horizontal scrolling happens on the INNER
+                           .table-responsive div. Keeping these as two separate
+                           elements matters: Bootstrap's .table-responsive sets
+                           overflow-x: auto, and if that class shared a single
+                           element with overflow: hidden (as it did before), the
+                           hidden rule would win and silently clip the last column
+                           (Pass Rate) instead of letting it scroll into view. */
+            .wassce-table-wrap {
+                border-radius: 10px;
+                overflow: hidden;
+                box-shadow: 0 4px 20px rgba(10, 42, 102, 0.08);
+            }
+
+            .wassce-table-scroll {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            /* Small on-mobile hint that the table scrolls, since the
+                           cut-off edge alone isn't always an obvious affordance. */
+            .wassce-scroll-hint {
+                display: none;
+                text-align: right;
+                font-size: 0.78rem;
+                color: #8a94a3;
+                padding: 6px 4px 10px;
+            }
+
+            @media (max-width: 767.98px) {
+                .wassce-scroll-hint {
+                    display: block;
+                }
+            }
+
+            table.wassce-table tbody tr:hover {
+                background-color: #f9fafc;
+            }
+
+            /* Subject name + "Perfect Score" badge wrapper.
+                           flex-wrap lets the whole badge drop to its own line
+                           as a single unit instead of the badge's own words
+                           breaking apart mid-phrase. */
+            .wassce-subject-cell {
+                display: flex;
+                align-items: center;
+                flex-wrap: wrap;
+                row-gap: 6px;
+                column-gap: 8px;
+            }
+
+            .wassce-subject-name {
+                font-weight: 600;
+                color: #1c2733;
+                white-space: nowrap;
+            }
+
+            .wassce-perfect-badge {
+                display: inline-flex;
+                align-items: center;
+                gap: 5px;
+                background: rgba(212, 160, 23, 0.15);
+                color: #8a6a0c;
+                font-size: 0.72rem;
+                font-weight: 700;
+                letter-spacing: .4px;
+                padding: 3px 9px;
+                border-radius: 20px;
+                white-space: nowrap;
+                flex-shrink: 0;
+            }
+
+            /* Pass-rate bar + percentage wrapper */
+            .wassce-rate-cell {
+                display: flex;
+                align-items: center;
+                width: 100%;
+                gap: 12px;
+            }
+
+            .wassce-bar-track {
+                background: #e9edf3;
+                border-radius: 20px;
+                height: 8px;
+                width: 100%;
+                min-width: 90px;
+                flex: 1 1 auto;
+                overflow: hidden;
+            }
+
+            .wassce-bar-fill {
+                height: 100%;
+                border-radius: 20px;
+                background: linear-gradient(90deg, var(--navy), var(--gold));
+            }
+
+            .wassce-rate-text {
+                font-weight: 700;
+                color: var(--navy);
+                font-size: 0.95rem;
+                white-space: nowrap;
+                flex-shrink: 0;
+                min-width: 42px;
+                text-align: right;
+            }
+
+            /* ---- Tablet ---- */
+            @media (max-width: 991.98px) {
+                .wassce-stat-number {
+                    font-size: 2.1rem;
+                }
+
+                .wassce-message-card {
+                    padding: 34px 32px;
+                }
+            }
+
+            /* ---- Large phone / small tablet ---- */
+            @media (max-width: 767.98px) {
+                .wassce-message-card {
+                    padding: 30px 24px;
+                }
+
+                .wassce-quote-mark {
+                    font-size: 2.8rem;
+                }
+
+                .wassce-stat-card {
+                    padding: 22px 14px;
+                }
+            }
+
+            /* ---- Phone ---- */
+            @media (max-width: 575.98px) {
+                .ftco-wassce.py-5 {
+                    padding-top: 2.5rem !important;
+                    padding-bottom: 2.5rem !important;
+                }
+
+                .wassce-eyebrow {
+                    font-size: 11px;
+                    padding: 6px 12px;
+                    letter-spacing: 1px;
+                }
+
+                .wassce-stat-card {
+                    padding: 18px 10px;
+                    border-top-width: 3px;
+                }
+
+                .wassce-stat-icon {
+                    width: 44px;
+                    height: 44px;
+                    font-size: 1.05rem;
+                    margin-bottom: 10px;
+                }
+
+                .wassce-stat-number {
+                    font-size: 1.6rem;
+                }
+
+                .wassce-stat-label {
+                    font-size: 0.78rem;
+                }
+
+                .wassce-message-card {
+                    padding: 24px 18px;
+                    border-radius: 10px;
+                }
+
+                .wassce-message-card p {
+                    font-size: 0.95rem;
+                    line-height: 1.7;
+                }
+            }
+        </style>
+
+        <div class="container">
+
+            <!-- Section Header -->
+            <div class="row justify-content-center mb-5">
+                <div class="col-md-8 text-center ftco-animate">
+                    <span class="badge badge-pill wassce-eyebrow">2026 WASSCE NATIONAL EXAMINATION</span>
+                    <h2 class="mt-3 mb-2 wassce-title">Our Students Excelled</h2>
+                    <p class="text-muted">
+                        We are proud to share Ed-Mol Memorial Matadi Baptist High School's official results
+                        from the West African Senior School Certificate Examination (WASSCE), reflecting the
+                        hard work of our students and the dedication of our teachers.
+                    </p>
+                </div>
+            </div>
+
+            <!-- KPI Stat Cards -->
+            <div class="row mb-5">
+                <div class="col-6 col-lg-3 mb-4 mb-lg-0 ftco-animate">
+                    <div class="wassce-stat-card is-gold">
+                        <div class="wassce-stat-icon"><span class="icon-graduation-cap"></span></div>
+                        <div class="wassce-stat-number">92%</div>
+                        <div class="wassce-stat-label">Overall Pass Rate</div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3 mb-4 mb-lg-0 ftco-animate">
+                    <div class="wassce-stat-card">
+                        <div class="wassce-stat-icon"><span class="icon-calendar"></span></div>
+                        <div class="wassce-stat-number">3 / 9</div>
+                        <div class="wassce-stat-label">Subjects at 100% Pass Rate</div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3 ftco-animate">
+                    <div class="wassce-stat-card">
+                        <div class="wassce-stat-icon"><span class="icon-edit"></span></div>
+                        <div class="wassce-stat-number">457</div>
+                        <div class="wassce-stat-label">Total Passes Recorded</div>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-3 ftco-animate">
+                    <div class="wassce-stat-card">
+                        <div class="wassce-stat-icon"><span class="icon-laptop"></span></div>
+                        <div class="wassce-stat-number">9</div>
+                        <div class="wassce-stat-label">Subjects Examined</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Achievement Message -->
+            <div class="row justify-content-center mb-5">
+                <div class="col-lg-10 ftco-animate">
+                    <div class="wassce-message-card">
+                        <div class="wassce-quote-mark">&ldquo;</div>
+                        <p>
+                            Our hearts are full of joy following the release of this year's National
+                            Examination results. Three subjects History, Chemistry, and Physics
+                            recorded a perfect 100% pass rate, and six of our nine subjects finished
+                            above 87%. This achievement reflects the discipline of our students and
+                            the commitment of our instructors, and we thank every parent and guardian
+                            who supported this journey with us.
+                        </p>
+                        <span class="wassce-message-signoff">Edmol Baptist School Administration</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subject Breakdown Table -->
+            <div class="row justify-content-center mb-4">
+                <div class="col-md-8 text-center ftco-animate">
+                    <h3 class="wassce-title" style="font-size:1.5rem;">Subject-by-Subject Breakdown</h3>
+                    <p class="text-muted mb-0">Full results across all nine subjects examined this year.</p>
+                </div>
+            </div>
+
+            <div class="row ftco-animate">
+                <div class="col-12">
+                    <div class="wassce-scroll-hint">Swipe to see all columns →</div>
+                    <div class="wassce-table-wrap">
+                        <div class="table-responsive wassce-table-scroll">
+                            <table class="table wassce-table">
+                                <thead>
+                                    <tr>
+                                        <th>Subject</th>
+                                        <th class="text-center">Passed</th>
+                                        <th class="text-center">Failed</th>
+                                        <th class="text-center">Total</th>
+                                        <th>Pass Rate</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="wassce-subject-cell">
+                                                <span class="wassce-subject-name">History</span>
+                                                <span class="wassce-perfect-badge"><span
+                                                        class="icon-graduation-cap"></span>
+                                                    Perfect Score</span>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">55</td>
+                                        <td class="text-center">0</td>
+                                        <td class="text-center">55</td>
+                                        <td>
+                                            <div class="wassce-rate-cell">
+                                                <div class="wassce-bar-track">
+                                                    <div class="wassce-bar-fill" style="width:100%;"></div>
+                                                </div>
+                                                <span class="wassce-rate-text">100%</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="wassce-subject-cell">
+                                                <span class="wassce-subject-name">Chemistry</span>
+                                                <span class="wassce-perfect-badge"><span
+                                                        class="icon-graduation-cap"></span>
+                                                    Perfect Score</span>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">55</td>
+                                        <td class="text-center">0</td>
+                                        <td class="text-center">55</td>
+                                        <td>
+                                            <div class="wassce-rate-cell">
+                                                <div class="wassce-bar-track">
+                                                    <div class="wassce-bar-fill" style="width:100%;"></div>
+                                                </div>
+                                                <span class="wassce-rate-text">100%</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="wassce-subject-cell">
+                                                <span class="wassce-subject-name">Physics</span>
+                                                <span class="wassce-perfect-badge"><span
+                                                        class="icon-graduation-cap"></span>
+                                                    Perfect Score</span>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">55</td>
+                                        <td class="text-center">0</td>
+                                        <td class="text-center">55</td>
+                                        <td>
+                                            <div class="wassce-rate-cell">
+                                                <div class="wassce-bar-track">
+                                                    <div class="wassce-bar-fill" style="width:100%;"></div>
+                                                </div>
+                                                <span class="wassce-rate-text">100%</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="wassce-subject-cell">
+                                                <span class="wassce-subject-name">Geography</span>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">54</td>
+                                        <td class="text-center">1</td>
+                                        <td class="text-center">55</td>
+                                        <td>
+                                            <div class="wassce-rate-cell">
+                                                <div class="wassce-bar-track">
+                                                    <div class="wassce-bar-fill" style="width:98%;"></div>
+                                                </div>
+                                                <span class="wassce-rate-text">98%</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="wassce-subject-cell">
+                                                <span class="wassce-subject-name">Mathematics</span>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">54</td>
+                                        <td class="text-center">1</td>
+                                        <td class="text-center">55</td>
+                                        <td>
+                                            <div class="wassce-rate-cell">
+                                                <div class="wassce-bar-track">
+                                                    <div class="wassce-bar-fill" style="width:98%;"></div>
+                                                </div>
+                                                <span class="wassce-rate-text">98%</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="wassce-subject-cell">
+                                                <span class="wassce-subject-name">Biology</span>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">54</td>
+                                        <td class="text-center">1</td>
+                                        <td class="text-center">55</td>
+                                        <td>
+                                            <div class="wassce-rate-cell">
+                                                <div class="wassce-bar-track">
+                                                    <div class="wassce-bar-fill" style="width:98%;"></div>
+                                                </div>
+                                                <span class="wassce-rate-text">98%</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="wassce-subject-cell">
+                                                <span class="wassce-subject-name">English</span>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">48</td>
+                                        <td class="text-center">7</td>
+                                        <td class="text-center">55</td>
+                                        <td>
+                                            <div class="wassce-rate-cell">
+                                                <div class="wassce-bar-track">
+                                                    <div class="wassce-bar-fill" style="width:87%;"></div>
+                                                </div>
+                                                <span class="wassce-rate-text">87%</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="wassce-subject-cell">
+                                                <span class="wassce-subject-name">Economics</span>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">46</td>
+                                        <td class="text-center">9</td>
+                                        <td class="text-center">55</td>
+                                        <td>
+                                            <div class="wassce-rate-cell">
+                                                <div class="wassce-bar-track">
+                                                    <div class="wassce-bar-fill" style="width:84%;"></div>
+                                                </div>
+                                                <span class="wassce-rate-text">84%</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="wassce-subject-cell">
+                                                <span class="wassce-subject-name">Literature</span>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">36</td>
+                                        <td class="text-center">19</td>
+                                        <td class="text-center">55</td>
+                                        <td>
+                                            <div class="wassce-rate-cell">
+                                                <div class="wassce-bar-track">
+                                                    <div class="wassce-bar-fill" style="width:65%;"></div>
+                                                </div>
+                                                <span class="wassce-rate-text">65%</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <!-- ========== End WASSCE Results Statistics Section ========== -->
 
     <section class="ftco-services ftco-no-pb">
         <div class="container-wrap">

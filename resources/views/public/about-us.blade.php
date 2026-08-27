@@ -10,13 +10,33 @@
 
     <body>
         <!-- Liberia Independence Day Banner -->
-        <!-- ============================= -->
-        <div class="lib-independence-banner">
+        <div class="wassce-announce-banner">
             <div class="container">
-                <div class="d-flex flex-wrap align-items-center justify-content-center text-center py-2">
-                    <span class="lib-flag-icon mr-2" aria-hidden="true">
-                        <!-- Inline SVG Liberian Flag -->
-                        <svg width="28" height="20" viewBox="0 0 28 20" xmlns="http://www.w3.org/2000/svg">
+                <div class="d-flex flex-wrap align-items-center justify-content-center text-center py-2 wassce-banner-row">
+
+                    <span class="wassce-banner-icon mr-2" aria-hidden="true">
+                        <!-- Original graduation cap + star motif (not the WAEC/ECOWAS logo) -->
+                        <svg width="30" height="26" viewBox="0 0 32 28" xmlns="http://www.w3.org/2000/svg">
+                            <polygon
+                                points="27,2 27.6,3.6 29.3,3.7 27.9,4.7 28.4,6.3 27,5.3 25.6,6.3 26.1,4.7 24.7,3.7 26.4,3.6"
+                                fill="#F5B700" />
+                            <polygon points="4,4 4.4,5.1 5.6,5.2 4.7,5.9 5,7 4,6.4 3,7 3.3,5.9 2.4,5.2 3.6,5.1"
+                                fill="#F5B700" />
+                            <polygon points="16,8 30,13 16,18 2,13" fill="#F5B700" />
+                            <rect x="9" y="14" width="14" height="5" rx="1.2" fill="#0a2a66" />
+                            <path d="M24,13.5 L24,21.5" stroke="#F5B700" stroke-width="1.4" stroke-linecap="round" />
+                            <circle cx="24" cy="22.5" r="1.6" fill="#F5B700" />
+                        </svg>
+                    </span>
+
+                    <span class="wassce-banner-text">
+                        Congratulations, WASSCE 2026 Candidates! Your results are in
+                        <strong>check your result here</strong> to view your official results.
+                    </span>
+
+                    <span class="wassce-flag-icon mx-2" aria-hidden="true" title="Proudly Liberian">
+                        <!-- Inline SVG Liberian Flag (unchanged) -->
+                        <svg width="24" height="17" viewBox="0 0 28 20" xmlns="http://www.w3.org/2000/svg">
                             <rect width="28" height="20" fill="#fff" />
                             <g fill="#BF0A30">
                                 <rect y="0" width="28" height="1.82" />
@@ -31,14 +51,100 @@
                                 fill="#fff" />
                         </svg>
                     </span>
-                    <span class="lib-banner-text">
-                        🇱🇷 Happy National Flag Day, Liberia! Wishing our students, staff, and the entire Edmol family a
-                        proud
-                        <strong>August 24th</strong> celebrating our <strong>flag, unity, and national pride</strong>.
-                    </span>
+
+                    <a href="https://result.liberiareg.org/" target="_blank" rel="noopener" class="wassce-check-btn">
+                        Check My Results <span aria-hidden="true">→</span>
+                    </a>
                 </div>
             </div>
+
+            <style>
+                .wassce-announce-banner {
+                    background: linear-gradient(90deg, #0a2a66 0%, #123a85 100%);
+                    border-bottom: 3px solid #d4a017;
+                    color: #fff;
+                }
+
+                .wassce-banner-row {
+                    row-gap: 8px;
+                    column-gap: 4px;
+                }
+
+                .wassce-banner-icon,
+                .wassce-flag-icon {
+                    display: inline-flex;
+                    align-items: center;
+                    flex-shrink: 0;
+                }
+
+                .wassce-banner-text {
+                    font-size: 0.95rem;
+                    line-height: 1.5;
+                }
+
+                .wassce-banner-text strong {
+                    color: #f4d374;
+                }
+
+                .wassce-check-btn {
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 6px;
+                    background: #d4a017;
+                    color: #0a2a66 !important;
+                    font-weight: 700;
+                    font-size: 0.85rem;
+                    white-space: nowrap;
+                    padding: 6px 16px;
+                    border-radius: 20px;
+                    margin-left: 10px;
+                    text-decoration: none !important;
+                    transition: background-color .2s ease, transform .2s ease;
+                }
+
+                .wassce-check-btn:hover {
+                    background: #f0b62a;
+                    transform: translateY(-1px);
+                }
+
+                /* ---- Responsive ---- */
+                @media (max-width: 767px) {
+                    .wassce-banner-row {
+                        text-align: center;
+                    }
+
+                    .wassce-banner-text {
+                        font-size: 0.85rem;
+                        width: 100%;
+                        order: 3;
+                        margin: 4px 0;
+                    }
+
+                    .wassce-check-btn {
+                        order: 4;
+                        margin-left: 0;
+                        width: 100%;
+                        justify-content: center;
+                        margin-top: 4px;
+                    }
+
+                    .wassce-flag-icon {
+                        order: 2;
+                    }
+
+                    .wassce-banner-icon {
+                        order: 1;
+                    }
+                }
+
+                @media (max-width: 400px) {
+                    .wassce-banner-text {
+                        font-size: 0.8rem;
+                    }
+                }
+            </style>
         </div>
+        <!-- ========== End WASSCE Congratulations Banner ========== -->
         <div class="about-page">
             <div class="py-2 bg-primary" style="background-color:#0a2a66 !important;">
                 <div class="container">
@@ -84,7 +190,8 @@
                             <li class="nav-item"><a href="{{ url('/about-us') }}" class="nav-link">About Us</a></li>
                             <li class="nav-item"><a href="{{ url('/teachers') }}" class="nav-link">Teacher</a></li>
                             <li class="nav-item"><a href="{{ url('/courses') }}" class="nav-link">Courses</a></li>
-                            <li class="nav-item"><a href="{{ url('/fees-structure') }}" class="nav-link">Fees-structure</a>
+                            <li class="nav-item"><a href="{{ url('/fees-structure') }}"
+                                    class="nav-link">Fees-structure</a>
                             </li>
                             <li class="nav-item"><a href="{{ url('/blog') }}" class="nav-link">Blog</a></li>
                             <li class="nav-item"><a href="{{ url('/contact-us') }}" class="nav-link">Contact-Us</a></li>
