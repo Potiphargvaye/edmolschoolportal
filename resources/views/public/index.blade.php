@@ -53,7 +53,7 @@
                 </span>
 
                 <span class="wassce-banner-text">
-                    🎓 Congratulations, WASSCE 2026 Candidates! Your results are in —
+                    Congratulations, WASSCE 2026 Candidates! Your results are in
                     <strong>check your result here</strong> to view your official results.
                 </span>
 
@@ -578,8 +578,8 @@
                 margin-bottom: 0;
                 background: #fff;
                 /* Fixed width keeps every column at its original, undistorted
-                               size on all screens. The scroll wrapper below is what makes
-                               narrow phones scroll to it instead of it getting squeezed. */
+                                   size on all screens. The scroll wrapper below is what makes
+                                   narrow phones scroll to it instead of it getting squeezed. */
                 min-width: 720px;
             }
 
@@ -604,13 +604,13 @@
             }
 
             /* Outer wrapper only handles the rounded corners + shadow.
-                           The actual horizontal scrolling happens on the INNER
-                           .table-responsive div. Keeping these as two separate
-                           elements matters: Bootstrap's .table-responsive sets
-                           overflow-x: auto, and if that class shared a single
-                           element with overflow: hidden (as it did before), the
-                           hidden rule would win and silently clip the last column
-                           (Pass Rate) instead of letting it scroll into view. */
+                               The actual horizontal scrolling happens on the INNER
+                               .table-responsive div. Keeping these as two separate
+                               elements matters: Bootstrap's .table-responsive sets
+                               overflow-x: auto, and if that class shared a single
+                               element with overflow: hidden (as it did before), the
+                               hidden rule would win and silently clip the last column
+                               (Pass Rate) instead of letting it scroll into view. */
             .wassce-table-wrap {
                 border-radius: 10px;
                 overflow: hidden;
@@ -623,7 +623,7 @@
             }
 
             /* Small on-mobile hint that the table scrolls, since the
-                           cut-off edge alone isn't always an obvious affordance. */
+                               cut-off edge alone isn't always an obvious affordance. */
             .wassce-scroll-hint {
                 display: none;
                 text-align: right;
@@ -643,9 +643,9 @@
             }
 
             /* Subject name + "Perfect Score" badge wrapper.
-                           flex-wrap lets the whole badge drop to its own line
-                           as a single unit instead of the badge's own words
-                           breaking apart mid-phrase. */
+                               flex-wrap lets the whole badge drop to its own line
+                               as a single unit instead of the badge's own words
+                               breaking apart mid-phrase. */
             .wassce-subject-cell {
                 display: flex;
                 align-items: center;
