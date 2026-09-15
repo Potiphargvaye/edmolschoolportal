@@ -13,7 +13,7 @@
             class="h-8 w-8 object-contain rounded-md bg-white/10 p-0.5">
 
         <span class="hidden sm:inline text-white font-bold text-sm tracking-wider">
-            EDMOL SMS
+            EDMOL NOTE: System Upgrade in Progress
         </span>
     </div>
     <ul class="ml-auto flex items-center gap-1">
