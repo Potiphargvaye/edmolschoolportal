@@ -215,10 +215,11 @@
                     <li class="nav-item"><a href="{{ url('/blog') }}" class="nav-link">Blog</a></li>
                     <li class="nav-item"><a href="{{ url('/contact-us') }}" class="nav-link">Contact-Us</a></li>
                     <li class="nav-item ml-lg-4">
-                        <a href="{{ route('login') }}" class="nav-link login-ghost" id="loginBtn">
+                        <a href="https://schoolgearliberia.com/login" class="nav-link login-ghost" id="loginBtn"
+                            target="_blank" rel="noopener noreferrer">
                             <span class="login-text">Login to Portal</span>
                             <span class="login-arrow">→</span>
-                            <span class="login-spinner" style="display:none;"></span> <!-- CSS spinner -->
+                            <span class="login-spinner" style="display:none;"></span>
                         </a>
                     </li>
 
@@ -578,8 +579,8 @@
                 margin-bottom: 0;
                 background: #fff;
                 /* Fixed width keeps every column at its original, undistorted
-                                   size on all screens. The scroll wrapper below is what makes
-                                   narrow phones scroll to it instead of it getting squeezed. */
+                                                           size on all screens. The scroll wrapper below is what makes
+                                                           narrow phones scroll to it instead of it getting squeezed. */
                 min-width: 720px;
             }
 
@@ -604,13 +605,13 @@
             }
 
             /* Outer wrapper only handles the rounded corners + shadow.
-                               The actual horizontal scrolling happens on the INNER
-                               .table-responsive div. Keeping these as two separate
-                               elements matters: Bootstrap's .table-responsive sets
-                               overflow-x: auto, and if that class shared a single
-                               element with overflow: hidden (as it did before), the
-                               hidden rule would win and silently clip the last column
-                               (Pass Rate) instead of letting it scroll into view. */
+                                                       The actual horizontal scrolling happens on the INNER
+                                                       .table-responsive div. Keeping these as two separate
+                                                       elements matters: Bootstrap's .table-responsive sets
+                                                       overflow-x: auto, and if that class shared a single
+                                                       element with overflow: hidden (as it did before), the
+                                                       hidden rule would win and silently clip the last column
+                                                       (Pass Rate) instead of letting it scroll into view. */
             .wassce-table-wrap {
                 border-radius: 10px;
                 overflow: hidden;
@@ -623,7 +624,7 @@
             }
 
             /* Small on-mobile hint that the table scrolls, since the
-                               cut-off edge alone isn't always an obvious affordance. */
+                                                       cut-off edge alone isn't always an obvious affordance. */
             .wassce-scroll-hint {
                 display: none;
                 text-align: right;
@@ -643,9 +644,9 @@
             }
 
             /* Subject name + "Perfect Score" badge wrapper.
-                               flex-wrap lets the whole badge drop to its own line
-                               as a single unit instead of the badge's own words
-                               breaking apart mid-phrase. */
+                                                       flex-wrap lets the whole badge drop to its own line
+                                                       as a single unit instead of the badge's own words
+                                                       breaking apart mid-phrase. */
             .wassce-subject-cell {
                 display: flex;
                 align-items: center;
@@ -2330,7 +2331,6 @@
             const loginArrow = loginBtn.querySelector(".login-arrow");
             const loginSpinner = loginBtn.querySelector(".login-spinner");
 
-            // Reset button state on page load
             function resetLoginButton() {
                 loginText.textContent = "Login to Portal";
                 loginArrow.style.display = "inline-block";
@@ -2350,13 +2350,12 @@
                 loginText.textContent = "Redirecting...";
                 loginSpinner.style.display = "inline-block";
                 loginArrow.style.display = "none";
-
-                // Optional: Add spinning animation with CSS
                 loginSpinner.style.animation = "spin 1s linear infinite";
 
-                // Wait 8 seconds then redirect
+                // Wait, then open in a new tab
                 setTimeout(function() {
-                    window.location.href = loginBtn.href; // go to login page
+                    window.open(loginBtn.href, "_blank", "noopener,noreferrer");
+                    resetLoginButton(); // reset immediately since this page never unloads
                 }, 3000);
             });
 
@@ -2368,8 +2367,6 @@
             });
         });
     </script>
-
-
     </body>
 
 

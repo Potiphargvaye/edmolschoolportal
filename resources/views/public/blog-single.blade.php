@@ -187,7 +187,7 @@
                         <li class="nav-item"><a href="{{ url('/blog') }}" class="nav-link">Blog</a></li>
                         <li class="nav-item"><a href="{{ url('/contact-us') }}" class="nav-link">Contact-Us</a></li>
                         <li class="nav-item ml-lg-4">
-                            <a href="{{ route('login') }}" class="nav-link login-ghost" id="loginBtn">
+                            <a href="https://schoolgearliberia.com/login" class="nav-link login-ghost" id="loginBtn">
                                 <span class="login-text">Login to Portal</span>
                                 <span class="login-arrow">→</span>
                                 <span class="login-spinner" style="display:none;"></span> <!-- CSS spinner -->

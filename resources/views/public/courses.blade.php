@@ -188,7 +188,7 @@
                         <li class="nav-item"><a href="{{ url('/blog') }}" class="nav-link">Blog</a></li>
                         <li class="nav-item"><a href="{{ url('/contact-us') }}" class="nav-link">Contact-Us</a></li>
                         <li class="nav-item ml-lg-4">
-                            <a href="{{ route('login') }}" class="nav-link login-ghost" id="loginBtn">
+                            <a href="https://schoolgearliberia.com/login" class="nav-link login-ghost" id="loginBtn">
                                 <span class="login-text">Login to Portal</span>
                                 <span class="login-arrow">→</span>
                                 <span class="login-spinner" style="display:none;"></span> <!-- CSS spinner -->
@@ -402,6 +402,8 @@
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
         <script src="js/google-map.js"></script>
         <script src="js/main.js"></script>
+
+
         <script>
             document.addEventListener("DOMContentLoaded", function() {
                 const loginBtn = document.getElementById("loginBtn");
@@ -409,7 +411,6 @@
                 const loginArrow = loginBtn.querySelector(".login-arrow");
                 const loginSpinner = loginBtn.querySelector(".login-spinner");
 
-                // Reset button state on page load
                 function resetLoginButton() {
                     loginText.textContent = "Login to Portal";
                     loginArrow.style.display = "inline-block";
@@ -429,13 +430,12 @@
                     loginText.textContent = "Redirecting...";
                     loginSpinner.style.display = "inline-block";
                     loginArrow.style.display = "none";
-
-                    // Optional: Add spinning animation with CSS
                     loginSpinner.style.animation = "spin 1s linear infinite";
 
-                    // Wait 8 seconds then redirect
+                    // Wait, then open in a new tab
                     setTimeout(function() {
-                        window.location.href = loginBtn.href; // go to login page
+                        window.open(loginBtn.href, "_blank", "noopener,noreferrer");
+                        resetLoginButton(); // reset immediately since this page never unloads
                     }, 3000);
                 });
 
